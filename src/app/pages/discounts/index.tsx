@@ -170,7 +170,7 @@ function Discounts() {
                           }
                           {
                             // METHOD?.includes("GET_BY_ID") &&
-                            (item.platform === 'SHOPEE' || item.platform === 'VINID') &&
+                            (item.platform === 'SHOPEE' || item.platform === 'VINID' || item.platform === 'BEAUTYX') &&
                             <button
                               className='btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1'
                               onClick={() => navigate(`/pages/discounts/${item.uuid}`)}
@@ -194,7 +194,7 @@ function Discounts() {
                             // </button>
                           }
                           {
-                            (item.platform === 'SHOPEE' || item.platform === 'VINID') &&
+                            (item.platform === 'SHOPEE' || item.platform === 'VINID' || item.platform === 'BEAUTYX') &&
                             <ExportCode
                               title=''
                               size="small"
