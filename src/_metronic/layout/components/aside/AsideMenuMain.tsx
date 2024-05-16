@@ -85,6 +85,11 @@ export function AsideMenuMain() {
           title='Thiết kế Trang chủ Beautyx'
         />
         <AsideMenuItem
+          to='pages/tips'
+          icon='/media/icons/duotune/coding/cod004.svg'
+          title='Tip'
+        />
+        <AsideMenuItem
           to='pages/approves'
           icon='/media/icons/duotune/general/gen051.svg'
           title='Lịch sử kiểm duyệt'

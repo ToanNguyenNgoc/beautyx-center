@@ -36,6 +36,8 @@ const ServicesPage = lazy(() => import('../pages/services'))
 const ProductsPage = lazy(() => import('../pages/products'))
 const RolesPage = lazy(() => import('../pages/roles'))
 const PermissionsPage = lazy(() => import('../pages/permissions'))
+const TipsPage = lazy(() => import('../pages/tips'))
+const TipsForm = lazy(() => import('../pages/tips/module/tips-form'))
 
 //-------------
 // const OrgMobaGalleriesPage = lazy(() => import('../pages-organization/moba-galleries'))
@@ -175,7 +177,19 @@ const InitRoute: any[] = [
     {
         path: "pages/roles/:id/permissions",
         element: <PermissionsPage />
-    }
+    },
+    {
+        path: "pages/tips",
+        element: <TipsPage />
+    },
+    {
+        path: "pages/tips-form",
+        element: <TipsForm />
+    },
+    {
+        path: "pages/tips-form/:id",
+        element: <TipsForm />
+    },
 
 
 ]

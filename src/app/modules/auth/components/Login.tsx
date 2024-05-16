@@ -12,7 +12,7 @@ import { request3rdApi } from "app/api/api-3rd-client";
 
 const loginSchema = Yup.object().shape({
     email: Yup.string()
-        .email('Wrong email format')
+        // .email('Wrong email format')
         .min(3, 'Minimum 3 symbols')
         .max(50, 'Maximum 50 symbols')
         // .matches(/^[a-zA-Z0-9_.+-]+@(?:(?:[a-zA-Z0-9-]+\.)?[a-zA-Z]+\.)?(myspa|clinic)\.vn$/,

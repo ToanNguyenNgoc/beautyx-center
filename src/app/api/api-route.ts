@@ -18,6 +18,8 @@ export const API_ROUTE = {
   ORDERS_ID: (id: number | string) => `/orders/${id}`,
   SERVICES: '/services',
   PRODUCTS: '/products',
+  TIPS: '/beautyxtips',
+  TIPS_ID: (id: number | string) => `/beautyxtips/${id}`
 }
 export const API_3RD = {
   VIEW_COUNT: `${DOMAIN}/history/view`,
