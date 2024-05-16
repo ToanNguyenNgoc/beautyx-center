@@ -171,9 +171,9 @@ function PromotionForm() {
                 />
               </div>
               <input
-                value={formik.values.media_url || ''}
+                // value={formik.values.media_url}
                 // onChange={formik.handleChange}
-                readOnly
+                // readOnly
                 type="text"
                 name="image_url"
                 className="form-control form-control-solid mt-4 mb-2"
@@ -210,9 +210,9 @@ function PromotionForm() {
               />
             </div>
             <input
-              value={formik.values.thumbnail_url || ''}
+              value={formik.values.thumbnail_url}
               onChange={formik.handleChange}
-              readOnly
+              // readOnly
               type="text"
               name="thumbnail_url"
               className="form-control form-control-solid mt-4 mb-2"

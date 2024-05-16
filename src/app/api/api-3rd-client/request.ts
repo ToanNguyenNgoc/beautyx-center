@@ -1,5 +1,5 @@
 import axios3rdClient from "./client";
-import { ResponseDetail } from "@types";
+import { ReqPostNotification, ResponseDetail } from "@types";
 import { ITrend } from "app/pages/trends/trend.interface";
 
 class Request {
@@ -18,6 +18,7 @@ class Request {
     postTrend = (values: any) => axios3rdClient.post('/trends', values)
     putTrend = (id: string, values: any) => axios3rdClient.put(`/trends/${id}`, values)
     refreshComment = (id: string) => axios3rdClient.get(`/tiktok/refresh_trend/${id}`)
+    postNotification = (body: ReqPostNotification) => axios3rdClient.post('/zalo/fcm-notification', body)
 }
 export const request3rdApi = new Request();
 export default request3rdApi

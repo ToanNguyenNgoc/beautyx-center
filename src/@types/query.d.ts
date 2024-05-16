@@ -45,3 +45,6 @@ export type QrCustomer =QrPage & {
   'to_date'?:string;
   'sort'?:string;
 }
+export type QrCustomerEvent = QrPage & {
+  'subdomain'?:string
+}

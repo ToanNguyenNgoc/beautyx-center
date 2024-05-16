@@ -34,3 +34,10 @@ export type ReqPostBody = {
   tag_id?: number;
   service_ids?: number[]
 }
+export type ReqPostNotification={
+  title?:string;
+  description?:string;
+  type?:string|number;
+  link?:string;
+  payload_id?:string
+}
