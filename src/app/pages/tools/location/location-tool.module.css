@@ -1,0 +1,22 @@
+.cnt {
+  padding: 24px;
+  background-color: white;
+  margin: 12px;
+  border-radius: 12px;
+}
+
+.text_input {
+  max-width: 100%;
+  min-width: 100%;
+  min-height: 300px;
+  padding: 12px;
+}
+
+.table_cnt {
+  margin: 12px 0px;
+}
+
+.button_cnt {
+  display: flex;
+  justify-content: flex-end;
+}

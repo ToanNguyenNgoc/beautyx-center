@@ -12,6 +12,7 @@ import { ErrorsPage } from '../modules/errors/ErrorsPage'
 import { Logout, AuthPage, useAuth } from '../modules/auth'
 import { App } from '../App'
 import { CustomerEvent } from 'app/pages/customers-event/CustomerEvent'
+import { LocationTool } from 'app/pages/tools'
 
 /**
  * Base URL of the website.
@@ -37,6 +38,7 @@ const AppRoutes: FC = () => {
           ) : (
             <>
               <Route path='vong-quay' element={<CustomerEvent />} />
+              <Route path='location-tool' element={<LocationTool />} />
               <Route path='auth/*' element={<AuthPage />} />
               <Route path='*' element={<Navigate to='/auth' />} />
             </>
