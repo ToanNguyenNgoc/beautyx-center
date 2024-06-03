@@ -2,7 +2,6 @@ import { Button, Container } from "@mui/material";
 import { FC, useState } from "react";
 import style from './location-tool.module.css'
 import axios from "axios";
-import { isEmpty } from "lodash";
 import * as FileSaver from "file-saver";
 import * as XLSX from "xlsx"
 import moment from "moment";
@@ -11,7 +10,9 @@ interface ILocation {
   stt: number;
   address: string;
   latLng: string;
-  hasLatLng: boolean
+  hasLatLng: boolean;
+  lat: number;
+  lng: number
 }
 
 export const LocationTool: FC = () => {
@@ -29,10 +30,24 @@ export const LocationTool: FC = () => {
       return newData
     })
   }
-  const onChangeItemLocation = (txt: string, index: number) => {
+  // const onChangeItemLocation = (txt: string, index: number) => {
+  //   setData(prev => {
+  //     const newData = [...prev]
+  //     newData[index].latLng = txt
+  //     return newData
+  //   })
+  // }
+  const onChangeItemLat = (lat: any, index: number) => {
     setData(prev => {
       const newData = [...prev]
-      newData[index].latLng = txt
+      newData[index].lat = lat
+      return newData
+    })
+  }
+  const onChangeItemLng = (lng: any, index: number) => {
+    setData(prev => {
+      const newData = [...prev]
+      newData[index].lng = lng
       return newData
     })
   }
@@ -60,7 +75,9 @@ export const LocationTool: FC = () => {
               stt,
               address: item,
               latLng: response[0].center.join(','),
-              hasLatLng: true
+              hasLatLng: true,
+              lat: response[0].center.length > 1 ? response[0].center[0] : 0,
+              lng: response[0].center.length > 1 ? response[0].center[1] : 0,
             }])
           }
           // setData([...data, {
@@ -72,6 +89,8 @@ export const LocationTool: FC = () => {
       }
     })
   }
+  console.log(data);
+
 
 
   return (
@@ -112,18 +131,25 @@ export const LocationTool: FC = () => {
                       <td>
                         {index + 1}
                       </td>
-                      <td style={{ width: '75%' }}>
+                      <td style={{ width: '70%' }}>
                         <input
                           type="text" value={item.address}
                           className="form-control form-control-solid"
                           onChange={e => onChangeItemAddress(e.target.value, index)}
                         />
                       </td>
-                      <td>
+                      <td style={{ display: 'flex', justifyContent: 'space-between' }}>
                         <input
-                          type="text" value={isEmpty(item.latLng) ? '...' : item.latLng}
+                          style={{ width: 'calc(50% - 6px)' }}
+                          type="text" value={item.lat}
                           className="form-control form-control-solid"
-                          onChange={e => onChangeItemLocation(e.target.value, index)}
+                          onChange={e => onChangeItemLat(e.target.value, index)}
+                        />
+                        <input
+                          style={{ width: 'calc(50% - 6px)' }}
+                          type="text" value={item.lng}
+                          className="form-control form-control-solid"
+                          onChange={e => onChangeItemLng(e.target.value, index)}
                         />
                       </td>
                     </tr>
@@ -142,16 +168,17 @@ const onExportFile = (addresses: ILocation[]) => {
     const fileType =
       "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8";
     const fileExtension = ".xlsx";
-    const titleRow = ['STT', 'Địa chỉ', 'Tọa độ']; // Replace with your actual titles
+    const titleRow = ['STT', 'Địa chỉ', 'Lat', 'Lng']; // Replace with your actual titles
     const dataWithTitles = [
       titleRow,
-      ...addresses.map((item, i) => [i + 1, item.address, item.latLng])
+      ...addresses.map((item, i) => [i + 1, item.address, item.lat, item.lng])
     ];
     const ws = XLSX.utils.aoa_to_sheet(dataWithTitles);
     const columnWidths = [
       { wch: 5 },
       { wch: 100 },
-      { wch: 30 },
+      { wch: 20 },
+      { wch: 20 },
     ];
     ws['!cols'] = columnWidths;
     const wb = { Sheets: { data: ws }, SheetNames: ["data"] };
