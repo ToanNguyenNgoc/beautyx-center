@@ -186,7 +186,7 @@ function Form(props: IProps) {
                         <XSwitch
                             value={isCampaign}
                             onChange={(e) => setIsCampaign(e.target.checked)}
-                            label='Is campaign (Áp dụng mã giảm giá Shopee, VinId)'
+                            label='Is campaign (Áp dụng mã giảm giá Shopee, VinId, Viettel Money, Livwell)'
                         />
                     </div>
                 </div>

@@ -13,7 +13,7 @@ import { discountsApi } from 'app/api';
 import queryString from 'query-string';
 import { QrDiscount } from '@types';
 import { FormControl, MenuItem, Select, SelectChangeEvent } from '@mui/material';
-import { PLAT_FORM_ARR } from 'app/util';
+import { PLAT_FORM, PLAT_FORM_ARR } from 'app/util';
 import './style.scss'
 import { debounce, identity, pickBy } from 'lodash';
 import { ExportCode } from './module/discount-form'
@@ -194,7 +194,13 @@ function Discounts() {
                             // </button>
                           }
                           {
-                            (item.platform === 'SHOPEE' || item.platform === 'VINID' || item.platform === 'BEAUTYX') &&
+                            (
+                              item.platform === 'SHOPEE' ||
+                              item.platform === 'VINID' ||
+                              item.platform === 'BEAUTYX' ||
+                              item.platform === PLAT_FORM.VIETTEL_MONEY ||
+                              item.platform === PLAT_FORM.LIVWELL
+                            ) &&
                             <ExportCode
                               title=''
                               size="small"
