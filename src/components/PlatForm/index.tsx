@@ -40,6 +40,18 @@ export const FlatFormOrder = (props: IProps) => {
                 return <span className='plat-form-item' style={{ backgroundColor: "#DC2222" }}>
                     VINID
                 </span>
+            case PLAT_FORM.VIETTEL_MONEY:
+                return (
+                    <span className='plat-form-item' style={{ backgroundColor: "#DC2222" }}>
+                        {PLAT_FORM.VIETTEL_MONEY}
+                    </span>
+                )
+            case PLAT_FORM.LIVWELL:
+                return (
+                    <span className='plat-form-item' style={{ backgroundColor: "yellow", color:'black' }}>
+                        {PLAT_FORM.LIVWELL}
+                    </span>
+                )
             default:
                 return <span className='plat-form-item'>
                     Tất cả{element}
