@@ -199,7 +199,8 @@ function Discounts() {
                               item.platform === 'VINID' ||
                               item.platform === 'BEAUTYX' ||
                               item.platform === PLAT_FORM.VIETTEL_MONEY ||
-                              item.platform === PLAT_FORM.LIVWELL
+                              item.platform === PLAT_FORM.LIVWELL || 
+                              item.platform === PLAT_FORM.TAPTAP
                             ) &&
                             <ExportCode
                               title=''
