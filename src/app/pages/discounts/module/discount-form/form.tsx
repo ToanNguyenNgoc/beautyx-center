@@ -91,8 +91,8 @@ function Form(props: IProps) {
             discount_value: Yup.string().required("Vui lòng nhập giá trị giảm"),
             platform: Yup.array().min(1, "Vui lòng chọn nền tảng áp dụng"),
             organizations: Yup.array().min(1, "Vui lòng chọn Doanh nghiệp"),
-            total: isCampaign ? Yup.number().min(0, 'Số lượng mã tối đa 2000 mã')
-                .max(2000, 'Số lượng mã tối đa 2000 mã')
+            total: isCampaign ? Yup.number().min(0, 'Số lượng mã tối đa 4000 mã')
+                .max(4000, 'Số lượng mã tối đa 4000 mã')
                 .required('Vui lòng nhập số lượng mã')
                 :
                 Yup.string()
