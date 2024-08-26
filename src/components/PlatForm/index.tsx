@@ -48,8 +48,14 @@ export const FlatFormOrder = (props: IProps) => {
                 )
             case PLAT_FORM.LIVWELL:
                 return (
-                    <span className='plat-form-item' style={{ backgroundColor: "yellow", color:'black' }}>
+                    <span className='plat-form-item' style={{ backgroundColor: "yellow", color: 'black' }}>
                         {PLAT_FORM.LIVWELL}
+                    </span>
+                )
+            case PLAT_FORM.TAPTAP:
+                return (
+                    <span className='plat-form-item' style={{ backgroundColor: "#f7cc15", color: 'black' }}>
+                        {PLAT_FORM.TAPTAP}
                     </span>
                 )
             default:
