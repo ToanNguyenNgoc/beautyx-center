@@ -59,12 +59,21 @@ function Discounts() {
       <TitlePage
         element={
           // METHOD?.includes("POST") ?
-          <Link
-            to={{ pathname: "/pages/discounts-form" }}
-            className="btn btn-sm btn-primary"
-          >
-            Tạo mới
-          </Link>
+          <div>
+            {/* <Link
+              to={{ pathname: "/pages/vouchers-form" }}
+              className="btn btn-sm btn-info"
+            >
+              Tạo mới voucher
+            </Link> */}
+            <Link
+              to={{ pathname: "/pages/discounts-form" }}
+              className="btn btn-sm btn-primary"
+              style={{ marginLeft: 12 }}
+            >
+              Tạo mới mã giảm giá
+            </Link>
+          </div>
           // :
           // <></>
         }
@@ -199,7 +208,7 @@ function Discounts() {
                               item.platform === 'VINID' ||
                               item.platform === 'BEAUTYX' ||
                               item.platform === PLAT_FORM.VIETTEL_MONEY ||
-                              item.platform === PLAT_FORM.LIVWELL || 
+                              item.platform === PLAT_FORM.LIVWELL ||
                               item.platform === PLAT_FORM.TAPTAP
                             ) &&
                             <ExportCode

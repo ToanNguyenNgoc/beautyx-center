@@ -39,6 +39,8 @@ const PermissionsPage = lazy(() => import('../pages/permissions'))
 const TipsPage = lazy(() => import('../pages/tips'))
 const TipsForm = lazy(() => import('../pages/tips/module/tips-form'))
 
+const VoucherFormPage = lazy(()=> import('../pages/voucher/VoucherFormPage'))
+
 //-------------
 // const OrgMobaGalleriesPage = lazy(() => import('../pages-organization/moba-galleries'))
 
@@ -80,6 +82,14 @@ const InitRoute: any[] = [
     {
         path: "pages/discounts-form/:id",
         element: <DiscountsFormPage />
+    },
+    {
+        path: "pages/vouchers-form",
+        element: <VoucherFormPage />
+    },
+    {
+        path: "pages/vouchers-form/:id",
+        element: <VoucherFormPage />
     },
     //promotion
     {
