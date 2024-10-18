@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import TitlePage from 'components/TitlePage';
-import { formatDate } from 'app/util/format';
+import { formatDate, formatPrice } from 'app/util/format';
 import { DISCOUNTS_TYPE, DiscountsTypeElement } from 'app/util/fileType';
 import FlatFormOrder from 'components/PlatForm';
 import { KTSVG } from '_metronic/helpers';
@@ -97,6 +97,7 @@ function Discounts() {
                   <th className='min-w-80px'>Ưu tiên</th>
                   {/* <th className='min-w-150px'>Mô tả</th> */}
                   <th className='min-w-150px'>Hình thức giảm</th>
+                  <th className='min-w-150px'>Giá giảm</th>
                   {/* <th className='min-w-150px'>Loại giảm giá</th> */}
                   <th className='min-w-100px'>Từ ngày</th>
                   <th className='min-w-100px'>Đến ngày</th>
@@ -135,6 +136,11 @@ function Discounts() {
                           <DiscountsTypeElement
                             TYPE={item.discount_type}
                           />
+                        </div>
+                      </td>
+                      <td>
+                        <div className='d-flex flex-column w-100 me-2'>
+                          {formatPrice(item.discount_value || 0)}{item.discount_type === "PERCENT" ? "%" : "đ"}
                         </div>
                       </td>
                       <td>
@@ -179,7 +185,14 @@ function Discounts() {
                           }
                           {
                             // METHOD?.includes("GET_BY_ID") &&
-                            (item.platform === 'SHOPEE' || item.platform === 'VINID' || item.platform === 'BEAUTYX') &&
+                            (
+                              item.platform === 'SHOPEE' ||
+                              item.platform === 'VINID' ||
+                              item.platform === 'BEAUTYX' ||
+                              item.platform === PLAT_FORM.VIETTEL_MONEY ||
+                              item.platform === PLAT_FORM.LIVWELL ||
+                              item.platform === PLAT_FORM.TAPTAP
+                            ) &&
                             <button
                               className='btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1'
                               onClick={() => navigate(`/pages/discounts/${item.uuid}`)}
