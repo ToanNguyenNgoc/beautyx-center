@@ -58,7 +58,13 @@ export const FlatFormOrder = (props: IProps) => {
                         {PLAT_FORM.TAPTAP}
                     </span>
                 )
-            default:
+
+            case PLAT_FORM.ZALO:
+                return (
+                    <span className='plat-form-item' style={{ backgroundColor: "#115fe3", color: 'white' }}>
+                        {PLAT_FORM.ZALO}
+                    </span>
+                ); default:
                 return <span className='plat-form-item'>
                     Tất cả{element}
                 </span>;
