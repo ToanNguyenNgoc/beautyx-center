@@ -231,6 +231,21 @@ function Discounts() {
                               discount={item}
                             />
                           }
+                          {
+                            // METHOD?.includes("UPDATE") &&
+                            <button
+                              // to={{
+                              //   pathname: `/pages/discounts-form/${item.uuid}`,
+                              // }}
+                              onClick={() => mutate(item.id)}
+                              aria-label='Xem chi tiết'
+                              className='btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1'
+                            >
+                              <KTSVG path='/media/icons/duotune/general/gen027.svg'
+                                className='svg-icon-3'
+                              />
+                            </button>
+                          }
                         </div>
                       </td>
                     </tr>
