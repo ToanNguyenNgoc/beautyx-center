@@ -1,4 +1,4 @@
-import {IORDER_BY_ORG_ID, IOrderOrg, ResponseType} from 'app/interface'
+import {IRES_ORDER_BY_ORGID, IOrderOrg, ResponseType} from 'app/interface'
 import {paramOrder} from 'app/query-params'
 import {axiosClient} from 'configs'
 import {identity, pickBy} from 'lodash'
@@ -21,8 +21,8 @@ class Orders {
     const params = pickBy(paramsOb, identity)
     return axiosClient.get(url, AUTH_HEADER_PARAM_GET(params))
   }
-  getOrderOrgById = (values: IORDER_BY_ORG_ID) => {
-    const url = `/organizations/${values?.org}/orders`
+  getOrderOrgById = (values: IRES_ORDER_BY_ORGID) => {
+    const url = `orders/btx`
     const params = pickBy(values, identity)
     return axiosClient.get(url, {params}).then<ResponseType<IOrderOrg[]>>((res) => res.data)
   }

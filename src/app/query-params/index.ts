@@ -93,10 +93,13 @@ export const paramProductByIdOrg = {
 export const paramsOrderById = {
   page: 1,
   limit: '15',
-  platform: '',
-  is_user: '',
-  'filter[from_date]': '',
-  'filter[to_date]': '',
+  'filter[status]': '',
+  'filter[platform]': '',
+  'filter[withServicesSold]': '',
+  'filter[productable]': '',
+  'filter[organization_id]': '',
   include: '',
   sort: '',
+  user_id: '',
+  append: '',
 }

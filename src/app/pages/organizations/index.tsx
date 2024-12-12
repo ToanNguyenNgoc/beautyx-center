@@ -126,7 +126,7 @@ function Organizations() {
                           // METHOD?.includes("GET_BY_ID") &&
                           <Link
                             to={{ pathname: directRoute.ORGANIZATIONS_DETAIL(org.id) }}
-                            className='btn btn-bg-light btn-color-muted btn-active-color-primary btn-sm px-4 me-2'
+                            className='btn btn-icon btn-bg-light btn-active-color-primary btn-sm'
                           >
                             <i className="bi bi-eye fs-4"></i>
                           </Link>

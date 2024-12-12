@@ -106,233 +106,165 @@ interface IORDER_ID_ORG {
   id: string | number
 }
 
-interface FilterOrderOptions {
-  from_date?: string
-  to_date?: string
-}
-export interface IORDER_BY_ORG_ID extends Omit<IORDER_ID_ORG, 'id'> {
+// query order By ID
+export interface IRES_ORDER_BY_ORGID {
   page: number
-  limit: number | string
-  platform: string
-  is_user: boolean | string
-  filter?: FilterOrderOptions
-  include?: string
-  append?: string
-  sort?: string
+  limit: '15'
+  'filter[status]'?:
+    | 'PAID'
+    | 'PENDING'
+    | 'ERROR'
+    | 'COMPLETED'
+    | 'CANCELLED'
+    | 'PROCESSING'
+    | 'FAILED'
+    | 'REFUNDED'
+    | 'WAITING' | string
+  'filter[platform]'?:
+    | 'MOMO'
+    | 'MOBA'
+    | 'BEAUTYX'
+    | 'BEAUTYX MOBILE'
+    | 'TIKI'
+    | 'MYSPA CHECKIN'
+    | 'MBBANK'
+    | 'ZALO MOBA'
+    | string
+  'filter[withServicesSold]'?: boolean | string // Dịch vụ đã bán
+  'filter[productable]'?: boolean | string // Sản phẩm liên quan
+  'filter[organization_id]': number
+  include?:
+    | 'items'
+    | 'organization'
+    | 'branch'
+    | 'user'
+    | 'paymentMethod'
+    | 'deliveryAddress'
+    | 'appointments'
+    | 'btxReward'
+    | string
+  sort?: 'id' | '-created_at' | string
+  user_id?: number
+  append?: 'qr_link' | 'origin '
 }
 
 // orderOrg ---------------------------------------
-export interface IUserOrder {
-  id: number
-  email: string
-  facebook: string
-  fullname: string
-  telephone: string
-  birthday: string
-  sex: number
-  height: number
-  weight: number
-  address: string
-  nationality: number
-  province: number
-  district: number
-  ward: number
-  job: string
-  identify_number: string
-  image: string
-  identify_img: string
-  issue_date: string
-  issue_area: string
-  status: boolean
-  created_date: string
-  modified_date: string
-  created_by_id: number
-  branch_id: number
-  customer_backup_code: string
-  due_date: string | null
-  loginable: boolean | null
-  stage_name: string
-  vocative: string
-  brand_app: number
-  platform: string
-  sip_user: string | null
-  has_omicall: boolean
-  gs_line_to: number
-  acc_name: string
-  bank_name: string
-  account_number: string
-  profile_tag_id: string
-  level_id: number
-  member_from: string | null
-  summary: IUserSummaryOrder
+interface ExtraData {
+  redirectUrl: string
+  payUrl: string
+  deeplink: string
+  qrCodeUrl: string | null
+  deeplinkMiniApp: string
 }
 
-interface IUserSummaryOrder {
+interface PaymentGateway {
   id: number
-  uid: number
-  total_paid_order: number
-  total_paid_service_card: number
-  total_paid_prepay_card: number
-  service_used: string | null
-  user_level_id: number | null
-  level: string | null
-}
-
-interface ItemableOrder {
-  id: number
-  uid: number
-  sid: number
-  times: number
-  remain_time: number
-  final_price: number
-  price: number
-  discount: number
-  total_price: number
-  status: boolean
-  note: string
-  commission_percen: number
-  commission_money: number
-  reward_percent: number
-  reward_money: number
-  service_card_value_id: number
-  service_combo_id: number
-  promotion: number
-  time_expired: string
-  unlimited: boolean
-  deleted: boolean
-  created_date: string
-  modified_date: string
-  created_by_id: number
-  branch_id: number
-  transfer_id: string | null
-  referral_uid: number
-  is_new_customer: number
-  platform: string | null
-  order_id: number
-  other_branch_ids: string | null
-  service: IServiceOrder
-  treatmentCombo: string | null
-  parent: string | null
-}
-
-interface IServiceOrder {
-  id: number
-  service_code: string
-  service_backup_code: string
-  service_name: string
-  duration: number
-  price: string
-  special_price: string
-  special_price_momo: string
+  status: string
+  amount: number
+  amount_paid: number
   description: string
-  service_group_id: number
-  service_order: boolean
-  commission_percen: number
-  commission_money: string
-  reward_percent: number
-  reward_money: string
-  commission_plan: number
-  image: string
-  status: boolean
-  deleted: boolean
-  created_date: string
-  modified_date: string
-  created_by_id: number
-  branch_id: number
-  booking_online: boolean
-  service_cost_type: number
-  is_featured: boolean
-  is_momo_ecommerce_enable: boolean
-  is_moba_ecommerce_enable: boolean
-  video: string | null
-  is_displayed_home: number
-  tags: string | null
-  limit_room: number
-  service_class: string | null
-  hide_service_customer: number
-  other_branch_ids: string | null
-  image_url: string
-  video_url: string | null
-  rating: number
+  transaction_uuid: string
+  extra_data: ExtraData
+  payment_method_id: number
+  paymentable_type: string
+  paymentable_id: number
+  created_at: string
+  updated_at: string
+  deleted_at: string | null
+  amount_second: number | null
+  payment_method_second_id: number | null
 }
 
-export interface IOrderDetail {
+interface OpeningTime {
+  from_time_opening: string
+  to_time_opening: string
+  time_opening: string
+}
+
+interface Organization {
   id: number
-  order_id: number
-  item_id: number
-  item_name: string
-  quantity: number
-  treatment_program: number
-  temp_card_data: string
-  remain_time: number
-  price: number
-  discount: number
-  discount_unit: string
-  price_discount: number
-  price_after_discount: number
-  sub_total: number
-  prepay: number | null
-  commission: number
-  reward_percent: number
-  reward_money: number
-  duration: number
-  brand: string
-  type: number
-  status: boolean
-  happy_hour_code: string
-  created_date: string
-  created_by_id: number
-  deleted: boolean
-  note: string
-  pet_id: number
-  promotion_id: number | null
-  hide_item_moba: number
-  itemable: ItemableOrder
+  name: string
+  subdomain: string
+  domain: string
+  latitude: number
+  longitude: number
+  telephone: string[]
+  address: string
+  min_price: number
+  max_price: number
+  image: string
+  is_momo_ecommerce_enable: boolean
+  is_moba_register_requested: boolean
+  opening_status: boolean
+  opening_time: OpeningTime[]
+  created_at: string
+  updated_at: string
+  province_code: number
+  district_code: number
+  ward_code: number | null
+  priority: number
+  timezone: string | null
+  is_demo: boolean
+  description: string
+  mc_user_id: number
+  content: string
+  full_address: string
+  image_url: string
+  is_favorite: boolean
+  location: string
+}
+
+interface PaymentMethod {
+  id: number
+  name_key: string
+  is_changeable: boolean
+  created_at: string
+  updated_at: string
+}
+
+interface BTXReward {
+  id: number
+  type: string
+  rewardable_type: string
+  rewardable_id: number
+  reward_points: number
+  spentable_type: string | null
+  spentable_id: number | null
+  spent_points: number
+  expired_at: string
+  deleted_at: string | null
+  created_at: string
+  updated_at: string
+  user_id: number
 }
 
 export interface IOrderOrg {
   id: number
-  uid: number
-  status: number
-  type: number
+  status: string
+  amount: number
+  description: string | null
   payment_method_id: number
-  payment_methods: string
-  sub_total_money: number
-  tax_money: number
-  discount_percent: number
-  discount_money: number
-  happy_hour_code: string
-  coupon_code: string
-  coupon_discount_money: string
-  total_money: number
-  given_money: string
-  total_commission: number
-  note: string
-  uid_confirmed: number
-  date_time_confirmed: string
-  bed_ids: string
-  signature_image: string
-  check_in: string
-  check_out: string
-  deleted: boolean
-  created_date: string
-  created_by_id: number
-  branch_id: number
-  order_code: number
-  discount_symbol: number
-  tax: number
-  tax_symbol: number
-  referral_uid: number
-  is_new_customer: boolean
-  platform: string | null
-  pet_id: number
+  organization_id: number
+  user_id: number
+  origin_id: number
+  branch_id: number | null
+  created_at: string
+  updated_at: string
+  deleted_at: string | null
+  platform: string
+  discount_value: number
+  user_address_id: number | null
+  myspa_fee: number
+  amount_second: number | null
+  payment_method_second_id: number | null
+  is_review: number
+  payment_gateway: PaymentGateway
+  items: ITems[]
+  organization: Organization
+  branch: string | null
+  user: User
+  payment_method: PaymentMethod
   delivery_address: string | null
-  myspa_fee_momo: number
-  myspa_percent_momo: number
-  delivery_status: number
-  log: string | null
-  list_prepay_card: string | null
-  locker_id: string | null
-  details: IOrderDetail[]
-  user: IUserOrder
+  appointments: any[]
+  btx_reward: BTXReward
 }

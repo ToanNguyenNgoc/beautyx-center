@@ -1,0 +1,13 @@
+.order-title{
+  width: 50%;
+  gap: 14px;
+}
+.filter-list{
+  width: 100%;
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  .filter-item{
+    width: 100%;
+  }
+}
