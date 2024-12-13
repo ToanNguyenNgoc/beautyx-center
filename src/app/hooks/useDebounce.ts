@@ -1,17 +1,15 @@
 import { useState, useEffect } from 'react';
 
 export const useDebounce = <T>(value: T | undefined, delay: number) => {
-  const [debouncedValue, setDebouncedValue] = useState(value);
+  const [debouncedValue, setDebouncedValue] = useState(JSON.stringify(value));
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setDebouncedValue(value);
+    let timer: any
+    timer = setTimeout(() => {
+      setDebouncedValue(JSON.stringify(value));
     }, delay);
+    return () => clearTimeout(timer)
+  });
 
-    return () => {
-      clearTimeout(timer);
-    };
-  }, [value, delay]);
-
-  return debouncedValue;
+  return JSON.parse(debouncedValue);
 };

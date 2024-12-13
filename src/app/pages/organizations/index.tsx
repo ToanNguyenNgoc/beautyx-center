@@ -1,6 +1,6 @@
 import TitlePage from 'components/TitlePage';
 import { IOrganization } from 'app/interface';
-import { AppSnack, Avatar, XPagination } from 'components';
+import { AppSnack, Avatar, PageCircularProgress, XPagination } from 'components';
 import { StatusOrgE } from 'app/util/fileType'
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import directRoute from 'app/routing/DirectRoute';
@@ -16,18 +16,19 @@ import * as FileSaver from "file-saver";
 import * as XLSX from "xlsx"
 import "./organization.scss"
 import moment from 'moment';
-import { useMessage } from 'app/hooks';
+import { useDebounce, useMessage } from 'app/hooks';
 
 function Organizations() {
   const location = useLocation()
   const navigate = useNavigate()
-  const qrPath = queryString.parse(location.search)
-  const { data } = useQuery({
+  let qrPath = useDebounce(queryString.parse(location.search), 800) as any
+  const { data, isLoading } = useQuery({
     queryKey: ['ORG', qrPath],
     queryFn: () => orgApi.getAll({
       page: qrPath.page || 1,
       limit: 30,
       is_ecommerce: qrPath.is_ecommerce || '',
+      keyword: qrPath.search,
       sort: '-created_at'
     }).then<ResponseList<IOrganization[]>>(res => res.data.context)
   })
@@ -137,6 +138,7 @@ function Organizations() {
                 }
               </tbody>
             </table>
+            <PageCircularProgress loading={isLoading} />
             <XPagination
               totalPage={data?.last_page ?? 1}
               onChangePage={onChangePage}
@@ -160,13 +162,22 @@ const Filter: FC<{ data?: ResponseList<IOrganization[]> }> = ({ data }) => {
     }
     navigate({
       pathname: location.pathname,
-      search: queryString.stringify(pickBy(newQuery, identity))
+      search: queryString.stringify(pickBy(newQuery, identity)),
+    }, { replace: true })
+  }
+  const onChangeSearch = (text: string) => {
+    const newQuery = Object.assign(query, {
+      search: text
     })
+    navigate({
+      pathname: location.pathname,
+      search: queryString.stringify(pickBy(newQuery, identity)),
+    }, { replace: true })
   }
   return (
     <div className="card-body filter-cnt">
       <div className="search">
-        <input type="text" className="form-control form-control-solid" placeholder='Tìm kiếm MC' />
+        <input onChange={e => onChangeSearch(e.target.value)} type="text" className="form-control form-control-solid" placeholder='Tìm kiếm MC' />
       </div>
       <div className="filter">
         <div className="filter-item">
