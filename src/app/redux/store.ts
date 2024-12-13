@@ -5,6 +5,7 @@ import loginReducer from "./loginSlice"
 import topPropductReducer from "./product/productSlice"
 import ordersReducer from "./orders/ordersSlice"
 import homeSetupReducer from "./setup-home"
+import organizationReducer from "./organizationSlice"
 
 const rootReducer = {
     ACCOUNT: accountRuducer,
@@ -12,9 +13,11 @@ const rootReducer = {
     LOGIN: loginReducer,
     TOP_PRODUCT: topPropductReducer,
     ORDERS: ordersReducer,
-    HOME_SETUP: homeSetupReducer
+    HOME_SETUP: homeSetupReducer,
+    ORGANIZATION: organizationReducer
 }
 const store = configureStore({
     reducer: rootReducer,
 });
 export default store;
+export type RootStore = ReturnType<typeof store.getState> 

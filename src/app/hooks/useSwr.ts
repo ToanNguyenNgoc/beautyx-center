@@ -1,7 +1,13 @@
-import {identity, pickBy} from 'lodash'
+import { identity, pickBy } from 'lodash'
 import useSWR from 'swr'
+import { Configuration, Fetcher } from 'swr/dist/types'
 
-export function useSwr(condition: any, API_URL: string, query?: any) {
+type CallBack = {
+  onSuccess?: (data: any, key: string, config: Readonly<Required<Configuration<any, any, Fetcher<any>>>>) => void,
+  onError?: ((err: any, key: string, config: Readonly<Required<Configuration<any, any, Fetcher<any>>>>) => void)
+}
+
+export function useSwr(condition: any, API_URL: string, query?: any, callBack?: CallBack) {
   let result
   let response
   let responseArray = []
@@ -12,9 +18,19 @@ export function useSwr(condition: any, API_URL: string, query?: any) {
   if (query) {
     paramsURL = `?${new URLSearchParams(pickBy(query, identity)).toString()}`
   }
-  const {data, isValidating, mutate, error} = useSWR(condition && `${API_URL}${paramsURL}`, {
+  const { data, isValidating, mutate, error } = useSWR(condition && `${API_URL}${paramsURL}`, {
     revalidateOnFocus: false,
     // refreshInterval: refresh_time
+    onSuccess(data, key, config) {
+      if (callBack?.onSuccess) {
+        callBack.onSuccess(data.data, key, config)
+      }
+    },
+    onError(err, key, config) {
+      if (callBack?.onError) {
+        callBack.onError(err, key, config)
+      }
+    },
   })
   if (data) {
     response = data?.data?.context ?? data

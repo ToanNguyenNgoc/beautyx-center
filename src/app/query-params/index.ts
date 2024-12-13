@@ -55,8 +55,9 @@ export const paramService = {
   'filter[discount_percent_ecommerce]': '',
   sort: '',
 }
+
 export const paramProduct = {
-  pgae: 1,
+  page: 1,
   limit: '15',
   'filter[keyword]': '',
   'filter[is_momo_ecommerce_enable]': '',
@@ -73,4 +74,32 @@ export const paramProduct = {
   'filter[discount_percent]': '',
   'filter[discount_percent_ecommerce]': '',
   sort: '',
+}
+export const paramProductByIdOrg = {
+  page: 1,
+  limit: '15',
+  'filter[keyword]': '',
+  'filter[product_category_id]': '',
+  'filter[special]': '',
+  'filter[special_ecommerce]': '',
+  'filter[is_momo_ecommerce_enable]': '',
+  'filter[is_moba_ecommerce_enable]': '',
+  'filter[is_featured]': '',
+  'filter[is_product_order]': '',
+  includes: 'category | favorites',
+  append: 'is_favorite|rating',
+}
+
+export const paramsOrderById = {
+  page: 1,
+  limit: '15',
+  'filter[status]': '',
+  'filter[platform]': '',
+  'filter[withServicesSold]': '',
+  'filter[productable]': '',
+  'filter[organization_id]': '',
+  include: '',
+  sort: '',
+  user_id: '',
+  append: '',
 }
