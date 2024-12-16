@@ -1,18 +1,18 @@
-import {CircularProgress, FormControl, InputLabel, MenuItem} from '@mui/material'
-import Select, {SelectChangeEvent} from '@mui/material/Select'
-import {API_ROUTE} from 'app/api/api-route'
+import { CircularProgress, Dialog, FormControl, InputLabel, MenuItem } from '@mui/material'
+import Select, { SelectChangeEvent } from '@mui/material/Select'
+import { API_ROUTE } from 'app/api/api-route'
 import orderApi from 'app/api/orders'
-import {useGetParamUrl, useSwr} from 'app/hooks'
-import {IOrderOrg, IRES_ORDER_BY_ORGID, ResponseType} from 'app/interface'
-import {formatPrice, OrderStatusElement} from 'app/util'
-import {QR_KEY} from 'common'
-import {XPagination} from 'components'
+import { useGetParamUrl, useGetServiceDetail, useSwr } from 'app/hooks'
+import { IOrderOrg, IRES_ORDER_BY_ORGID, ITems, ResponseType } from 'app/interface'
+import { formatPrice, formatSalePriceService, onErrorImg, OrderStatusElement } from 'app/util'
+import { QR_KEY } from 'common'
+import { XPagination } from 'components'
 import TitlePage from 'components/TitlePage'
-import {identity, pickBy} from 'lodash'
+import { identity, pickBy } from 'lodash'
 import moment from 'moment'
-import {useState} from 'react'
-import {useQuery} from 'react-query'
-import {Link, useLocation, useNavigate, useParams} from 'react-router-dom'
+import { FC, useState } from 'react'
+import { useQuery } from 'react-query'
+import { Link, useLocation, useNavigate, useParams } from 'react-router-dom'
 import './order.scss'
 
 export function OrgOrders() {
@@ -29,7 +29,6 @@ export function OrgOrders() {
     page: query?.page || 1,
     sort: query?.sort || '',
   }
-  console.log(query, query?.sort)
   const [openAlert, setOpenAlert] = useState<{
     open: boolean
     title: string
@@ -50,16 +49,16 @@ export function OrgOrders() {
     sort: query?.sort || '-created_at',
   }
 
-  const {data, isLoading} = useQuery({
+  const { data, isLoading } = useQuery({
     queryKey: [QR_KEY.ORDER_ORG, org?.id, query?.page, query?.sort, query?.status, query.platform],
     queryFn: () => {
       if (!org?.id) return Promise.reject('Organization ID is missing')
       return orderApi.getOrderOrgById(PARAMS)
     },
     keepPreviousData: true,
-    onSuccess: (data) => {},
+    onSuccess: (data) => { },
     onError: (error) => {
-      setOpenAlert({open: true, title: `Lỗi: ${error}`, severity: 'error'})
+      setOpenAlert({ open: true, title: `Lỗi: ${error}`, severity: 'error' })
     },
     enabled: !!org?.id,
     cacheTime: 1000 * 60 * 5,
@@ -140,6 +139,7 @@ export function OrgOrders() {
       search: new URLSearchParams(pickBy(newQuery, identity)).toString(),
     })
   }
+  const [detail, setDetail] = useState<IOrderOrg>()
 
   return (
     <>
@@ -147,12 +147,12 @@ export function OrgOrders() {
         title={`${org?.name}`}
         element={
           <div className='order-title flex-row align-items-center justify-content-end'>
-            <span style={{whiteSpace: 'nowrap'}} className='text-gray-400 fw-bold fs-7 gs-0'>
+            <span style={{ whiteSpace: 'nowrap' }} className='text-gray-400 fw-bold fs-7 gs-0'>
               Bộ lọc:
             </span>
             <div className='filter-list'>
               <div className='filter-item'>
-                <FormControl style={{width: '100%'}} size='small'>
+                <FormControl style={{ width: '100%' }} size='small'>
                   <InputLabel id='demo-select-small-label'>Xắp xếp theo</InputLabel>
                   <Select
                     labelId='demo-select-small-label'
@@ -167,7 +167,7 @@ export function OrgOrders() {
                 </FormControl>
               </div>
               <div className='filter-item'>
-                <FormControl style={{width: '100%'}} size='small'>
+                <FormControl style={{ width: '100%' }} size='small'>
                   <InputLabel id='status-select-label'>Status</InputLabel>
                   <Select
                     labelId='status-select-label'
@@ -190,13 +190,13 @@ export function OrgOrders() {
                 </FormControl>
               </div>
               <div className='filter-item'>
-                <FormControl style={{width: '100%'}} size='small'>
+                <FormControl style={{ width: '100%' }} size='small'>
                   <InputLabel id='platform-select-label'>Platform</InputLabel>
                   <Select
                     labelId='platform-select-label'
                     id='platform-select'
                     label='Tất cả'
-                    value={selectedPlatform} 
+                    value={selectedPlatform}
                     onChange={handlePlatformFilter}
                   >
                     <MenuItem value=''>Tất cả</MenuItem>
@@ -218,9 +218,8 @@ export function OrgOrders() {
       <div className='card'>
         <div className='card-header border-0 pt-5'>
           <h3 className='card-title align-items-start flex-column'>
-            <span className='card-label fw-bold fs-3 mb-1'>{`Tổng đơn hàng (${
-              data?.context?.total || 0
-            })`}</span>
+            <span className='card-label fw-bold fs-3 mb-1'>{`Tổng đơn hàng (${data?.context?.total || 0
+              })`}</span>
           </h3>
           <div></div>
         </div>
@@ -228,7 +227,7 @@ export function OrgOrders() {
           <div className='table-responsive'>
             {isLoading ? (
               <div className='d-flex justify-content-center py-3'>
-                <CircularProgress size='30px' style={{color: 'var(--beautyx)'}} />
+                <CircularProgress size='30px' style={{ color: 'var(--beautyx)' }} />
               </div>
             ) : (
               <table className='table table-row-bordered table-row-gray-100 align-middle gs-0 gy-3'>
@@ -284,12 +283,12 @@ export function OrgOrders() {
                         <OrderStatusElement status={item?.status} />
                       </td>
                       <td className='text-end'>
-                        <Link
-                          to={'#'}
+                        <div
+                          onClick={() => setDetail(item)}
                           className='btn btn-icon btn-bg-light btn-active-color-primary btn-sm'
                         >
                           <i className='bi bi-eye fs-4'></i>
-                        </Link>
+                        </div>
                       </td>
                     </tr>
                   ))}
@@ -308,6 +307,104 @@ export function OrgOrders() {
         />
       </div>
       {/* close pagination */}
+      <OrderDetailShow detail={detail} onClose={() => setDetail(undefined)} />
     </>
+  )
+}
+
+interface OrderDetailShowProps {
+  detail?: IOrderOrg;
+  onClose?: () => void
+}
+
+const OrderDetailShow: FC<OrderDetailShowProps> = ({
+  detail,
+  onClose = () => { }
+}) => {
+  console.log(detail)
+  const items = detail?.items || []
+  return (
+    <Dialog open={!!detail} onClose={onClose}>
+      <div className='order_detail_cnt'>
+      <div className="section_cnt">
+        <p className='section_title'>Trạng thái đơn hàng</p>
+        <OrderStatusElement status={detail?.status || ''} />
+      </div>
+        <div className="section_cnt">
+          <span className="section_title">Danh sách item</span>
+          <table className='table table-row-bordered table-row-gray-100 align-middle gs-0 gy-3'>
+            <thead>
+              <tr className='fw-bold text-muted'>
+                <th className='min-w-120px'>Mã</th>
+                <th className='min-w-200px'>Dịch vụ</th>
+                <th className='min-w-140px'>Giá gốc</th>
+                <th className='min-w-120px'>Giá giảm</th>
+                <th className='min-w-140px'>Giá mua</th>
+                <th className='min-w-120px'>Số lượng</th>
+                <th className='min-w-120px'>Tổng</th>
+              </tr>
+            </thead>
+            <tbody>
+              {
+                items.map(item => (
+                  <ItemRow key={item.id} item={item} organization_id={Number(detail?.organization_id)} />
+                ))
+              }
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </Dialog>
+  )
+}
+
+const ItemRow: FC<{ item: ITems, organization_id: number }> = ({
+  organization_id,
+  item
+}) => {
+  const { detail } = useGetServiceDetail({ org_id: organization_id, id: Number(item.productable_id) })
+  if(!detail) return <></>
+  return (
+    <tr>
+      <td>
+        <span className='text-dark fw-bold d-block mb-1 fs-7'># {item.id}</span>
+      </td>
+      <td>
+        <div className="d-flex align-items-center">
+          <div className="symbol symbol-50px">
+            <img
+              onError={(e) => onErrorImg(e)}
+              className='symbol-label'
+              src={detail?.image_url}
+              alt=''
+            />
+          </div>
+          <span className="ms-5 text-dark fs-5 fw-bold text-hover-success">{detail?.service_name}</span>
+        </div>
+      </td>
+      <td>
+        <span className="text-dark fs-5 fw-bold">{formatPrice(detail?.price)}đ</span>
+      </td>
+      <td>
+        <span className="text-dark fs-5 fw-bold">
+          {formatPrice(formatSalePriceService(Number(detail?.special_price), Number(detail?.special_price_momo)))}đ
+        </span>
+      </td>
+      <td>
+        <span className="text-dark fs-5 fw-bold">
+          {formatPrice(item.base_price)}đ
+        </span>
+      </td>
+      <td>
+        <span className="text-dark fs-5 fw-bold">
+          {item.quantity}
+        </span>
+      </td>
+      <td>
+        <span className="text-dark fs-5 fw-bold">
+          {formatPrice(item.base_price * item.quantity)}đ
+        </span>
+      </td>
+    </tr>
   )
 }

@@ -14,3 +14,4 @@ export const getEnvParam = () => {
   const params = queryString.parse(window.location.search)
   return params.env
 }
+export const QR_STALE_TIME = 1000 * 60 * 2

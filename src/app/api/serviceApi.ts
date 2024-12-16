@@ -30,6 +30,9 @@ class ServiceApi {
     const paramsOb = {is_momo_ecommerce_enable: values.is_momo_ecommerce_enable}
     return axiosClient.patch(url, paramsOb)
   }
+  getDetail = (org_id:number,id:number)=>{
+    return axiosClient.get(`/organizations/${org_id}/services/${id}`).then(res => res.data)
+  }
 }
 
 const servicesApi = new ServiceApi()
