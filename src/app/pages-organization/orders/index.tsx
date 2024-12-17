@@ -4,9 +4,9 @@ import { API_ROUTE } from 'app/api/api-route'
 import orderApi from 'app/api/orders'
 import { useGetParamUrl, useGetServiceDetail, useSwr } from 'app/hooks'
 import { IOrderOrg, IRES_ORDER_BY_ORGID, ITems, ResponseType } from 'app/interface'
-import { formatPrice, formatSalePriceService, onErrorImg, OrderStatusElement } from 'app/util'
+import { formatPrice, formatSalePriceService, onErrorImg, OrderStatusElement, PAYMENT_METHOD } from 'app/util'
 import { QR_KEY } from 'common'
-import { XPagination } from 'components'
+import { PaymentMethod, XPagination } from 'components'
 import TitlePage from 'components/TitlePage'
 import { identity, pickBy } from 'lodash'
 import moment from 'moment'
@@ -45,7 +45,7 @@ export function OrgOrders() {
     'filter[status]': selectedStatus || undefined,
     'filter[platform]': selectedPlatform || undefined,
     'filter[organization_id]': org?.id,
-    include: 'items|organization|branch|user',
+    include: 'items|organization|branch|user|paymentMethod',
     sort: query?.sort || '-created_at',
   }
 
@@ -180,7 +180,7 @@ export function OrgOrders() {
                     <MenuItem value='PAID'>Đã thanh toán</MenuItem>
                     <MenuItem value='PENDING'>Chờ thanh toán</MenuItem>
                     <MenuItem value='ERROR'>Lỗi</MenuItem>
-                    <MenuItem value='COMPLETED'>Hoàn thành</MenuItem>
+                    {/* <MenuItem value='COMPLETED'>Hoàn thành</MenuItem> */}
                     <MenuItem value='CANCELLED'>Đã hủy</MenuItem>
                     <MenuItem value='PROCESSING'>Đang xử lý</MenuItem>
                     <MenuItem value='FAILED'>Thất bại</MenuItem>
@@ -275,7 +275,7 @@ export function OrgOrders() {
                         Web, UI/UX Design
                       </span> */}
                       </td>
-                      <td className='text-dark fw-bold  fs-6'>{formatPrice(item?.amount)}đ</td>
+                      <td className='text-dark fw-bold  fs-6'>{formatPrice(item?.amount - item.discount_value)}đ</td>
                       <td className='text-dark fw-bold  fs-6'>
                         {moment(item?.created_at, 'YYYY-MM-DD HH:mm:ss').format('YYYY-MM-DD')}
                       </td>
@@ -326,10 +326,48 @@ const OrderDetailShow: FC<OrderDetailShowProps> = ({
   return (
     <Dialog open={!!detail} onClose={onClose}>
       <div className='order_detail_cnt'>
-      <div className="section_cnt">
-        <p className='section_title'>Trạng thái đơn hàng</p>
-        <OrderStatusElement status={detail?.status || ''} />
-      </div>
+        <div className="section_cnt">
+          <p className='section_title'>Trạng thái đơn hàng</p>
+          <OrderStatusElement status={detail?.status || ''} />
+        </div>
+        <div className="section_cnt">
+          <span className="section_title">Thông tin khách hàng</span>
+          <div className='d-flex'>
+            <div className="wrap-item w-50 p-3">
+              <label className="form-label">Tên khách hàng</label>
+              <input
+                value={detail?.user?.fullname || ''}
+                className="form-control form-control-solid"
+                disabled
+                readOnly
+              />
+            </div>
+            <div className="wrap-item w-50 p-3">
+              <label className="form-label">Số điện thoại</label>
+              <input
+                value={detail?.user.telephone}
+                className="form-control form-control-solid"
+                disabled
+                readOnly
+              />
+            </div>
+          </div>
+          <div className='d-flex'>
+            <div className="wrap-item w-50 p-3">
+              <label className="form-label">Email</label>
+              <input
+                value={detail?.user?.email || ''}
+                className="form-control form-control-solid"
+                disabled
+                readOnly
+              />
+            </div>
+          </div>
+        </div>
+        <div className="section_cnt">
+          <p className="section_title">Phương thức thanh toán</p>
+          <PaymentMethod payment_method_id={Number(detail?.payment_method_id)} />
+        </div>
         <div className="section_cnt">
           <span className="section_title">Danh sách item</span>
           <table className='table table-row-bordered table-row-gray-100 align-middle gs-0 gy-3'>
@@ -353,6 +391,30 @@ const OrderDetailShow: FC<OrderDetailShowProps> = ({
             </tbody>
           </table>
         </div>
+        <div className="section_cnt">
+          <p className="section_title">Chi tiết thanh toán</p>
+          <div className="d-flex justify-content-end">
+            <div className="w-50">
+              <div className="d-flex justify-content-between mt-3">
+                <span className='fs-5'>Tạm tính</span>
+                <span className='fw-bold fs-4'>{formatPrice(detail?.amount)}đ</span>
+              </div>
+              {
+                detail && detail?.discount_value > 0 ?
+                  <div className="d-flex justify-content-between mt-3">
+                    <span className='fs-5'>Giảm giá</span>
+                    <span className='fw-bold fs-4'>{formatPrice(detail?.discount_value)}đ</span>
+                  </div>
+                  :
+                  null
+              }
+              <div className="d-flex justify-content-between mt-3">
+                <span className='fs-5'>Thanh toán</span>
+                <span className='fw-bold fs-4'>{formatPrice(Number(detail?.amount) - Number(detail?.discount_value))}đ</span>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </Dialog>
   )
@@ -363,7 +425,7 @@ const ItemRow: FC<{ item: ITems, organization_id: number }> = ({
   item
 }) => {
   const { detail } = useGetServiceDetail({ org_id: organization_id, id: Number(item.productable_id) })
-  if(!detail) return <></>
+  if (!detail) return <></>
   return (
     <tr>
       <td>

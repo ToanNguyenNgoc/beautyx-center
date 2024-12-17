@@ -17,6 +17,7 @@ import * as XLSX from "xlsx"
 import "./organization.scss"
 import moment from 'moment';
 import { useDebounce, useMessage } from 'app/hooks';
+import { DIRECT_ORG } from 'app/util';
 
 function Organizations() {
   const location = useLocation()
@@ -73,7 +74,11 @@ function Organizations() {
                   data?.data?.map((org: IOrganization, index: number) => (
                     <tr key={index} >
                       <td>
-                        <div className='d-flex align-items-center'>
+                        <div 
+                          className='d-flex align-items-center' 
+                          style={{cursor:'pointer'}}
+                          onClick={()=>DIRECT_ORG(org)}
+                        >
                           <div className='symbol symbol-50px me-5'>
                             <Avatar src={org.image_url} />
                           </div>

@@ -5,7 +5,7 @@ import { useGetParamUrl, useSwr } from 'app/hooks'
 import { IService, ISERVICE_BY_ORG_ID, ResponseType } from 'app/interface'
 import { paramService } from 'app/query-params'
 import { RootStore } from 'app/redux/store'
-import { formatPrice, formatSalePriceService, onErrorImg, StatusElement } from 'app/util'
+import { DIRECT_SERVICE_BTX, formatPrice, formatSalePriceService, onErrorImg, StatusElement } from 'app/util'
 import { QR_KEY } from 'common'
 import { SnackAlert, XPagination, XSwitch } from 'components'
 import TitlePage from 'components/TitlePage'
@@ -179,9 +179,8 @@ export function OrgServices() {
               <li className='nav-item'>
                 <Link
                   to={`/pages/organizations/${org?.id}/services`}
-                  className={`nav-link ${
-                    isServiceTabActive ? 'active fw-bold text-primary' : 'fw-bold'
-                  }`}
+                  className={`nav-link ${isServiceTabActive ? 'active fw-bold text-primary' : 'fw-bold'
+                    }`}
                 >
                   Dịch vụ
                 </Link>
@@ -270,26 +269,30 @@ export function OrgServices() {
                             rowSpan={1}
                             colSpan={1}
                           >
-                            <div className='d-flex align-items-center'>
-                              <Link to='#' className='symbol symbol-50px'>
+                            <div 
+                              style={{cursor:'pointer'}}
+                              className='d-flex align-items-center' 
+                              onClick={() => DIRECT_SERVICE_BTX(Number(org?.id), item.id, item.service_name || '')}
+                            >
+                              <div className='symbol symbol-50px'>
                                 <img
                                   onError={(e) => onErrorImg(e)}
                                   className='symbol-label'
                                   src={item.image ? item.image_url : org?.image_url}
                                   alt=''
                                 />
-                              </Link>
+                              </div>
                               <div className='ms-5'>
-                                <Link to='#' className='text-dark fs-5 fw-bold text-hover-success'>
+                                <div className='text-dark fs-5 fw-bold text-hover-success'>
                                   {item?.service_name}
-                                </Link>
+                                </div>
                               </div>
                             </div>
                           </td>
                           <th className='sorting text-gray-600'>{formatPrice(item?.price)}</th>
                           <th className='sorting text-gray-800'>
                             {formatPrice(
-                              formatSalePriceService(Number(item.special_price),Number(item.special_price_momo))
+                              formatSalePriceService(Number(item.special_price), Number(item.special_price_momo))
                             )}
                           </th>
                           <th className='sorting'>
