@@ -105,11 +105,11 @@ export function AsideMenuMain() {
         icon='/media/icons/duotune/communication/com004.svg'
         title='Push thông báo'
       />
-      <AsideMenuItem
+      {/* <AsideMenuItem
         to='pages/setup-home'
         icon='/media/icons/duotune/coding/cod001.svg'
         title='Thiết kế Trang chủ Beautyx'
-      />
+      /> */}
       <AsideMenuItem to='pages/tips' icon='/media/icons/duotune/coding/cod004.svg' title='Tip' />
       <AsideMenuItem
         to='pages/approves'
@@ -131,11 +131,11 @@ export function AsideMenuMain() {
         icon='/media/icons/duotune/communication/com013.svg'
         title='Khách hàng'
       />
-      <AsideMenuItem
+      {/* <AsideMenuItem
         to='pages/trends'
         icon='/media/icons/duotune/files/fil004.svg'
         title='Trends'
-      />
+      /> */}
 
       {AsideMenuInitList.map((item, index: number) =>
         generateRoute?.includes(item.to) ? (
@@ -145,7 +145,7 @@ export function AsideMenuMain() {
         )
       )}
 
-      <AsideMenuItemWithSub
+      {/* <AsideMenuItemWithSub
         icon='/media/icons/duotune/coding/cod002.svg'
         to='/crafted/pages/profile'
         title='Cộng đồng & kiểm duyệt'
@@ -160,7 +160,7 @@ export function AsideMenuMain() {
           icon='/media/icons/duotune/files/fil004.svg'
           title='Kiểm duyệt bài viết'
         />
-      </AsideMenuItemWithSub>
+      </AsideMenuItemWithSub> */}
     </>
   )
 }
