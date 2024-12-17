@@ -119,7 +119,7 @@ export function AsideMenuMain() {
       <AsideMenuItem
         to='pages/organizations'
         icon='/media/icons/duotune/general/gen051.svg'
-        title='Danh sách MC'
+        title='Danh sách Merchant'
       />
       <AsideMenuItem
         to='pages/contracts'
