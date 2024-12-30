@@ -11,3 +11,5 @@ export * from './classStyle'
 export * from './platForm'
 export * from './regex'
 export * from './constant'
+
+export const isDev = () => window.location.hostname === "localhost";

@@ -86,6 +86,11 @@ export function AsideMenuMain() {
         </div>
       </div>
       <AsideMenuItem
+        to='pages/gov'
+        icon='/media/icons/duotune/files/fil001.svg'
+        title='Thống kê'
+      />
+      <AsideMenuItem
         to='pages/banners'
         icon='/media/icons/duotune/general/gen006.svg'
         title='Banners'

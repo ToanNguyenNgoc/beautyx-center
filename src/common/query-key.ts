@@ -10,5 +10,8 @@ export const QR_KEY = {
   SERVICE_BY_ID: 'SERVICE_BY_ID',
   PRODUCT_BY_ID: 'PRODUCT_BY_ID',
   ORDER_ORG: 'ORDER_ORG',
+  Statistic: 'Statistic',
+  Organization: 'Organization',
+  Productable: 'Productable'
 }
 export const QR_CACHE = 15 * (60 * 1000)

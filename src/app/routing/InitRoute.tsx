@@ -7,6 +7,7 @@ import {
     OrgProducts,
     OrgOrders
 } from '../pages-organization'
+import { GovPage } from "app/pages/gov/GovPage"
 //----
 
 const SetupHomePage = lazy(() => import('../pages/setup-home'))
@@ -48,6 +49,11 @@ const InitRoute: any[] = [
     {
         path: "pages/setup-home",
         element: <SetupHomePage />
+    },
+    //gov
+    {
+        path:"/pages/gov",
+        element:<GovPage/>
     },
     //banner
     {
