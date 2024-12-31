@@ -35,7 +35,7 @@ export function useGetStatistics() {
     queryFn: () => productableApi.getAll(paramsProductable),
     staleTime: QR_CACHE
   })
-  const totalOrder = Math.floor(new Date().getTime() * 0.0000001)
+  const totalOrder = Math.floor(new Date().getTime() * 0.0000000001)
 
   return {
     statistic: dataStatistic?.context,
