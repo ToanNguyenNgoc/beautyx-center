@@ -8,6 +8,15 @@ import { QR_KEY } from 'common'
 import { statisticApi } from 'app/api'
 import moment from 'moment'
 import { FormControl, InputLabel, MenuItem, Select, SelectChangeEvent } from '@mui/material'
+import dayjs from 'dayjs'
+
+const generateYear = () => {
+  let years: number[] = [];
+  for (var i = 2021; i <= Number(dayjs().format('YYYY')); i++) {
+    years.push(i)
+  }
+  return years
+}
 
 export const Customer: FC = () => {
   return (
@@ -110,10 +119,11 @@ export const CustomerChart: React.FC<Props> = ({ className, chartColor, chartHei
                     label="Năm"
                     onChange={handleChange}
                   >
-                    <MenuItem value={2021}>2021</MenuItem>
-                    <MenuItem value={2022}>2022</MenuItem>
-                    <MenuItem value={2023}>2023</MenuItem>
-                    <MenuItem value={2024}>2024</MenuItem>
+                    {
+                      generateYear().map(year => (
+                        <MenuItem key={year} value={year}>{year}</MenuItem>
+                      ))
+                    }
                   </Select>
                 </FormControl>
               </div>
