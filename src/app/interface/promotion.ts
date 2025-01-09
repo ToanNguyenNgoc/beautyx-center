@@ -14,5 +14,6 @@ export interface Promotion {
   created_at: string,
   updated_at: string,
   discounts: IDiscountPar[],
-  productables: Productable[]
+  productables: Productable[],
+  priority:number
 }

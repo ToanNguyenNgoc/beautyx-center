@@ -89,6 +89,12 @@ const PromotionItem: FC<{ item: Promotion }> = ({ item }) => {
             <span className='text-dark fw-bold text-hover-primary fs-6'>
               {item.name}
             </span>
+            {
+              item.priority < 0 &&
+              <span>
+                Webview đối tác
+              </span>
+            }
             <span className='text-muted fw-semobold text-muted d-block fs-7'>
               {formatDate(item.created_at)}
             </span>

@@ -1,5 +1,5 @@
 import TitlePage from "components/TitlePage";
-import { useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { FileUploader } from "react-drag-drop-files";
 import { FILE_IMG_TYPE } from "app/util";
 import { IMGS } from "_metronic/assets/imgs/imgs";
@@ -22,16 +22,20 @@ import ReactQuill from "react-quill";
 import 'react-quill/dist/quill.snow.css';
 
 function PromotionForm() {
+  const navigate = useNavigate()
   const params: any = useParams()
   const { handlePostMedia, isLoading } = usePostMedia()
   const { handlePostMedia: handlePostThumbnail, isLoading: isLoadingThumbnail } = usePostMedia()
   const { resultLoad, noti, onCloseNoti } = useMessage()
   const { mutateAsync, isLoading: isLoadingMutate } = useMutation({
     mutationFn: (body: ReqPromotionBody) => params.id ? promotionApi.put(params.id, body) : promotionApi.post(body),
-    onSuccess: () => resultLoad({
-      message: params.id ? 'Cập nhật promotion thành công' : 'Tạo mới promotion thành công',
-      color: 'success'
-    }),
+    onSuccess: () => {
+      resultLoad({
+        message: params.id ? 'Cập nhật promotion thành công' : 'Tạo mới promotion thành công',
+        color: 'success'
+      })
+      setTimeout(() => navigate(-1), 1500)
+    },
     onError: (errors: any) => {
       const err = errors as AxiosError
       resultLoad({
@@ -52,17 +56,25 @@ function PromotionForm() {
       valid_from: moment().format('YYYY-MM-DD HH:mm:ss'),
       valid_util: moment().format('YYYY-MM-DD HH:mm:ss'),
       discounts: [],
-      productables: []
+      productables: [],
+      priority: 0,
+
+      url: '',
+      token: '',
+      color: '',
+      platform: ''
     },
     validationSchema: Yup.object({
       name: Yup.string().required('Nhập tên của promotion'),
       media_url: Yup.string().required('Upload hình của promotion')
     }),
     onSubmit: async (values) => {
+      const { url, token, platform, color } = values
       const body = pickBy({
         ...values,
         productables: values.productables.map((i: Productable) => i.id),
         discounts: values.discounts.map((i: IDiscountPar) => i.id),
+        content: values.priority < 0 ? JSON.stringify({ url, token, platform, color }) : values.content,
       }, identity)
       const res = await mutateAsync({ ...body, is_popup: values.is_popup ? 1 : 0, })
       if (res) {
@@ -85,6 +97,15 @@ function PromotionForm() {
       formik.setFieldValue('valid_util', data.context.valid_util)
       formik.setFieldValue('productables', data.context.productables)
       formik.setFieldValue('discounts', data.context.discounts)
+      formik.setFieldValue('priority', data.context.priority)
+
+      try {
+        const { url, token, platform, color } = JSON.parse(data.context.content)
+        formik.setFieldValue('url', url)
+        formik.setFieldValue('token', token)
+        formik.setFieldValue('platform', platform)
+        formik.setFieldValue('color', color)
+      } catch (error) { }
     }
   })
   const handleChangeMedia = (file: File) => {
@@ -131,7 +152,7 @@ function PromotionForm() {
       <div className='post d-flex flex-column-fluid' id="kt_post">
         <div className="promotion-form">
           <form autoComplete="off" onSubmit={formik.handleSubmit} className="form">
-            <div className="flex-row-sp align-items-center input-wrap">
+            <div className="flex-row align-items-center input-wrap">
               <div className="wrap-item">
                 <XSwitch
                   value={formik.values.is_popup}
@@ -139,7 +160,68 @@ function PromotionForm() {
                   label='Is Popup'
                 />
               </div>
+              <div className="wrap-item">
+                <XSwitch
+                  value={formik.values.priority < 0 ? true : false}
+                  onChange={(e) => formik.setFieldValue('priority', e.target.checked ? -1 : 0)}
+                  label='Webview đối tác'
+                />
+              </div>
             </div>
+            {
+              formik.values.priority < 0 &&
+              <div style={{ border: 'solid 1px var(--kt-gray-500)', padding: 6, borderRadius: 6, margin: '6px 0px' }}>
+                <div className="required form-label">Cài đặt webview</div>
+                <div className="d-flex justify-content-between">
+                  <div className="w-50" style={{ paddingRight: 6 }}>
+                    <div className="required form-label">Link webview</div>
+                    <input
+                      type="text"
+                      value={formik.values.url}
+                      onChange={formik.handleChange}
+                      name="url"
+                      className="form-control form-control-solid mt-4 mb-2"
+                      placeholder="URL..."
+                    />
+                  </div>
+                  <div className="w-50" style={{ paddingLeft: 12 }}>
+                    <div className="required form-label">Token</div>
+                    <input
+                      type="text"
+                      value={formik.values.token}
+                      onChange={formik.handleChange}
+                      name="token"
+                      className="form-control form-control-solid mt-4 mb-2"
+                      placeholder="Token"
+                    />
+                  </div>
+                </div>
+                <div className="d-flex justify-content-between">
+                  <div className="w-50" style={{ paddingRight: 6 }}>
+                    <div className="required form-label">Platform</div>
+                    <input
+                      type="text"
+                      value={formik.values.platform}
+                      onChange={formik.handleChange}
+                      name="platform"
+                      className="form-control form-control-solid mt-4 mb-2"
+                      placeholder="Platform..."
+                    />
+                  </div>
+                  <div className="w-50" style={{ paddingLeft: 12 }}>
+                    <div className="required form-label">Color</div>
+                    <input
+                      type="text"
+                      value={formik.values.color}
+                      onChange={formik.handleChange}
+                      name="color"
+                      className="form-control form-control-solid mt-4 mb-2"
+                      placeholder="color"
+                    />
+                  </div>
+                </div>
+              </div>
+            }
             <div className="column">
               <div className="required form-label">Hình ảnh</div>
               <div className="drag-banner">
@@ -242,7 +324,7 @@ function PromotionForm() {
             <div className="column">
               <XDateRangePicker
                 required
-                minDate={new Date()}
+                // minDate={new Date()}
                 startDate={new Date(formik.values.valid_from)}
                 endDate={new Date(formik.values.valid_util)}
                 onChange={(e) => {
