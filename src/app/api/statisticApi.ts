@@ -18,5 +18,6 @@ export const statisticApi = {
       ...res.data.context,
       from_date: qr.from_date,
       to_date: qr.to_date
-    }))
+    })),
+
 }

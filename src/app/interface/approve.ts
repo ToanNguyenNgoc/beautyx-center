@@ -19,6 +19,6 @@ export interface IApprove {
     organization: IOrganization,
     organization_id: number,
     status: "PENDING" | "REVIEW" | "REJECT" | "APPROVED",
-    type: "ORGANIZATION" | "BRANCH" | "SERVICE" | "PRODUCT" | "REPAY_CARD" | "TREATMENT_COMBO",
+    type: "ORGANIZATION" | "BRANCH" | "SERVICE" | "PRODUCT" | "REPAY_CARD" | "TREATMENT_COMBO" | "ECOMMERCE_ON",
     updated_at: string
 }

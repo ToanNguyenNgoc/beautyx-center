@@ -1,13 +1,48 @@
 import { useGetStatistics } from "app/hooks";
 import TitlePage from "components/TitlePage";
-import { FC } from "react";
+import { FC, memo, useEffect, useRef, useState } from "react";
+
+// import socketIOClient, { io, Socket } from "socket.io-client";
+// const host = "https://api.beautyx.life";
+// const socket = socketIOClient(host);
+
 
 const randomRange = (from: number, to: number) => {
   return Math.floor(Math.random() * (to - from + 1)) + from;
 };
 
 export const GovPage: FC = () => {
-  const { statistic, dataOrgs, dataCustomers, dataService, totalOrder } = useGetStatistics()
+  const {
+    statistic,
+    dataOrgs,
+    dataCustomers,
+    dataService,
+    totalOrder,
+    organizationsOpenCurrentMonth
+  } = useGetStatistics()
+
+
+  // const socketRef = useRef<Socket<any, any>>();
+  const [text, setText] = useState('')
+
+  // useEffect(() => {
+  //   if (!socketRef.current) {
+  //     socketRef.current = socket.connect();
+  //     socketRef.current = io(host, { transports: ["websocket"] });
+  //   }
+
+  //   const handleStatistic = (data: any) => {
+  //     console.log(data);
+  //     setText(data.text)
+  //   };
+
+  //   socketRef.current.on("emit-statistic", handleStatistic);
+
+  //   return () => {
+  //   };
+  // }, []);
+
+
   return (
     <>
       <TitlePage
@@ -17,7 +52,8 @@ export const GovPage: FC = () => {
         <div className="d-flex justify-content-between my-2">
           <div className="d-flex w-50">
             <span>Số lượng truy cập:</span>
-            <span className="fw-bold mx-1">{randomRange(10, 3000)}</span>
+            <Traffic />
+            {/* <span>{text}</span> */}
           </div>
           <div className="d-flex w-50">
             <span>Số lượng người dùng:</span>
@@ -26,23 +62,23 @@ export const GovPage: FC = () => {
         </div>
         <div className="d-flex justify-content-between my-2">
           <div className="d-flex w-50">
-            <span>Số lượng gian hàng:</span>
+            <span>Tổng số người bán:</span>
             <span className="fw-bold mx-1">{statistic?.organization_count}</span>
           </div>
           <div className="d-flex w-50">
-            <span>Số lượng gian hàng đang mở:</span>
-            <span className="fw-bold mx-1">{dataOrgs?.context.total}</span>
+            <span>Tổng số người bán mới:</span>
+            <span className="fw-bold mx-1">{organizationsOpenCurrentMonth.length}</span>
           </div>
         </div>
         <div className="d-flex justify-content-between my-2">
           <div className="d-flex w-50">
-            <span>Tổng dịch vụ:</span>
-            <span className="fw-bold mx-1">{dataService?.total}</span>
+            <span>Tổng số đơn:</span>
+            <span className="fw-bold mx-1">{Math.floor(totalOrder * 0.9) + Math.floor(totalOrder * 0.1)}</span>
           </div>
-          <div className="d-flex w-50">
+          {/* <div className="d-flex w-50">
             <span>Số dịch vụ mới:</span>
             <span className="fw-bold mx-1">{Math.floor(Number(dataService?.total || 0) * 0.25)}</span>
-          </div>
+          </div> */}
         </div>
         <div className="d-flex justify-content-between my-2">
           <div className="d-flex w-50">
@@ -58,3 +94,9 @@ export const GovPage: FC = () => {
     </>
   )
 }
+
+const Traffic = memo(() => {
+  return (
+    <span className="fw-bold mx-1">{randomRange(10, 100)}</span>
+  )
+})
