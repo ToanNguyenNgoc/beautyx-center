@@ -1,10 +1,9 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useGetStatistics } from "app/hooks";
 import TitlePage from "components/TitlePage";
 import { FC, memo, useEffect, useRef, useState } from "react";
 
-// import socketIOClient, { io, Socket } from "socket.io-client";
-// const host = "https://api.beautyx.life";
-// const socket = socketIOClient(host);
+import socketIOClient, { io, Socket } from "socket.io-client";
 
 
 const randomRange = (from: number, to: number) => {
@@ -21,26 +20,6 @@ export const GovPage: FC = () => {
     organizationsOpenCurrentMonth
   } = useGetStatistics()
 
-
-  // const socketRef = useRef<Socket<any, any>>();
-  const [text, setText] = useState('')
-
-  // useEffect(() => {
-  //   if (!socketRef.current) {
-  //     socketRef.current = socket.connect();
-  //     socketRef.current = io(host, { transports: ["websocket"] });
-  //   }
-
-  //   const handleStatistic = (data: any) => {
-  //     console.log(data);
-  //     setText(data.text)
-  //   };
-
-  //   socketRef.current.on("emit-statistic", handleStatistic);
-
-  //   return () => {
-  //   };
-  // }, []);
 
 
   return (
@@ -96,6 +75,27 @@ export const GovPage: FC = () => {
 }
 
 const Traffic = memo(() => {
+  // const host = "https://api.beautyx.life";
+  // const host = "http://localhost:3004";
+  // const socket = socketIOClient(host);
+  // const socketRef = useRef<Socket<any, any>>();
+  // const [text, setText] = useState('')
+
+  // useEffect(() => {
+  //   if (!socketRef.current) {
+  //     socketRef.current = socket.connect();
+  //     socketRef.current = io(host, { transports: ["websocket"] });
+  //   }
+
+  //   const handleStatistic = (data: any) => {
+  //     console.log(data);
+  //     setText(data.text)
+  //   };
+
+  //   socketRef.current.on("emit-statistic", handleStatistic);
+  //   return () => {
+  //   };
+  // }, []);
   return (
     <span className="fw-bold mx-1">{randomRange(10, 100)}</span>
   )
