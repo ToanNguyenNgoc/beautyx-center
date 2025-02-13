@@ -53,6 +53,9 @@ class Organization {
             return axiosClient.get(url, { params })
         }
     }
+    updateECommerce = (org_id:number, params:{is_momo_ecommerce_enable:boolean})=>{
+        return axiosClient.patch(`/organizations/${org_id}/update-ecommerce`,params)
+    }
 }
 export const orgApi = new Organization();
 export default orgApi;

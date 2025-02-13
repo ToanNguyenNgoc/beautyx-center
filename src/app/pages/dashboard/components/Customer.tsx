@@ -2,7 +2,6 @@
 import React, { FC, useEffect, useRef, useState } from 'react'
 import ApexCharts, { ApexOptions } from 'apexcharts'
 import { useThemeMode } from '_metronic/partials/layout/theme-mode/ThemeModeProvider'
-import { ListsWidget2 } from '_metronic/partials/widgets'
 import { useMutation, } from 'react-query'
 import { QR_KEY } from 'common'
 import { statisticApi } from 'app/api'
@@ -20,17 +19,17 @@ const generateYear = () => {
 
 export const Customer: FC = () => {
   return (
-    <div className='row gy-5 g-xl-8'>
-      <div className='col-xxl-8'>
+    <div className='row gy-5 g-xl-12'>
+      <div className='col-xxl-12'>
         <CustomerChart
           className='card-xxl-stretch mb-xl-3'
           chartColor='danger'
           chartHeight='150px'
         />
       </div>
-      <div className='col-xxl-4'>
+      {/* <div className='col-xxl-4'>
         <ListsWidget2 className='card-xxl-stretch mb-5 mb-xxl-8' />
-      </div>
+      </div> */}
     </div>
   )
 }

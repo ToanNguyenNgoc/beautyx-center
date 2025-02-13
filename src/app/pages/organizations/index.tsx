@@ -1,7 +1,7 @@
 import TitlePage from 'components/TitlePage';
 import { IOrganization } from 'app/interface';
-import { AppSnack, Avatar, PageCircularProgress, XPagination } from 'components';
-import { StatusOrgE } from 'app/util/fileType'
+import { AppSnack, Avatar, PageCircularProgress, XPagination, XSwitch } from 'components';
+// import { StatusOrgE } from 'app/util/fileType'
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import directRoute from 'app/routing/DirectRoute';
 import { FC, useEffect, useState } from 'react';
@@ -65,80 +65,13 @@ function Organizations() {
                   <th className='min-w-125px'>Liên lạc</th>
                   <th className='min-w-125px'>Lượt thích</th>
                   <th className='min-w-200px'>Trạng thái TMDT</th>
-                  <th className='min-w-100px'>Rating</th>
                   <th className='min-w-150px text-end rounded-end'></th>
                 </tr>
               </thead>
               <tbody>
                 {
                   data?.data?.map((org: IOrganization, index: number) => (
-                    <tr key={index} >
-                      <td>
-                        <div 
-                          className='d-flex align-items-center' 
-                          style={{cursor:'pointer'}}
-                          onClick={()=>DIRECT_ORG(org)}
-                        >
-                          <div className='symbol symbol-50px me-5'>
-                            <Avatar src={org.image_url} />
-                          </div>
-                          <div className='d-flex justify-content-start flex-column'>
-                            <span className='text-dark fw-bold text-hover-primary mb-1 fs-6'>
-                              {org.name}
-                            </span>
-                            <span className='text-muted fw-semobold text-muted d-block fs-7'>
-                              {org.full_address}
-                            </span>
-                          </div>
-                        </div>
-                      </td>
-                      <td>
-                        <span className='text-dark fw-bold text-hover-primary d-block mb-1 fs-7'>
-                          {org.telephone?.join(', ')}
-                        </span>
-                      </td>
-                      <td>
-                        <span className='text-dark fw-bold text-hover-primary d-block mb-1 fs-6'>
-                          {org.favorites_count}
-                        </span>
-                      </td>
-                      <td>
-                        <StatusOrgE status={org.is_momo_ecommerce_enable} />
-                      </td>
-                      <td>
-                        <div className='rating'>
-                          <div className='rating-label me-2 checked'>
-                            <i className='bi bi-star-fill fs-5'></i>
-                          </div>
-                          <div className='rating-label me-2 checked'>
-                            <i className='bi bi-star-fill fs-5'></i>
-                          </div>
-                          <div className='rating-label me-2 checked'>
-                            <i className='bi bi-star-fill fs-5'></i>
-                          </div>
-                          <div className='rating-label me-2 checked'>
-                            <i className='bi bi-star-fill fs-5'></i>
-                          </div>
-                          <div className='rating-label me-2 checked'>
-                            <i className='bi bi-star-fill fs-5'></i>
-                          </div>
-                        </div>
-                        <span className='text-muted fw-semobold text-muted d-block fs-7 mt-1'>
-                          Best Rated
-                        </span>
-                      </td>
-                      <td className='text-end'>
-                        {
-                          // METHOD?.includes("GET_BY_ID") &&
-                          <Link
-                            to={{ pathname: directRoute.ORGANIZATIONS_DETAIL(org.id) + '/services' }}
-                            className='btn btn-icon btn-bg-light btn-active-color-primary btn-sm'
-                          >
-                            <i className="bi bi-eye fs-4"></i>
-                          </Link>
-                        }
-                      </td>
-                    </tr>
+                    <ItemOrg key={index} org={org} />
                   ))
                 }
               </tbody>
@@ -155,6 +88,104 @@ function Organizations() {
     </>
   );
 }
+
+const ItemOrg: FC<{ org: IOrganization }> = ({ org }) => {
+  const [active, setActive] = useState(org.is_momo_ecommerce_enable)
+  const { resultLoad, noti, onCloseNoti } = useMessage()
+  const onActive = (e: boolean) => {
+    setActive(e)
+    orgApi.updateECommerce(org.id, {
+      is_momo_ecommerce_enable: e
+    })
+      .then(res => {
+        setActive(res.data.context.is_momo_ecommerce_enable)
+        resultLoad({ message: 'Cập nhật thành công', color: 'success' })
+      })
+      .catch(() => {
+        setActive(org.is_momo_ecommerce_enable);
+        resultLoad({ message: 'Có lỗi xảy ra', color: 'error' })
+      })
+  }
+  return (
+    <>
+      <AppSnack
+        severity={noti.color}
+        message={noti.message}
+        open={noti.openAlert}
+        close={onCloseNoti}
+      />
+      <tr>
+        <td>
+          <div
+            className='d-flex align-items-center'
+            style={{ cursor: 'pointer' }}
+            onClick={() => DIRECT_ORG(org)}
+          >
+            <div className='symbol symbol-50px me-5'>
+              <Avatar src={org.image_url} />
+            </div>
+            <div className='d-flex justify-content-start flex-column'>
+              <span className='text-dark fw-bold text-hover-primary mb-1 fs-6'>
+                {org.name}
+              </span>
+              <span className='text-muted fw-semobold text-muted d-block fs-7'>
+                {org.full_address}
+              </span>
+            </div>
+          </div>
+        </td>
+        <td>
+          <span className='text-dark fw-bold text-hover-primary d-block mb-1 fs-7'>
+            {org.telephone?.join(', ')}
+          </span>
+        </td>
+        <td>
+          <span className='text-dark fw-bold text-hover-primary d-block mb-1 fs-6'>
+            {org.favorites_count}
+          </span>
+        </td>
+        <td>
+          {/* <StatusOrgE status={org.is_momo_ecommerce_enable} /> */}
+          <XSwitch label='' value={active} onChange={e => onActive(e.target.checked)} />
+        </td>
+        {/* <td>
+        <div className='rating'>
+          <div className='rating-label me-2 checked'>
+            <i className='bi bi-star-fill fs-5'></i>
+          </div>
+          <div className='rating-label me-2 checked'>
+            <i className='bi bi-star-fill fs-5'></i>
+          </div>
+          <div className='rating-label me-2 checked'>
+            <i className='bi bi-star-fill fs-5'></i>
+          </div>
+          <div className='rating-label me-2 checked'>
+            <i className='bi bi-star-fill fs-5'></i>
+          </div>
+          <div className='rating-label me-2 checked'>
+            <i className='bi bi-star-fill fs-5'></i>
+          </div>
+        </div>
+        <span className='text-muted fw-semobold text-muted d-block fs-7 mt-1'>
+          Best Rated
+        </span>
+      </td> */}
+        <td className='text-end'>
+          {
+            // METHOD?.includes("GET_BY_ID") &&
+            <Link
+              to={{ pathname: directRoute.ORGANIZATIONS_DETAIL(org.id) + '/services' }}
+              className='btn btn-icon btn-bg-light btn-active-color-primary btn-sm'
+            >
+              <i className="bi bi-eye fs-4"></i>
+            </Link>
+          }
+        </td>
+      </tr>
+    </>
+  )
+}
+
 const Filter: FC<{ data?: ResponseList<IOrganization[]> }> = ({ data }) => {
   const query = queryString.parse(useLocation().search) as any
   const navigate = useNavigate()
