@@ -61,4 +61,4 @@ yarn copy.lock
 ./history
 .history/
 
-# build
+build

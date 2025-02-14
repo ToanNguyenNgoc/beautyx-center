@@ -3,8 +3,6 @@ import { useGetStatistics } from "app/hooks";
 import TitlePage from "components/TitlePage";
 import { FC, memo, useEffect, useRef, useState } from "react";
 
-import socketIOClient, { io, Socket } from "socket.io-client";
-
 
 const randomRange = (from: number, to: number) => {
   return Math.floor(Math.random() * (to - from + 1)) + from;

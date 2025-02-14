@@ -1,2 +1,0 @@
-"use strict";(self.webpackChunkdemo1=self.webpackChunkdemo1||[]).push([[878],{25878:(e,n,t)=>{t.r(n),t.d(n,{default:()=>o});var s=t(93511),a=t(51318),h=t(70579);const o=function(){return(0,h.jsx)(h.Fragment,{children:(0,h.jsx)(s.A,{element:(0,h.jsx)(a.N_,{to:{pathname:"/pages/push-notifications-form"},className:"btn btn-sm btn-primary",children:"T\u1ea1o m\u1edbi th\xf4ng b\xe1o"}),title:"Danh s\xe1ch th\xf4ng b\xe1o"})})}}}]);
-//# sourceMappingURL=878.913c1d56.chunk.js.map
