@@ -61,6 +61,11 @@ export function useGetPermissions() {
       name: 'admin.comments',
       desc: 'Danh sách bình luận',
       permissions: permissions.filter(i => i.name.includes('admin.comments'))
+    },
+    {
+      name: 'versions',
+      desc: 'Danh sách phiên bản phần mềm',
+      permissions: permissions.filter(i => i.name.includes('versions'))
     }
   ]
   return {
