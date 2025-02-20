@@ -47,10 +47,6 @@ function Customers() {
       search: queryString.stringify(newQuery)
     })
   }
-  useQuery({
-    queryKey:[1],
-    queryFn:()=>adminApi.adminOrders()
-  })
   return (
     <>
       <TitlePage title="Danh sách khách hàng" />

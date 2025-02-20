@@ -63,6 +63,7 @@ const RoleFormPage: FC = () => {
       permissions_id: permissionsSelect.map(i => i.id)
     })
   }
+  
 
   return (
     <PermissionLayout permissions={type === 'store' ? ['v1.roles.store'] : ['v1.roles.show', 'v1.roles.patch']} showEmpty>

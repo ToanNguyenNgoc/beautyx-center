@@ -1,3 +1,6 @@
+import { ORDER_STATUS, PLAT_FORM } from "app/util";
+
+
 export type QrPage = {
   'page'?: number | string;
   'limit'?: number | string;
@@ -53,4 +56,16 @@ export type QrAdminAccount = QrPage & {
   "filter[roles_count]"?: any;
   "include"?: string;
   "sort"?: string;
+}
+
+export type QrAdminOrder = QrPage & {
+  "filter[keyword]"?: string;
+  "filter[status]"?: keyof typeof ORDER_STATUS;
+  "filter[platform]"?:keyof typeof PLAT_FORM;
+  "filter[withServicesSold]"?:boolean;
+  "filter[productable]"?:boolean;
+  "filter[organization_id]"?:number;
+  "include"?:string;
+  "sort"?:string;
+  "append"?:string;
 }

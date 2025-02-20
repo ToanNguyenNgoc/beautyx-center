@@ -106,11 +106,11 @@ export function AsideMenuMain() {
         title='Giảm giá'
       />
       <PermissionLayout permissions={['v1.beautyx.notification.sendNotification']}>
-      <AsideMenuItem
-        to='pages/push-notifications'
-        icon='/media/icons/duotune/communication/com004.svg'
-        title='Push thông báo'
-      />
+        <AsideMenuItem
+          to='pages/push-notifications'
+          icon='/media/icons/duotune/communication/com004.svg'
+          title='Push thông báo'
+        />
       </PermissionLayout>
       {/* <AsideMenuItem
         to='pages/setup-home'
@@ -150,6 +150,13 @@ export function AsideMenuMain() {
           to='pages/roles'
           icon='/media/icons/duotune/general/gen051.svg'
           title='Phân quyền'
+        />
+      </PermissionLayout>
+      <PermissionLayout permissions={['v1.admin.orders.index']}>
+        <AsideMenuItem
+          to='pages/orders'
+          icon='/media/icons/duotune/finance/fin008.svg'
+          title='Danh sách đơn hàng'
         />
       </PermissionLayout>
       {/* <AsideMenuItem

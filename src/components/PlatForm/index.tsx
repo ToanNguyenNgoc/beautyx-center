@@ -66,7 +66,7 @@ export const FlatFormOrder = (props: IProps) => {
                     </span>
                 ); default:
                 return <span className='plat-form-item'>
-                    Tất cả{element}
+                    Không xác định{element}
                 </span>;
 
         }

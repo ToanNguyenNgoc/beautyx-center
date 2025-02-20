@@ -6,6 +6,7 @@ import { InitAlert, PermissionLayout } from 'components'
 import { useNavigate } from 'react-router-dom';
 import { roleAndPermissionApi } from 'app/api';
 import { Button } from '@mui/material';
+import { SUPER_ADMIN } from 'app/util';
 
 function Roles() {
   const navigate = useNavigate()
@@ -53,26 +54,31 @@ function Roles() {
                       <td>{index + 1}</td>
                       <td>{role.name}</td>
                       <td>
-                        <PermissionLayout permissions={['v1.roles.show', 'v1.roles.patch']}>
-                          <button
-                            onClick={() => navigate(`/pages/roles-form/${role.id}`, { state: role.name })}
-                            aria-label='Xem chi tiết'
-                            className='btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1'
-                          >
-                            <KTSVG path='/media/icons/duotune/art/art005.svg' className='svg-icon-3' />
-                          </button>
-                        </PermissionLayout>
-                        <PermissionLayout permissions={['v1.roles.destroy']}>
-                          <button
-                            onClick={() => onDelete(role.id)}
-                            aria-label='Xem chi tiết'
-                            className='btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1'
-                          >
-                            <KTSVG path='/media/icons/duotune/general/gen027.svg'
-                              className='svg-icon-3'
-                            />
-                          </button>
-                        </PermissionLayout>
+                        {
+                          role.name !== SUPER_ADMIN &&
+                          <>
+                            <PermissionLayout permissions={['v1.roles.show', 'v1.roles.patch']}>
+                              <button
+                                onClick={() => navigate(`/pages/roles-form/${role.id}`, { state: role.name })}
+                                aria-label='Xem chi tiết'
+                                className='btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1'
+                              >
+                                <KTSVG path='/media/icons/duotune/art/art005.svg' className='svg-icon-3' />
+                              </button>
+                            </PermissionLayout>
+                            <PermissionLayout permissions={['v1.roles.destroy']}>
+                              <button
+                                onClick={() => onDelete(role.id)}
+                                aria-label='Xem chi tiết'
+                                className='btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1'
+                              >
+                                <KTSVG path='/media/icons/duotune/general/gen027.svg'
+                                  className='svg-icon-3'
+                                />
+                              </button>
+                            </PermissionLayout>
+                          </>
+                        }
                       </td>
                     </tr>
                   ))

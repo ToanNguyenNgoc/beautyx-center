@@ -122,9 +122,8 @@ function Accounts() {
                             <KTSVG path='/media/icons/duotune/art/art005.svg' className='svg-icon-3' />
                           </button>
                         </PermissionLayout>
-                        <PermissionLayout permissions={['v1.admin.users.update']}>
+                        {/* <PermissionLayout permissions={['v1.admin.users.update']}>
                           <button
-                            // onClick={() => onDelete(role.id)}
                             aria-label='Xem chi tiết'
                             className='btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1'
                           >
@@ -132,7 +131,7 @@ function Accounts() {
                               className='svg-icon-3'
                             />
                           </button>
-                        </PermissionLayout>
+                        </PermissionLayout> */}
                       </td>
                     </tr>
                   ))
