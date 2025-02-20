@@ -1,9 +1,9 @@
 import TitlePage from "components/TitlePage";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { FileUploader } from "react-drag-drop-files";
 import { FILE_IMG_TYPE } from "app/util";
 import { IMGS } from "_metronic/assets/imgs/imgs";
-import { AppSnack, SelectionDiscounts, SelectionProductable, XDateRangePicker, XSwitch } from "components";
+import { AppSnack, PermissionLayout, SelectionDiscounts, SelectionProductable, XDateRangePicker, XSwitch } from "components";
 import { useFormik } from "formik";
 import { LoadingButton } from "@mui/lab";
 import moment from "moment";
@@ -66,7 +66,7 @@ function PromotionForm() {
     },
     validationSchema: Yup.object({
       name: Yup.string().required('Nhập tên của promotion'),
-      media_url: Yup.string().required('Upload hình của promotion')
+      // media_url: Yup.string().required('Upload hình của promotion')
     }),
     onSubmit: async (values) => {
       const { url, token, platform, color } = values
@@ -141,7 +141,7 @@ function PromotionForm() {
     })
   }
   return (
-    <>
+    <PermissionLayout permissions={params.id ? ['v1.promotions.update'] : ['v1.promotions.store']} showEmpty>
       <AppSnack
         severity={noti.color}
         message={noti.message}
@@ -362,7 +362,7 @@ function PromotionForm() {
           </form>
         </div>
       </div>
-    </>
+    </PermissionLayout>
   );
 }
 

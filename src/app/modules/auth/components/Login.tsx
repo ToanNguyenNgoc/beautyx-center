@@ -52,16 +52,6 @@ export function Login() {
                 const res = await dispatch(loginAsync({ email: values.email, password: values.password }))
                 onLogin3rd(values.email, values.password)
                 if (res.meta.requestStatus === "fulfilled" && res.payload) {
-                    // const user_check = await verifyUser(res.payload)
-                    // if (user_check) {
-                    //     saveAuth(res.payload)
-                    //     setCurrentUser(user_check)
-                    //     dispatch(fetchAsyncUser(user_check.ROLE));
-                    // } else {
-                    //     setStatus('The account is unauthorized !')
-                    //     setSubmitting(false)
-                    //     setLoading(false)
-                    // }
                     saveAuth(res.payload)
                     setCurrentUser(res.payload)
                     dispatch(fetchAsyncUser(res.payload));

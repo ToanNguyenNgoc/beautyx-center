@@ -4,7 +4,7 @@ export type QrPage = {
 }
 export type QrDiscount = QrPage & {
   'filter[platform]'?: string;
-  'filter[keyword]'?:string;
+  'filter[keyword]'?: string;
   'filter[discount_type]'?: "SUB_TOTAL" | "FINAL_PRICE" | "PRODUCT" | "" | string;
   'filter[organization_id]'?: number | string;
   'filter[location]'?: string;
@@ -33,18 +33,24 @@ export type QrProductable = QrPage & {
 }
 export type QrPromotion = QrPage
 export type QrCommunity = QrPage & {
-  'filter[organization_id]'?:number|string;
-  'filter[status]'?:boolean;
-  'filter[tag_id]'?:number|string;
-  'sort'?:'-created_at'|'created_at';
-  'append'?:string
+  'filter[organization_id]'?: number | string;
+  'filter[status]'?: boolean;
+  'filter[tag_id]'?: number | string;
+  'sort'?: '-created_at' | 'created_at';
+  'append'?: string
 }
-export type QrCustomer =QrPage & {
-  'platform'?:string;
-  'from_date'?:string;
-  'to_date'?:string;
-  'sort'?:string;
+export type QrCustomer = QrPage & {
+  'platform'?: string;
+  'from_date'?: string;
+  'to_date'?: string;
+  'sort'?: string;
 }
 export type QrCustomerEvent = QrPage & {
-  'subdomain'?:string
+  'subdomain'?: string
+}
+export type QrAdminAccount = QrPage & {
+  "filter[keyword]"?: string;
+  "filter[roles_count]"?: any;
+  "include"?: string;
+  "sort"?: string;
 }

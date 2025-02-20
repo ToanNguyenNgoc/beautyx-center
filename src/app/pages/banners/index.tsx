@@ -21,7 +21,7 @@ import { KTSVG, toAbsoluteUrl } from "_metronic/helpers";
 import { BannerTypeElement, formatDate } from "app/util";
 import moment from "moment";
 import { Button, CircularProgress } from "@mui/material";
-import { PageCircularProgress } from "components";
+import { PageCircularProgress, PermissionLayout } from "components";
 
 function BannerWidget(props: any) {
   const navigate = useNavigate()
@@ -43,16 +43,17 @@ function BannerWidget(props: any) {
     <>
       <TitlePage
         element={
-          // METHOD?.includes("POST") &&
-          <Button
-            onClick={() => navigate('/pages/banners-form', {
-              state: banners[0]?.priority
-            })}
-            variant="contained"
-            size="large"
-          >
-            Tạo mới banner
-          </Button>
+          <PermissionLayout permissions={['v1.banners.store']}>
+            <Button
+              onClick={() => navigate('/pages/banners-form', {
+                state: banners[0]?.priority
+              })}
+              variant="contained"
+              size="large"
+            >
+              Tạo mới banner
+            </Button>
+          </PermissionLayout>
         }
         title="Danh sách banners"
       />
@@ -213,8 +214,7 @@ const SortableComponent: FC<SortableComponentProps> = ({ banners, onSortEnd }) =
           </td>
           <td>
             <div className='d-flex justify-content-end flex-shrink-0'>
-              {
-                // METHOD?.includes("UPDATE") &&
+              <PermissionLayout permissions={['v1.banners.update']}>
                 <Link
                   to={{
                     pathname: `/pages/banners-form/${item.id}`,
@@ -223,18 +223,20 @@ const SortableComponent: FC<SortableComponentProps> = ({ banners, onSortEnd }) =
                 >
                   <KTSVG path='/media/icons/duotune/art/art005.svg' className='svg-icon-3' />
                 </Link>
-              }
-              <button
-                onClick={() => mutate(item.id)} disabled={isLoading}
-                className='btn btn-icon btn-bg-light btn-active-color-primary btn-sm'
-              >
-                {
-                  isLoading ?
-                    <CircularProgress size={12} />
-                    :
-                    <KTSVG path='/media/icons/duotune/general/gen027.svg' className='svg-icon-3' />
-                }
-              </button>
+              </PermissionLayout>
+              <PermissionLayout permissions={['v1.banners.destroy']}>
+                <button
+                  onClick={() => mutate(item.id)} disabled={isLoading}
+                  className='btn btn-icon btn-bg-light btn-active-color-primary btn-sm'
+                >
+                  {
+                    isLoading ?
+                      <CircularProgress size={12} />
+                      :
+                      <KTSVG path='/media/icons/duotune/general/gen027.svg' className='svg-icon-3' />
+                  }
+                </button>
+              </PermissionLayout>
             </div>
           </td>
         </SortableItem>

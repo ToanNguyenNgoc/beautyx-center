@@ -1,34 +1,35 @@
 // import './style.scss'
 import TitlePage from 'components/TitlePage'
-import {Link} from 'react-router-dom'
-import {KTSVG} from '_metronic/helpers'
-import {useMutation, useQuery} from 'react-query'
+import { Link } from 'react-router-dom'
+import { KTSVG } from '_metronic/helpers'
+import { useMutation, useQuery } from 'react-query'
 import tipAPI from 'app/api/tipApi'
 import { Tips } from 'app/interface'
 import { QR_KEY } from 'common'
 import { queryClient } from 'index'
+import { InitAlert, PermissionLayout } from 'components'
 function TipPage() {
-  const {data} = useQuery({
+  const { data } = useQuery({
     queryKey: [QR_KEY.TIP_PAGE],
     queryFn: () => tipAPI.getAll(),
   })
-  const {mutate, isLoading} = useMutation({
+  const { mutate } = useMutation({
     mutationFn: (id: number) => tipAPI.deleteById(id),
     onSuccess: () => {
       queryClient.invalidateQueries([QR_KEY.TIP_PAGE])
     },
-    onError: (error) => {
-      console.log(error)
-    },
+    onError: (error) => InitAlert.open({ title: 'Có lỗi xảy ra', 'type': 'error' }),
   })
-  const tips:Tips[] = data?.context?.data ?? []
+  const tips: Tips[] = data?.context?.data ?? []
   return (
     <>
       <TitlePage
         element={
-          <Link to={{pathname: '/pages/tips-form'}} className='btn btn-sm btn-primary'>
-            Tạo mới
-          </Link>
+          <PermissionLayout permissions={['v1.beautyx.tips.store']}>
+            <Link to={{ pathname: '/pages/tips-form' }} className='btn btn-sm btn-primary'>
+              Tạo mới
+            </Link>
+          </PermissionLayout>
         }
         title='Danh sách Tip'
       />
@@ -65,7 +66,7 @@ function TipPage() {
                       <td>{item?.priority}</td>
                       <td>
                         <div className='d-flex justify-content-end flex-shrink-0'>
-                          {
+                          <PermissionLayout permissions={['v1.beautyx.tips.update']}>
                             <Link
                               to={{
                                 pathname: `/pages/tips-form/${item?.id}`,
@@ -77,17 +78,19 @@ function TipPage() {
                                 className='svg-icon-3'
                               />
                             </Link>
-                          }
-                          <Link
-                            to='#'
-                            className='btn btn-icon btn-bg-light btn-active-color-primary btn-sm'
-                            onClick={() => mutate(item?.id)}
-                          >
-                            <KTSVG
-                              path='/media/icons/duotune/general/gen027.svg'
-                              className='svg-icon-3'
-                            />
-                          </Link>
+                          </PermissionLayout>
+                          <PermissionLayout permissions={['v1.beautyx.tips.destroy']}>
+                            <Link
+                              to='#'
+                              className='btn btn-icon btn-bg-light btn-active-color-primary btn-sm'
+                              onClick={() => mutate(item?.id)}
+                            >
+                              <KTSVG
+                                path='/media/icons/duotune/general/gen027.svg'
+                                className='svg-icon-3'
+                              />
+                            </Link>
+                          </PermissionLayout>
                         </div>
                       </td>
                     </tr>

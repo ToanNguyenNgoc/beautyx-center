@@ -1,0 +1,1 @@
+export interface ParamsPage { page: number; limit: number }

@@ -2,8 +2,9 @@ import { AUTH_LOCAL_TOKEN } from 'app/modules/auth';
 import axios from 'axios'
 import queryString from 'query-string'
 
-// export const baseURL = process.env.REACT_APP_API_URL_DEV;
-export const baseURL = process.env.REACT_APP_API_URL ?? process.env.REACT_APP_API_LIVE
+export const baseURL = process.env.REACT_APP_API_URL_DEV;
+// export const baseURL = process.env.REACT_APP_API_URL ?? process.env.REACT_APP_API_LIVE
+// export const baseURL = 'http://localhost:8000/v1'
 export const axiosClient = axios.create({
   baseURL: baseURL,
   headers: {

@@ -6,6 +6,7 @@ export const TYPE = {
   DISCOUNT: { type: 'DISCOUNT', id: 19, title: 'Chi tiết deal HOT' }
 }
 export const dev = 'dev'
+export const SUPER_ADMIN = 'SUPER_ADMIN'
 
 export const NOTI_TYPES = [
   TYPE.PROMOTION, TYPE.ORG, TYPE.DEAL, TYPE.DISCOUNT

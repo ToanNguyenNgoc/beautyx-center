@@ -1,15 +1,28 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import authApi from 'app/api/authApi';
 import { IPUT_PROFILE } from 'app/api/interface';
-import { USERROLE } from 'app/modules/auth';
+import { AUTH_LOCAL_TOKEN, UserRole, USERROLE } from 'app/modules/auth';
 import { STATUS } from '../status';
+
+export const getRoles = async (token?: string) => {
+    let roles: UserRole[] = []
+    if (token || sessionStorage.getItem(AUTH_LOCAL_TOKEN)) {
+        try {
+            const response = await authApi.getRoles(token)
+            roles = typeof response.data.context.roles === 'string' ? [] : response.data.context.roles
+        } catch (error) { }
+    }
+    return roles
+}
+
 export const fetchAsyncUser: any = createAsyncThunk(
     "USER/fetchAsyncUser",
-    async (ROLE) => {
+    async (ROLE: any) => {
         try {
             const res: any = await authApi.getUserProfile();
+            const roles = await getRoles()
             const user = { ...res.data.context, ROLE }
-            return user
+            return Object.assign(user, { roles })
         } catch (error) {
             // removeAuth();
         }
@@ -25,7 +38,8 @@ export const updateAsyncUser: any = createAsyncThunk(
 )
 export interface IAccountState {
     USER: USERROLE,
-    status: string
+    status: string,
+    userRole: UserRole[],
 }
 
 const initialState: IAccountState = {
@@ -43,7 +57,8 @@ const initialState: IAccountState = {
             id: 0, name: '', guard_name: '', summary: '', created_at: '', updated_at: ''
         }
     },
-    status: ''
+    status: '',
+    userRole: []
 }
 const accountSlice = createSlice({
     initialState,
@@ -63,8 +78,7 @@ const accountSlice = createSlice({
             return { ...state, status: STATUS.LOADING }
         },
         [fetchAsyncUser.fulfilled]: (state, { payload }) => {
-            // console.log(payload)
-            return { ...state, USER: payload, status: STATUS.SUCCESS }
+            return { ...state, USER: payload, status: STATUS.SUCCESS, userRole: payload?.roles }
         },
         [fetchAsyncUser.rejected]: (state) => {
             return { ...state, status: STATUS.FAIL }

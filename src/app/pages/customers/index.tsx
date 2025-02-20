@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { Avatar, FormControl, MenuItem, Select, SelectChangeEvent } from "@mui/material";
 import { KTSVG } from "_metronic/helpers";
-import { statisticApi } from "app/api";
+import { adminApi, statisticApi } from "app/api";
 import { PLAT_FORM_ARR, formatDate, getRangeOfDates } from "app/util";
 import { QR_CACHE, QR_KEY } from "common";
 import { AppSnack, FlatFormOrder, PageCircularProgress, XDateRangePicker, XPagination } from "components";
@@ -47,6 +47,10 @@ function Customers() {
       search: queryString.stringify(newQuery)
     })
   }
+  useQuery({
+    queryKey:[1],
+    queryFn:()=>adminApi.adminOrders()
+  })
   return (
     <>
       <TitlePage title="Danh sách khách hàng" />

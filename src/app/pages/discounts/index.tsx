@@ -6,7 +6,7 @@ import { DISCOUNTS_TYPE, DiscountsTypeElement } from 'app/util/fileType';
 import FlatFormOrder from 'components/PlatForm';
 import { KTSVG } from '_metronic/helpers';
 import { IDiscountPar } from 'app/interface';
-import { PageCircularProgress, XPagination } from 'components';
+import { InitAlert, PageCircularProgress, PermissionLayout, XPagination } from 'components';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { QR_KEY } from 'common';
 import { discountsApi } from 'app/api';
@@ -52,20 +52,14 @@ function Discounts() {
     mutationFn: (id: number | string) => discountsApi.deleteById(id),
     onSuccess: () => {
       queryClient.invalidateQueries([QR_KEY.DISCOUNT_PAGE, query])
-    }
+    },
+    onError: () => InitAlert.open({ title: 'Có lỗi xảy ra', type: 'error' })
   })
   return (
     <>
       <TitlePage
         element={
-          // METHOD?.includes("POST") ?
-          <div>
-            {/* <Link
-              to={{ pathname: "/pages/vouchers-form" }}
-              className="btn btn-sm btn-info"
-            >
-              Tạo mới voucher
-            </Link> */}
+          <PermissionLayout permissions={['v1.discounts.store']}>
             <Link
               to={{ pathname: "/pages/discounts-form" }}
               className="btn btn-sm btn-primary"
@@ -73,9 +67,7 @@ function Discounts() {
             >
               Tạo mới mã giảm giá
             </Link>
-          </div>
-          // :
-          // <></>
+          </PermissionLayout>
         }
         title="Danh sách Mã giảm giá"
       />
@@ -171,21 +163,16 @@ function Discounts() {
                       </td>
                       <td>
                         <div className='d-flex justify-content-end flex-shrink-0 tb-control'>
-                          {
-                            // METHOD?.includes("UPDATE") &&
+                          <PermissionLayout permissions={['v1.discounts.update']}>
                             <button
-                              // to={{
-                              //   pathname: `/pages/discounts-form/${item.uuid}`,
-                              // }}
                               onClick={() => navigate(`/pages/discounts-form/${item.uuid}`, { state: item })}
                               aria-label='Xem chi tiết'
                               className='btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1'
                             >
                               <KTSVG path='/media/icons/duotune/art/art005.svg' className='svg-icon-3' />
                             </button>
-                          }
+                          </PermissionLayout>
                           {
-                            // METHOD?.includes("GET_BY_ID") &&
                             (
                               item.platform === 'SHOPEE' ||
                               item.platform === 'VINID' ||
@@ -205,18 +192,6 @@ function Discounts() {
                             </button>
                           }
                           {
-                            // METHOD?.includes("DELETE") &&
-                            // <button
-                            //   className='btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1'
-                            //   onClick={() =>mutate(item.id)}
-                            // >
-                            //   <KTSVG
-                            //     path='/media/icons/duotune/arrows/arr015.svg'
-                            //     className='svg-icon-3'
-                            //   />
-                            // </button>
-                          }
-                          {
                             (
                               item.platform === 'SHOPEE' ||
                               item.platform === 'VINID' ||
@@ -231,12 +206,8 @@ function Discounts() {
                               discount={item}
                             />
                           }
-                          {
-                            // METHOD?.includes("UPDATE") &&
+                          <PermissionLayout permissions={['v1.discounts.destroy']}>
                             <button
-                              // to={{
-                              //   pathname: `/pages/discounts-form/${item.uuid}`,
-                              // }}
                               onClick={() => mutate(item.id)}
                               aria-label='Xem chi tiết'
                               className='btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1'
@@ -245,7 +216,7 @@ function Discounts() {
                                 className='svg-icon-3'
                               />
                             </button>
-                          }
+                          </PermissionLayout>
                         </div>
                       </td>
                     </tr>

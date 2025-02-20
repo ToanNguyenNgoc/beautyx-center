@@ -1,6 +1,7 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import TitlePage from 'components/TitlePage';
 import { IOrganization } from 'app/interface';
-import { AppSnack, Avatar, PageCircularProgress, XPagination, XSwitch } from 'components';
+import { AppSnack, Avatar, PageCircularProgress, PermissionLayout, XPagination, XSwitch } from 'components';
 // import { StatusOrgE } from 'app/util/fileType'
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import directRoute from 'app/routing/DirectRoute';
@@ -146,7 +147,9 @@ const ItemOrg: FC<{ org: IOrganization }> = ({ org }) => {
         </td>
         <td>
           {/* <StatusOrgE status={org.is_momo_ecommerce_enable} /> */}
-          <XSwitch label='' value={active} onChange={e => onActive(e.target.checked)} />
+          <PermissionLayout permissions={['v1.organizations.updateECommerce']}>
+            <XSwitch label='' value={active} onChange={e => onActive(e.target.checked)} />
+          </PermissionLayout>
         </td>
         {/* <td>
         <div className='rating'>

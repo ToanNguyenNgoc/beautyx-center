@@ -21,7 +21,7 @@ import { IBanner, IOrganization } from 'app/interface';
 import { LoadingButton } from '@mui/lab';
 import * as Yup from "yup"
 import { AxiosError } from 'axios';
-import { AppSnack, SelectionOrg } from 'components';
+import { AppSnack, PermissionLayout, SelectionOrg } from 'components';
 
 function BannerAdd() {
     // useVerifyRoute()
@@ -102,11 +102,11 @@ function BannerAdd() {
                 formik.setFieldValue('imageURL', data[0]?.original_url ?? '')
             },
             version: 'myspa',
-            resetOriginalResult:true
+            resetOriginalResult: true
         })
     }
     return (
-        <>
+        <PermissionLayout permissions={params.id ? ['v1.banners.update'] : ['v1.banners.store']} showEmpty>
             <AppSnack
                 severity={noti.color}
                 message={noti.message}
@@ -262,7 +262,7 @@ function BannerAdd() {
                     </form>
                 </div>
             </div>
-        </>
+        </PermissionLayout>
     );
 }
 

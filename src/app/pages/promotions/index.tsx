@@ -4,7 +4,7 @@ import { promotionApi } from "app/api";
 import { Promotion } from "app/interface";
 import { formatDate } from "app/util";
 import { QR_KEY } from "common";
-import { PageCircularProgress, XSwitch } from "components";
+import { PageCircularProgress, PermissionLayout, XSwitch } from "components";
 import TitlePage from "components/TitlePage";
 import { FC } from "react";
 import { useMutation, useQuery, useQueryClient } from "react-query";
@@ -22,15 +22,14 @@ function Promotions() {
     <>
       <TitlePage
         element={
-          // METHOD?.includes("POST") ?
-          <Link
-            to={{ pathname: "/pages/promotions-form" }}
-            className="btn btn-sm btn-primary"
-          >
-            Tạo mới
-          </Link>
-          // :
-          // <></>
+          <PermissionLayout permissions={['v1.promotions.store']}>
+            <Link
+              to={{ pathname: "/pages/promotions-form" }}
+              className="btn btn-sm btn-primary"
+            >
+              Tạo mới
+            </Link>
+          </PermissionLayout>
         }
         title="Danh sách Promotion"
       />
@@ -116,8 +115,7 @@ const PromotionItem: FC<{ item: Promotion }> = ({ item }) => {
       </td>
       <td>
         <div className='d-flex justify-content-end flex-shrink-0 tb-control'>
-          {
-            // METHOD?.includes("UPDATE") &&
+          <PermissionLayout permissions={['v1.promotions.update']}>
             <Link
               to={{
                 pathname: `/pages/promotions-form/${item.id}`
@@ -127,17 +125,19 @@ const PromotionItem: FC<{ item: Promotion }> = ({ item }) => {
             >
               <KTSVG path='/media/icons/duotune/art/art005.svg' className='svg-icon-3' />
             </Link>
-          }
-          <button onClick={() => mutate(item.id)} disabled={isLoading}
-            className='btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1'
-          >
-            {
-              isLoading ?
-                <CircularProgress size={12} />
-                :
-                <KTSVG path='/media/icons/duotune/general/gen027.svg' className='svg-icon-3' />
-            }
-          </button>
+          </PermissionLayout>
+          <PermissionLayout permissions={['v1.promotions.destroy']}>
+            <button onClick={() => mutate(item.id)} disabled={isLoading}
+              className='btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1'
+            >
+              {
+                isLoading ?
+                  <CircularProgress size={12} />
+                  :
+                  <KTSVG path='/media/icons/duotune/general/gen027.svg' className='svg-icon-3' />
+              }
+            </button>
+          </PermissionLayout>
         </div>
       </td>
     </tr>

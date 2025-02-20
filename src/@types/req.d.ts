@@ -41,3 +41,9 @@ export type ReqPostNotification={
   link?:string;
   payload_id?:string
 }
+export type ReqAdminUser = {
+  fullname?:string;
+  email?:string;
+  telephone?:string;
+  roles_id?:number[]
+}

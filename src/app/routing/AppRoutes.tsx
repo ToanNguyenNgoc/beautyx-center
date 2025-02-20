@@ -5,7 +5,7 @@
  * components (e.g: `src/app/modules/Auth/pages/AuthPage`, `src/app/BasePage`).
  */
 
-import { FC } from 'react'
+import { FC, Fragment } from 'react'
 import { Routes, Route, BrowserRouter, Navigate } from 'react-router-dom'
 import { PrivateRoutes } from './PrivateRoutes'
 import { ErrorsPage } from '../modules/errors/ErrorsPage'
@@ -13,6 +13,7 @@ import { Logout, AuthPage, useAuth } from '../modules/auth'
 import { App } from '../App'
 import { CustomerEvent } from 'app/pages/customers-event/CustomerEvent'
 import { LocationTool } from 'app/pages/tools'
+import { RegisterGlobalLayout } from 'components'
 
 /**
  * Base URL of the website.
@@ -25,27 +26,30 @@ const AppRoutes: FC = () => {
   const { currentUser } = useAuth();
   const user_role = "ADMIN";
   return (
-    <BrowserRouter basename={PUBLIC_URL}>
-      <Routes>
-        <Route element={<App />}>
-          <Route path='error/*' element={<ErrorsPage />} />
-          <Route path='logout' element={<Logout />} />
-          {currentUser ? (
-            <>
-              <Route path='/*' element={<PrivateRoutes USER_ROLE={user_role} />} />
-              <Route index element={<Navigate to='/dashboard' />} />
-            </>
-          ) : (
-            <>
-              <Route path='vong-quay' element={<CustomerEvent />} />
-              <Route path='location-tool' element={<LocationTool />} />
-              <Route path='auth/*' element={<AuthPage />} />
-              <Route path='*' element={<Navigate to='/auth' />} />
-            </>
-          )}
-        </Route>
-      </Routes>
-    </BrowserRouter>
+    <Fragment>
+      <BrowserRouter basename={PUBLIC_URL}>
+        <Routes>
+          <Route element={<App />}>
+            <Route path='error/*' element={<ErrorsPage />} />
+            <Route path='logout' element={<Logout />} />
+            {currentUser ? (
+              <>
+                <Route path='/*' element={<PrivateRoutes USER_ROLE={user_role} />} />
+                <Route index element={<Navigate to='/dashboard' />} />
+              </>
+            ) : (
+              <>
+                <Route path='vong-quay' element={<CustomerEvent />} />
+                <Route path='location-tool' element={<LocationTool />} />
+                <Route path='auth/*' element={<AuthPage />} />
+                <Route path='*' element={<Navigate to='/auth' />} />
+              </>
+            )}
+          </Route>
+        </Routes>
+      </BrowserRouter>
+      <RegisterGlobalLayout />
+    </Fragment>
   )
 }
 

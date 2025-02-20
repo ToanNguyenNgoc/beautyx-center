@@ -41,6 +41,9 @@ const TipsPage = lazy(() => import('../pages/tips'))
 const TipsForm = lazy(() => import('../pages/tips/module/tips-form'))
 
 const VoucherFormPage = lazy(()=> import('../pages/voucher/VoucherFormPage'))
+const RoleFormPage = lazy(()=> import('../pages/roles/role-form/RoleFormPage'))
+const AccountsPage = lazy(()=> import('../pages/accounts'))
+const AccountFormPage = lazy(()=> import('../pages/accounts/modules/AccountForm/AccountFormPage'))
 
 //-------------
 // const OrgMobaGalleriesPage = lazy(() => import('../pages-organization/moba-galleries'))
@@ -160,6 +163,19 @@ const InitRoute: any[] = [
         path: "pages/products",
         element: <ProductsPage />
     },
+    //
+    {
+        path:"pages/accounts",
+        element: <AccountsPage />
+    },
+    {
+        path:"pages/accounts-form/:id",
+        element: <AccountFormPage />
+    },
+    {
+        path:"pages/accounts-form",
+        element: <AccountFormPage />
+    },
     //-------------------------------
     //page dependencies [ORGANIZATION-DETAIL]
     {
@@ -189,6 +205,14 @@ const InitRoute: any[] = [
     {
         path: "pages/roles",
         element: <RolesPage />
+    },
+    {
+        path: "pages/roles-form/:id",
+        element: <RoleFormPage />
+    },
+    {
+        path: "pages/roles-form",
+        element: <RoleFormPage />
     },
     {
         path: "pages/roles/:id/permissions",

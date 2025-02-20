@@ -16,8 +16,8 @@ export async function verifyUser(response_user: AuthModel) {
     let user_check
     if (response_user) {
         const token = response_user.token ?? sessionStorage.getItem(AUTH_LOCAL_TOKEN)
-        const resUserLoginRole = window.atob(response_user.roles ?? sessionStorage.getItem(ROLE_KEY))
-        const role = resUserLoginRole.slice(2, resUserLoginRole.length - 2)
+        // const resUserLoginRole = window.atob(response_user.roles ?? sessionStorage.getItem(ROLE_KEY))
+        // const role = resUserLoginRole.slice(2, resUserLoginRole.length - 2)
         try {
             // const res_permissions = await getRoles(token)
             // const permissions: IAUTHOR[] = res_permissions.data.context

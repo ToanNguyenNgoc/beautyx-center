@@ -10,7 +10,7 @@ import { useAuth } from 'app/modules/auth'
 import { useLocation, useParams } from 'react-router-dom'
 import { useSwr } from 'app/hooks'
 import { API_ROUTE } from 'app/api/api-route'
-import { Avatar } from 'components'
+import { Avatar, PermissionLayout } from 'components'
 import { useDispatch } from 'react-redux'
 import { onSetOrganization } from 'app/redux/organizationSlice'
 // import { checkMethod } from 'app/util'
@@ -105,11 +105,13 @@ export function AsideMenuMain() {
         icon='/media/icons/duotune/finance/fin008.svg'
         title='Giảm giá'
       />
+      <PermissionLayout permissions={['v1.beautyx.notification.sendNotification']}>
       <AsideMenuItem
         to='pages/push-notifications'
         icon='/media/icons/duotune/communication/com004.svg'
         title='Push thông báo'
       />
+      </PermissionLayout>
       {/* <AsideMenuItem
         to='pages/setup-home'
         icon='/media/icons/duotune/coding/cod001.svg'
@@ -136,6 +138,20 @@ export function AsideMenuMain() {
         icon='/media/icons/duotune/communication/com013.svg'
         title='Khách hàng'
       />
+      <PermissionLayout permissions={['v1.admin.users.index']}>
+        <AsideMenuItem
+          to='pages/accounts'
+          icon='/media/icons/duotune/communication/com013.svg'
+          title='Đội ngũ'
+        />
+      </PermissionLayout>
+      <PermissionLayout permissions={['v1.roles.index', 'v1.permissions.index']}>
+        <AsideMenuItem
+          to='pages/roles'
+          icon='/media/icons/duotune/general/gen051.svg'
+          title='Phân quyền'
+        />
+      </PermissionLayout>
       {/* <AsideMenuItem
         to='pages/trends'
         icon='/media/icons/duotune/files/fil004.svg'

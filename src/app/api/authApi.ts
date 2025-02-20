@@ -1,7 +1,7 @@
 import { AUTH_HEADER } from "./config_header";
-import {AUTH_LOCAL_TOKEN} from '../modules/auth/core/AuthHelpers';
+import { AUTH_LOCAL_TOKEN } from '../modules/auth/core/AuthHelpers';
 
-import {ILOGIN,IPUT_PROFILE,IFORGOT,IREGISTER} from './interface';
+import { ILOGIN, IPUT_PROFILE, IFORGOT, IREGISTER } from './interface';
 import { axiosClient } from "configs";
 class Auth {
   login = (values: ILOGIN) => {
@@ -30,6 +30,9 @@ class Auth {
   putUserProfile = (params: IPUT_PROFILE) => {
     const url = `/users/profile`;
     return axiosClient.put(url, params, AUTH_HEADER())
+  };
+  getRoles = (token?: string) => {
+    return axiosClient.get('/users/roles')
   }
 
 }

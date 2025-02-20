@@ -90,7 +90,7 @@ const AuthInit: FC<WithChildren> = ({ children }) => {
     const res = await dispatch(fetchAsyncUser())
     if (res.meta.requestStatus === PAYLOAD_STATUS.SUCCESS) {
       const user_check = await verifyUser(res.payload)
-      setCurrentUser(user_check)
+      setCurrentUser(res?.payload?.roles?.length > 0 ? user_check : undefined)
       setFirstLoad(false)
       setShowSplashScreen(false)
     }

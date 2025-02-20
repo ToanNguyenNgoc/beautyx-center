@@ -121,3 +121,18 @@ export interface USERROLE {
   roles: string,
   ROLE: IAUTHOR
 }
+
+export interface UserRole {
+  id: number;
+  name: string;
+  guard_name: string;
+  summary: string | null;
+  created_at: string;
+  updated_at: string;
+  permissions: string[];
+  pivot: {
+    model_id: number;
+    role_id: number;
+    model_type: string;
+  };
+}

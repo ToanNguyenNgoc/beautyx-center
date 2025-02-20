@@ -11,7 +11,7 @@ import { ReqPostNotification } from "@types";
 import { notificationApi } from "app/api";
 import { useMessage } from "app/hooks";
 import { AxiosError } from "axios";
-import { AppSnack, SelectPromotion, SelectionDiscounts, SelectionOrg } from "components";
+import { AppSnack, PermissionLayout, SelectPromotion, SelectionDiscounts, SelectionOrg } from "components";
 import { useState } from "react";
 import { IDiscountPar, IOrganization } from "app/interface";
 import { request3rdApi } from "app/api/api-3rd-client";
@@ -59,7 +59,7 @@ function PushNotificationForm() {
     }
   })
   return (
-    <>
+    <PermissionLayout permissions={['v1.beautyx.notification.sendNotification']} showEmpty>
       <TitlePage title="Thông báo" />
       <AppSnack
         severity={noti.color}
@@ -207,7 +207,7 @@ function PushNotificationForm() {
           </div>
         </div>
       </div>
-    </>
+    </PermissionLayout>
   );
 }
 

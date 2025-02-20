@@ -1,70 +1,89 @@
 import TitlePage from 'components/TitlePage';
 import React from 'react';
-import { useSwr, useVerifyRoute } from 'app/hooks'
-import { IAUTHOR } from 'app/interface'
-import { API_ROUTE } from 'app/api/api-route';
-import { KTSVG, toAbsoluteUrl } from '_metronic/helpers';
-import { XButton } from 'components'
-import directRoute from 'app/routing/DirectRoute';
+import { useGetRoles } from 'app/hooks'
+import { KTSVG } from '_metronic/helpers';
+import { InitAlert, PermissionLayout } from 'components'
 import { useNavigate } from 'react-router-dom';
+import { roleAndPermissionApi } from 'app/api';
+import { Button } from '@mui/material';
 
 function Roles() {
-    const navigate = useNavigate()
-    const { METHOD } = useVerifyRoute()
-    const { response, totalItem } = useSwr(true, API_ROUTE.ROLES)
-    const roles: IAUTHOR[] = response ?? []
-    return (
-        <>
-            <TitlePage
-                title='Phân quyền'
-            />
-            <div className={`card mb-5 mb-xl-8`}>
-                <div className='card-body py-3'>
-                    <div className='table-responsive'>
-                        <table className='table align-middle gs-0 gy-4'>
-                            <thead>
-                                <tr className='fw-bold text-muted bg-light'>
-                                    <th className='ps-4 min-w-300px rounded-start'>#</th>
-                                    <th className='min-w-125px'>Tên quyền</th>
-                                    <th className='min-w-250px'>Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {
-                                    roles.map((item: IAUTHOR) => (
-                                        <tr key={item.id}>
-                                            <td>
-                                                <span className='text-dark fw-bold mb-1 fs-6'>
-                                                    {item.id}
-                                                </span>
-                                            </td>
-                                            <td>
-                                                <span className='text-dark fw-bold text-hover-primary d-block mb-1 fs-6'>
-                                                    {item.name}
-                                                </span>
-                                            </td>
-                                            <td>
-                                                <div style={{ width: "100px" }}>
-                                                    <XButton
-                                                        title='Cấp quyền'
-                                                        color="success"
-                                                        onClick={() => navigate(directRoute.ROLES_ID_PERMISSIONS(item.id))}
-                                                    />
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    ))
-                                }
-                            </tbody>
-                            {/* end::Table body */}
-                        </table>
-                        {/* end::Table */}
-                    </div>
-                    {/* end::Table container */}
-                </div>
-            </div>
-        </>
-    );
+  const navigate = useNavigate()
+  const { roles, refetch } = useGetRoles()
+
+  const onDelete = (id: number) => {
+    roleAndPermissionApi.roleDelete(id)
+      .then(() => {
+        InitAlert.open({ title: 'Xóa thành công !' });
+        refetch()
+      })
+      .catch(() => InitAlert.open({ title: 'Có lỗi xảy ra !' }))
+  }
+  return (
+    <PermissionLayout permissions={['v1.roles.index']} showEmpty>
+      <TitlePage
+        title='Phân quyền'
+        element={
+          <PermissionLayout permissions={['v1.roles.store']}>
+            <Button
+              onClick={() => navigate('/pages/roles-form')}
+              variant="contained"
+              size="large"
+            >
+              Tạo mới quyền
+            </Button>
+          </PermissionLayout>
+        }
+      />
+      <div className={`card mb-5 mb-xl-8`}>
+        <div className='card-body py-3'>
+          <div className='table-responsive'>
+            <table className='table align-middle gs-0 gy-4'>
+              <thead>
+                <tr className='fw-bold text-muted bg-light'>
+                  <th className='ps-4 min-w-120px rounded-start'>#</th>
+                  <th className='min-w-250px'>Tên quyền</th>
+                  <th className='min-w-100px'>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                {
+                  roles.filter(i => i.guard_name === 'api').map((role, index) => (
+                    <tr key={role.id}>
+                      <td>{index + 1}</td>
+                      <td>{role.name}</td>
+                      <td>
+                        <PermissionLayout permissions={['v1.roles.show', 'v1.roles.patch']}>
+                          <button
+                            onClick={() => navigate(`/pages/roles-form/${role.id}`, { state: role.name })}
+                            aria-label='Xem chi tiết'
+                            className='btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1'
+                          >
+                            <KTSVG path='/media/icons/duotune/art/art005.svg' className='svg-icon-3' />
+                          </button>
+                        </PermissionLayout>
+                        <PermissionLayout permissions={['v1.roles.destroy']}>
+                          <button
+                            onClick={() => onDelete(role.id)}
+                            aria-label='Xem chi tiết'
+                            className='btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1'
+                          >
+                            <KTSVG path='/media/icons/duotune/general/gen027.svg'
+                              className='svg-icon-3'
+                            />
+                          </button>
+                        </PermissionLayout>
+                      </td>
+                    </tr>
+                  ))
+                }
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </PermissionLayout>
+  );
 }
 
 export default Roles;

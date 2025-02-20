@@ -1,6 +1,7 @@
 import tipAPI from 'app/api/tipApi'
 import FormTip from 'app/pages/tips/module/form'
 import { QR_KEY } from 'common'
+import { PermissionLayout } from 'components'
 import TitlePage from 'components/TitlePage'
 import { useQuery } from 'react-query'
 import { useParams } from 'react-router-dom'
@@ -10,17 +11,17 @@ export default function TipsForm() {
   if (params && params.id) {
     isForm = 'EDIT'
   }
-  const {data} = useQuery({
+  const { data } = useQuery({
     queryKey: [QR_KEY.TIP_PAGE, params.id],
     queryFn: () => tipAPI.getById(parseInt(params.id)),
   })
   const tip = data?.context
   return (
-    <>
+    <PermissionLayout permissions={isForm === 'ADD' ? ['v1.beautyx.tips.store'] : ['v1.beautyx.tips.update']} showEmpty>
       <TitlePage title={params?.id ? 'Chỉnh sửa thông tin Tip' : 'Tạo mới Tip'} />
       {(isForm === 'ADD' || tip) &&
-        <FormTip tipId={parseInt(params.id)}  tip={tip} isForm={isForm} />
+        <FormTip tipId={parseInt(params.id)} tip={tip} isForm={isForm} />
       }
-    </>
+    </PermissionLayout>
   )
 }
