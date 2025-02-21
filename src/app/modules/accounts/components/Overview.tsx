@@ -1,22 +1,13 @@
-/* eslint-disable jsx-a11y/anchor-is-valid */
-import React from 'react'
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import {Link} from 'react-router-dom'
 import {KTSVG} from '../../../../_metronic/helpers'
-import {
-  ChartsWidget1,
-  TablesWidget1,
-  ListsWidget5,
-  TablesWidget5,
-} from '../../../../_metronic/partials/widgets'
-import { useDispatch, useSelector } from "react-redux";
+import {  useSelector } from "react-redux";
 // custom import 
-import { useAuth } from '../../auth';
 
 // interface 
 import {IRoot} from '../../../redux/interface';
 export function Overview() {
-  const {currentUser} = useAuth();
-  const { USER,status } = useSelector((state : IRoot) => state.ACCOUNT );
+  const { USER } = useSelector((state : IRoot) => state.ACCOUNT );
   console.log(useSelector((state: any) => state.ACCOUNT ))
   return (
     <>

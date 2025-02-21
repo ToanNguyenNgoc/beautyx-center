@@ -1,17 +1,18 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Avatar } from "@mui/material";
 import { communityApi } from "app/api";
 import { Post } from "app/interface";
-import { QR_KEY } from "common";
-import TitlePage from "components/TitlePage";
+import { QR_KEY } from "app/common";
+import TitlePage from "app/components/TitlePage";
 import { FC } from "react";
 import { useQuery } from "react-query";
 import { Link, useNavigate } from "react-router-dom";
 import "./style.scss"
-import { PageCircularProgress, XSwitch } from "components";
+import { PageCircularProgress, XSwitch } from "app/components";
 import moment from "moment";
 import { useSelector } from "react-redux";
 import { IRoot } from "app/redux/interface";
-import { KTSVG } from "_metronic/helpers";
+import { KTSVG } from "../../../_metronic/helpers";
 
 function Community() {
   const { data, isLoading } = useQuery({
@@ -61,7 +62,7 @@ function Community() {
               </thead>
               <tbody>
                 {
-                  data?.data?.map(i => (
+                  data?.data?.map((i:any) => (
                     <PostItem key={i.id} post={i} />
                   ))
                 }

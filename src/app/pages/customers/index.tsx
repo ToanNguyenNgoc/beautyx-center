@@ -1,15 +1,18 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable no-var */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable react-hooks/exhaustive-deps */
 import { Avatar, FormControl, MenuItem, Select, SelectChangeEvent } from "@mui/material";
-import { KTSVG } from "_metronic/helpers";
-import { adminApi, statisticApi } from "app/api";
+import { KTSVG } from "../../../_metronic/helpers";
+import {  statisticApi } from "app/api";
 import { PLAT_FORM_ARR, formatDate, getRangeOfDates } from "app/util";
-import { QR_CACHE, QR_KEY } from "common";
-import { AppSnack, FlatFormOrder, PageCircularProgress, XDateRangePicker, XPagination } from "components";
-import TitlePage from "components/TitlePage";
+import { QR_CACHE, QR_KEY } from "app/common";
+import { AppSnack, FlatFormOrder, PageCircularProgress, XDateRangePicker, XPagination } from "app/components";
+import TitlePage from "app/components/TitlePage";
 import { useMutation, useQuery } from "react-query";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import queryString from "query-string"
-import { QrCustomer, ResponseList } from "@types";
+import { QrCustomer, ResponseList } from "app/@types";
 import { FC, useEffect, useState } from "react";
 import "./style.scss"
 import { identity, pickBy } from "lodash";
@@ -75,7 +78,7 @@ function Customers() {
               </thead>
               <tbody>
                 {
-                  customers.map(item => (
+                  customers.map((item:any) => (
                     <tr key={item.id}>
                       <td>
                         <div className='d-flex align-items-center'>
@@ -326,7 +329,7 @@ const ExportFile: FC<ExportFileProps> = ({ data, qr }) => {
   )
 }
 const onExportFile = (customers: Customer[]) => {
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve, _reject) => {
     const fileType =
       "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8";
     const fileExtension = ".xlsx";

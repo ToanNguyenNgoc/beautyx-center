@@ -1,15 +1,15 @@
-import TitlePage from "components/TitlePage";
+import TitlePage from "app/components/TitlePage";
 import { paramContract } from 'app/query-params';
 import { useGetParamUrl, useSwr } from 'app/hooks'
 import { IContract } from 'app/interface'
 import { API_ROUTE } from "app/api/api-route";
-import { KTSVG } from "_metronic/helpers";
-import { Avatar } from 'components'
+import { KTSVG } from "../../../_metronic/helpers";
+import { Avatar } from 'app/components'
 import { ApproveTypeElement, ApproveStatusElement } from 'app/util/fileType'
 import dayjs from "dayjs";
 import directRoute from "app/routing/DirectRoute";
 import { useLocation, useNavigate } from "react-router-dom";
-import { XPagination } from 'components'
+import { XPagination } from 'app/components'
 
 function Contracts() {
     const navigate = useNavigate();

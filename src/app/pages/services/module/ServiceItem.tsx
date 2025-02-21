@@ -1,4 +1,3 @@
-import React from 'react'
 import {IServiceSingle} from 'app/interface/service_single'
 import {formatPrice, formatSalePriceService, onErrorImg, StatusElement} from 'app/util'
 import {Link, useNavigate} from 'react-router-dom'

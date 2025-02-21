@@ -1,14 +1,14 @@
 // import './style.scss'
-import TitlePage from 'components/TitlePage'
+import TitlePage from 'app/components/TitlePage'
 import { Link } from 'react-router-dom'
-import { KTSVG } from '_metronic/helpers'
-import { useMutation, useQuery } from 'react-query'
+import { KTSVG } from '../../../_metronic/helpers'
+import { useMutation, useQuery, useQueryClient } from 'react-query'
 import tipAPI from 'app/api/tipApi'
 import { Tips } from 'app/interface'
-import { QR_KEY } from 'common'
-import { queryClient } from 'index'
-import { InitAlert, PermissionLayout } from 'components'
+import { QR_KEY } from 'app/common'
+import { InitAlert, PermissionLayout } from 'app/components'
 function TipPage() {
+  const queryClient = useQueryClient()
   const { data } = useQuery({
     queryKey: [QR_KEY.TIP_PAGE],
     queryFn: () => tipAPI.getAll(),
@@ -18,7 +18,7 @@ function TipPage() {
     onSuccess: () => {
       queryClient.invalidateQueries([QR_KEY.TIP_PAGE])
     },
-    onError: (error) => InitAlert.open({ title: 'Có lỗi xảy ra', 'type': 'error' }),
+    onError: () => InitAlert.open({ title: 'Có lỗi xảy ra', 'type': 'error' }),
   })
   const tips: Tips[] = data?.context?.data ?? []
   return (

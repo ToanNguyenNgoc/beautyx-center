@@ -1,5 +1,7 @@
-import React, { useState } from 'react';
-import TitlePage from 'components/TitlePage';
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import  { useState } from 'react';
+import TitlePage from 'app/components/TitlePage';
 import { useParams } from 'react-router-dom';
 import { API_ROUTE } from 'app/api/api-route';
 import { useNoti, useSwr } from 'app/hooks';
@@ -7,12 +9,11 @@ import { DIRECT_ORG_E } from 'app/util'
 import { IContract, IOrganization } from 'app/interface';
 import { Navigate } from 'react-router-dom';
 import { ApproveTypeElement, ApproveStatusElement } from 'app/util/fileType'
-import { SnackAlert, XButton } from 'components'
+import { SnackAlert, XButton } from 'app/components'
 import style from './contract-detail.module.scss'
 import dayjs from 'dayjs';
 import { approveApi } from 'app/api';
 import { Dialog } from '@mui/material';
-import parse from 'html-react-parser';
 
 const paramsDetail = {
     "include": "approve|organization"
@@ -34,6 +35,7 @@ function ContractDetail() {
             return branch
         }).filter(Boolean)
     }
+    console.log(branchesRegister)
     const { noti, firstLoad, resultLoad, onCloseNoti } = useNoti()
     const handlePutApprove = async () => {
         firstLoad()

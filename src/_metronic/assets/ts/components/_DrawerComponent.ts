@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
+/* eslint-disable @typescript-eslint/no-unsafe-function-type */
+/* eslint-disable prefer-const */
 import {
   EventHandlerUtil,
   getUniqueIdWithPrefix,
@@ -235,18 +238,18 @@ class DrawerComponent {
     }
   }
 
-  private _getDirection = () => {
-    return String(this._getOption('direction')) === 'left' ? 'left' : 'right'
-  }
+  // private _getDirection = () => {
+  //   return String(this._getOption('direction')) === 'left' ? 'left' : 'right'
+  // }
 
-  private _getWidth = () => {
-    let width = this._getOption('width')
-    if (width && width === 'auto') {
-      width = getCSS(this.element, 'width')
-    }
+  // private _getWidth = () => {
+  //   let width = this._getOption('width')
+  //   if (width && width === 'auto') {
+  //     width = getCSS(this.element, 'width')
+  //   }
 
-    return width
-  }
+  //   return width
+  // }
 
   ///////////////////////
   // ** Public API  ** //
@@ -333,7 +336,7 @@ class DrawerComponent {
   public static handleDismiss = () => {
     // External drawer toggle handler
     DOMEventHandlerUtil.on(document.body, '[data-kt-drawer-dismiss="true"]', 'click', () => {
-      /* @ts-ignore */
+      //@ts-ignore
       const element = this.closest('[data-kt-drawer="true"]')
       if (element) {
         const drawer = DrawerComponent.getInstance(element)

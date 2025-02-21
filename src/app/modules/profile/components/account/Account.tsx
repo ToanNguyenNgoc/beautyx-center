@@ -1,5 +1,4 @@
-/* eslint-disable jsx-a11y/anchor-is-valid */
-import React, {useState} from 'react'
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import {UserModel} from '../../../../interface/account_models';
 import { IRoot } from '../../../../redux/interface';
 import { useSelector } from 'react-redux';
@@ -7,9 +6,9 @@ import { useSelector } from 'react-redux';
 export function Account() {
 
   //const [hasError, setHasError] = useState(false);
-  const {USER,status} = useSelector((state : IRoot) => state.ACCOUNT)
+  const {USER} = useSelector((state : IRoot) => state.ACCOUNT)
   // const [data, setData] = useState<UserModel>(defaultAccount)
-  const updateData = (fieldsToUpdate: Partial<UserModel>) => {
+  const updateData = (_fieldsToUpdate: Partial<UserModel>) => {
     // const updatedData = {...data, ...fieldsToUpdate}
 
     // setData(updatedData)

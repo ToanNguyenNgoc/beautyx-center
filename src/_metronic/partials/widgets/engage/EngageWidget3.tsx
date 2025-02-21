@@ -1,4 +1,3 @@
-/* eslint-disable jsx-a11y/anchor-is-valid */
 import React from 'react'
 import {toAbsoluteUrl} from '../../../helpers'
 
@@ -15,6 +14,7 @@ const EngageWidget3: React.FC<Props> = ({
   innerPadding = '',
   color = 'primary',
 }) => {
+  console.log(innerPadding, imagePath)
   return (
     <div className={`card card-custom ${className}`}>
       {/* begin::Card Body */}

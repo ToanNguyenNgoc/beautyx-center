@@ -1,6 +1,5 @@
-/* eslint-disable jsx-a11y/anchor-is-valid */
-import { AsyncThunk } from '@reduxjs/toolkit';
-import React, { useEffect, useState } from 'react'
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { KTSVG, toAbsoluteUrl } from '../../../../_metronic/helpers'
 import { IPRODUCT_GET_ALL } from '../../../api/product_models';

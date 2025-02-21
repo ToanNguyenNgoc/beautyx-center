@@ -1,3 +1,7 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable no-var */
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import {createPopper, VirtualElement} from '@popperjs/core'
 import {
   getElementChild,
@@ -327,7 +331,7 @@ class MenuComponent {
 
   // Test if item's sub is shown
   private _isItemSubShown = (item: HTMLElement) => {
-    let sub = this._getItemSubElement(item)
+    const sub = this._getItemSubElement(item)
     if (sub) {
       if (this._getItemSubType(item) === 'dropdown') {
         const subHTMLElement = sub as HTMLElement
@@ -354,9 +358,9 @@ class MenuComponent {
   }
 
   // Test of it is item sub element
-  private _isItemSubElement = (item: HTMLElement) => {
-    return item.classList.contains('menu-sub')
-  }
+  // private _isItemSubElement = (item: HTMLElement) => {
+  //   return item.classList.contains('menu-sub')
+  // }
 
   // Test if item has sub
   private _hasItemSub = (item: HTMLElement) => {
@@ -496,7 +500,7 @@ class MenuComponent {
     }
 
     if (DataUtil.has(item, 'popper') === true) {
-      // @ts-ignore
+      //@ts-ignore
       DataUtil.get(item, 'popper').destroy()
       DataUtil.remove(item, 'popper')
     }
@@ -605,7 +609,7 @@ class MenuComponent {
   }
 
   // TODO: not done
-  private _destroy = () => {}
+  // private _destroy = () => {}
 
   // Update all item state classes if item sub type changed
   private _update = () => {
@@ -665,7 +669,7 @@ class MenuComponent {
   }
 
   // Mouseout handle
-  private _mouseout = (element: HTMLElement, e: MouseEvent) => {
+  private _mouseout = (element: HTMLElement, _e: MouseEvent) => {
     const item = this._getItemElement(element)
     if (!item) {
       return
@@ -686,7 +690,7 @@ class MenuComponent {
   }
 
   // Mouseover handle
-  private _mouseover = (element: HTMLElement, e: MouseEvent) => {
+  private _mouseover = (element: HTMLElement, _e: MouseEvent) => {
     const item = this._getItemElement(element)
     if (!item) {
       return
@@ -709,7 +713,7 @@ class MenuComponent {
   }
 
   // Dismiss handler
-  private _dismiss = (element: HTMLElement, e: Event) => {
+  private _dismiss = (element: HTMLElement, _e: Event) => {
     const item = this._getItemElement(element)
     if (!item) {
       return
@@ -733,7 +737,7 @@ class MenuComponent {
   }
 
   // Link handler
-  private _link = (element: HTMLElement, e: Event) => {
+  private _link = (_element: HTMLElement, _e: Event) => {
     if (EventHandlerUtil.trigger(this.element, 'kt.menu.link.click') === false) {
       return
     }
@@ -957,8 +961,8 @@ class MenuComponent {
           const item = menuItems[i] as HTMLElement
           const menuObj = MenuComponent.getInstance(item) as MenuComponent
           if (menuObj && menuObj.getItemSubType(item) === 'dropdown') {
-            // eslint-disable-next-line @typescript-eslint/no-unused-vars
-            const menu = menuObj.getElement()
+            // // eslint-disable-next-line @typescript-eslint/no-unused-vars
+            // const menu = menuObj.getElement()
             const sub = menuObj.getItemSubElement(item) as HTMLElement
             if (item === e.target || item.contains(e.target as HTMLElement)) {
               continue

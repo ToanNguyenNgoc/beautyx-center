@@ -1,4 +1,4 @@
-import { axiosClient } from "configs";
+import { axiosClient } from "app/configs";
 
 export interface RequestRole {
   name?: string;

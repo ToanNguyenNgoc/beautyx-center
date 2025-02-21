@@ -1,15 +1,16 @@
-import React, { useState } from 'react';
-import TitlePage from 'components/TitlePage';
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import  { useState } from 'react';
+import TitlePage from 'app/components/TitlePage';
 import { useGetParamUrl, useSwr } from 'app/hooks';
 import { paramApproves } from 'app/query-params';
 import { API_ROUTE } from 'app/api/api-route';
-import { KTSVG } from '_metronic/helpers';
+import { KTSVG } from '../../../_metronic/helpers';
 import { IApprove } from 'app/interface';
 // import { useVerifyRoute } from 'app/hooks';
 import { ApproveStatusElement, ApproveTypeElement } from 'app/util'
 import dayjs from 'dayjs'
 import ApproveDetail from './module/approve-detail';
-import { Avatar, XPagination } from 'components';
+import { Avatar, XPagination } from 'app/components';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 function Approve() {

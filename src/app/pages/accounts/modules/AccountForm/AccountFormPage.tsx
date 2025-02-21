@@ -1,10 +1,11 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { MenuItem, OutlinedInput, Select, SelectChangeEvent, Theme, useTheme } from "@mui/material";
-import { ReqAdminUser, ResponseDetail } from "@types";
+import { ReqAdminUser, ResponseDetail } from "app/@types";
 import { adminApi } from "app/api";
 import { useGetRoles, useGetRolesAndPermissions } from "app/hooks";
 import { AdminAccount } from "app/interface";
-import { InitAlert, PermissionLayout, XButton } from "components";
-import TitlePage from "components/TitlePage";
+import { InitAlert, PermissionLayout, XButton } from "app/components";
+import TitlePage from "app/components/TitlePage";
 import { useFormik } from "formik";
 import { FC } from "react";
 import { useMutation, useQuery } from "react-query";

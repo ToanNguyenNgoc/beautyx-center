@@ -1,9 +1,10 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { AUTH_HEADER } from "./config_header"
 import { API_ROUTE } from "./api-route";
 import { pickBy, identity } from "lodash"
-import { ResponseDetail, ResponseList } from "@types";
 import { IBanner } from "app/interface";
-import { axiosClient } from "configs";
+import { ResponseDetail, ResponseList } from "../@types";
+import { axiosClient } from "app/configs";
 
 class BannerApi {
   banners = () => {

@@ -1,17 +1,20 @@
-import TitlePage from "components/TitlePage";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/ban-ts-comment */
+import TitlePage from "app/components/TitlePage";
 import "./form.scss"
 import { useFormik } from "formik";
 import { MenuItem, Select } from "@mui/material";
-import { IMGS } from "_metronic/assets/imgs/imgs";
+//@ts-ignore
+import { IMGS } from "../../../../_metronic/assets/imgs/imgs";
 import { LoadingButton } from "@mui/lab";
 import { NOTI_TYPES, PLAT_FORM, TYPE, dev, getEnvParam } from "app/util";
 import * as yup from "yup"
 import { useMutation } from "react-query";
-import { ReqPostNotification } from "@types";
+import { ReqPostNotification } from "app/@types";
 import { notificationApi } from "app/api";
 import { useMessage } from "app/hooks";
 import { AxiosError } from "axios";
-import { AppSnack, PermissionLayout, SelectPromotion, SelectionDiscounts, SelectionOrg } from "components";
+import { AppSnack, PermissionLayout, SelectPromotion, SelectionDiscounts, SelectionOrg } from "app/components";
 import { useState } from "react";
 import { IDiscountPar, IOrganization } from "app/interface";
 import { request3rdApi } from "app/api/api-3rd-client";

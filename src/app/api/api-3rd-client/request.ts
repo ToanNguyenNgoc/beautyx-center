@@ -1,5 +1,6 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import axios3rdClient from "./client";
-import { ReqPostNotification, ResponseDetail } from "@types";
+import { ReqPostNotification, ResponseDetail } from "app/@types";
 import { ITrend } from "app/pages/trends/trend.interface";
 
 class Request {

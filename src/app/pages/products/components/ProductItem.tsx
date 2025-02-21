@@ -1,4 +1,3 @@
-import React from 'react'
 import {IProductSingle} from 'app/interface/product_single'
 import {Link} from 'react-router-dom'
 import {formatPrice, formatSalePriceProduct, onErrorImg, StatusElement} from 'app/util'

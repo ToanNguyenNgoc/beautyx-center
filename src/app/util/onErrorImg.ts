@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/ban-ts-comment */
+//@ts-ignore
 import { IMGS } from "../../_metronic/assets/imgs/imgs";
 
 export function onErrorImg(e: any) {

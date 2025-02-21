@@ -13,14 +13,14 @@ import { Logout, AuthPage, useAuth } from '../modules/auth'
 import { App } from '../App'
 import { CustomerEvent } from 'app/pages/customers-event/CustomerEvent'
 import { LocationTool } from 'app/pages/tools'
-import { RegisterGlobalLayout } from 'components'
+import { RegisterGlobalLayout } from 'app/components'
 
 /**
  * Base URL of the website.
  *
  * @see https://facebook.github.io/create-react-app/docs/using-the-public-folder
  */
-const { PUBLIC_URL } = process.env
+const { PUBLIC_URL } = import.meta.env
 
 const AppRoutes: FC = () => {
   const { currentUser } = useAuth();

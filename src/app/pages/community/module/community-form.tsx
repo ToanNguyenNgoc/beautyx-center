@@ -1,8 +1,9 @@
-import TitlePage from "components/TitlePage";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import TitlePage from "app/components/TitlePage";
 import { ChangeEvent, FC, useEffect, useRef } from "react";
 import { useFormik } from "formik";
 import { LoadingButton } from "@mui/lab";
-import { AppSnack, SelectionOrg } from "components";
+import { AppSnack, SelectionOrg } from "app/components";
 import { IOrganization, IService, Media } from "app/interface";
 import { accept_image, accept_video } from "app/util";
 import { useMessage, usePostMedia } from "app/hooks";
@@ -11,7 +12,7 @@ import { SelectService } from "app/pages/discounts/module/discount-form/select-s
 import "../style.scss"
 import { useMutation } from "react-query";
 import { communityApi } from "app/api";
-import { ReqPostBody } from "@types";
+import { ReqPostBody } from "app/@types";
 
 interface InitialValues {
   content: string;
@@ -112,7 +113,7 @@ const CommunityForm: FC = () => {
             <div className="mt-4">
               <SelectionOrg
                 required
-                setOrigin={(e) => { formik.setFieldValue('organization', e); formik.setFieldValue('services', []) }}
+                setOrigin={(e:any) => { formik.setFieldValue('organization', e); formik.setFieldValue('services', []) }}
                 origin={formik.values.organization}
                 organization_id={formik.values.organization?.id}
               />

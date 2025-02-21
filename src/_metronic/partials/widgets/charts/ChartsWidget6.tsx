@@ -1,4 +1,4 @@
-/* eslint-disable jsx-a11y/anchor-is-valid */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, {useEffect, useRef} from 'react'
 import ApexCharts, {ApexOptions} from 'apexcharts'
 import {getCSS, getCSSVariableValue} from '../../../assets/ts/_utils'
@@ -79,7 +79,7 @@ const ChartsWidget6: React.FC<Props> = ({className}) => {
 
 export {ChartsWidget6}
 
-function getChartOptions(height: number): ApexOptions {
+function getChartOptions(_height: number): ApexOptions {
   const labelColor = getCSSVariableValue('--kt-gray-500')
   const borderColor = getCSSVariableValue('--kt-gray-200')
 

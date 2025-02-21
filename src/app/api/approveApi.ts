@@ -2,7 +2,7 @@ import { IPUT_APPROVE } from './interface'
 import { API_ROUTE } from "./api-route"
 import { identity, pickBy } from 'lodash'
 import {  AUTH_HEADER } from "./config_header"
-import { axiosClient } from 'configs'
+import { axiosClient } from 'app/configs'
 
 class ApproveApi {
     putApprove = (id: number | string, body: IPUT_APPROVE) => {

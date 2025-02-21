@@ -1,14 +1,15 @@
-import TitlePage from "components/TitlePage";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import TitlePage from "app/components/TitlePage";
 import { FC } from "react";
 import './voucher.style.scss'
-import { AppSnack, XDateRangePicker, XSwitch } from "components";
+import { AppSnack, XDateRangePicker, XSwitch } from "app/components";
 import { useFormik } from "formik";
 import * as Yup from 'yup'
 import { LoadingButton } from "@mui/lab";
 import moment from "moment";
 import { discountsApi } from "app/api";
 import { useMutation } from "react-query";
-import { ReqDiscountBody } from "@types";
+import { ReqDiscountBody } from "app/@types";
 import { useMessage } from "app/hooks";
 import { useNavigate } from "react-router-dom";
 
@@ -17,14 +18,14 @@ const VoucherFormPage: FC = () => {
   const { resultLoad, onCloseNoti, noti } = useMessage()
   const { mutate, isLoading } = useMutation<any, any, ReqDiscountBody>({
     mutationFn: body => discountsApi.postDiscount(body),
-    onSuccess: (data) => {
+    onSuccess: () => {
       resultLoad({
         message: 'Tạo thành công',
         color: 'success'
       })
       setTimeout(() => navigate(-1), 2000)
     },
-    onError: (error, variables, context) => {
+    onError: () => {
       resultLoad({
         message: 'Có lỗi xảy ra',
         color: 'error'
@@ -201,7 +202,7 @@ const VoucherFormPage: FC = () => {
                   minDate={new Date()}
                   startDate={new Date(formik.values.valid_from)}
                   endDate={new Date(formik.values.valid_util)}
-                  onChange={(e) => {
+                  onChange={(e:any) => {
                     formik.setFieldValue('valid_from', moment(e.selection.startDate).format('YYYY-MM-DD HH:mm:ss'))
                     formik.setFieldValue('valid_util', moment(e.selection.endDate).format('YYYY-MM-DD HH:mm:ss'))
                   }}

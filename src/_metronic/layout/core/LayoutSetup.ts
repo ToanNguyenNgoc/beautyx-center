@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import {
   IAside,
   IContent,
@@ -12,7 +13,7 @@ import {
 } from './LayoutModels'
 import {DefaultLayoutConfig} from './DefaultLayoutConfig'
 
-const LAYOUT_CONFIG_KEY = process.env.REACT_APP_BASE_LAYOUT_CONFIG_KEY || 'LayoutConfig'
+const LAYOUT_CONFIG_KEY = import.meta.env.VITE_REACT_APP_BASE_LAYOUT_CONFIG_KEY || 'LayoutConfig'
 
 export function getLayout(): ILayout {
   const ls = localStorage.getItem(LAYOUT_CONFIG_KEY)
@@ -218,7 +219,7 @@ export class LayoutSetup {
     }
   }
 
-  private static initAsideMenu(config: IAside): void {
+  private static initAsideMenu(_config: IAside): void {
     // if (Theme::getOption('layout', 'aside/menu') === 'documentation') {
     // 	self::$menu = new Menu( Theme::getOption('menu', 'documentation'), Theme::getPagePath() );
     // } else {

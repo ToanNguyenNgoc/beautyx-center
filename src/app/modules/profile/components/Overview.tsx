@@ -1,4 +1,3 @@
-import React from 'react'
 import {
   FeedsWidget2,
   FeedsWidget3,

@@ -1,11 +1,11 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import tipAPI from 'app/api/tipApi'
 import { Tips } from 'app/interface'
-import { QR_KEY } from 'common'
-import { XSwitch } from 'components'
+import { QR_KEY } from 'app/common'
+import { XSwitch } from 'app/components'
 import { useFormik } from 'formik'
-import { queryClient } from 'index'
 import { useState } from 'react'
-import { useMutation } from 'react-query'
+import { useMutation, useQueryClient } from 'react-query'
 import { useNavigate } from 'react-router-dom'
 import * as Yup from 'yup'
 type Props = {
@@ -14,6 +14,7 @@ type Props = {
   tipId: number
 }
 export default function FormTip(props: Props) {
+  const queryClient = useQueryClient()
   const {isForm, tip, tipId} = props
   const [statusDefault, setStatus] = useState(!!tip?.status)
   const navigate = useNavigate()

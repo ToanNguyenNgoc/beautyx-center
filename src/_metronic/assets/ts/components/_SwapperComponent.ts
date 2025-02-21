@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-unsafe-function-type */
 import {
   getAttributeValueByBreakpoint,
   stringSnakeToCamel,
@@ -80,7 +82,7 @@ class SwapperComponent {
   private getOption(name: string) {
     const attr = this.element.getAttribute(`${this.queries.attrQuery}${name}`)
     if (attr) {
-      let value = getAttributeValueByBreakpoint(attr)
+      const value = getAttributeValueByBreakpoint(attr)
       if (attr != null && String(value) === 'true') {
         return true
       } else if (value !== null && String(value) === 'false') {
@@ -135,7 +137,7 @@ class SwapperComponent {
   // Static methods
   public static getInstance = (
     el: HTMLElement,
-    componentName: string = defaultSwapperQueires.componentName
+    _componentName: string = defaultSwapperQueires.componentName
   ): SwapperComponent | null => {
     const place = SwapperStore.get(el.id)
     if (place) {

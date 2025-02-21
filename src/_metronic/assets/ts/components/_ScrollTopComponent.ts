@@ -1,3 +1,4 @@
+/* eslint-disable no-var */
 import {
   getScrollTop,
   getAttributeValueByBreakpoint,
@@ -37,7 +38,7 @@ class ScrollTopComponent {
   }
 
   private _handlers = () => {
-    let timer: number
+    var timer: number
     window.addEventListener('scroll', () => {
       throttle(timer, () => {
         this._scroll()

@@ -1,5 +1,5 @@
 import { API_ROUTE } from "./api-route";
-import { axiosClient } from "configs";
+import { axiosClient } from "app/configs";
 import { pickBy, identity } from "lodash"
 import { AUTH_HEADER } from "./config_header"
 import { PostTip, Tips, ResponseType, Response } from "app/interface";

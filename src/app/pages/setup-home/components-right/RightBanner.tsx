@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { IBanner } from 'app/interface/banner';
 import { IRoot } from 'app/redux/interface';
 import { onSortTableBanners } from 'app/redux/setup-home';
@@ -85,7 +86,7 @@ interface ISortableContainer extends SortableContainerProps {
 }
 
 const SortableItem: React.ComponentClass<ISortableItem, any> = SortableElement(
-    ({ children, className }: { children: React.ReactNode; className: string }) => (
+    ({ children }: { children: React.ReactNode; className: string }) => (
         <tr>{children}</tr>
     )
 )
@@ -95,7 +96,7 @@ interface ISortableHandleElement {
 }
 
 const SortableList: React.ComponentClass<ISortableContainer, any> = SortableContainer(
-    ({ children, className }: { children: React.ReactNode; className: string }) => {
+    ({ children }: { children: React.ReactNode; className: string }) => {
         return <tbody>{children}</tbody>
     }
 )

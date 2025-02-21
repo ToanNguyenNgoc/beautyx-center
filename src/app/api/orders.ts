@@ -1,11 +1,13 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import {IRES_ORDER_BY_ORGID, IOrderOrg, ResponseType} from 'app/interface'
 import {paramOrder} from 'app/query-params'
-import {axiosClient} from 'configs'
 import {identity, pickBy} from 'lodash'
 import {AUTH_HEADER_PARAM_GET} from './config_header'
+import { axiosClient } from 'app/configs'
 
 class Orders {
   getAllOrder = (values: any) => {
+    console.log(values)
     const url = `/orders`
     const paramsOb = {
       // page: values.page || 1,

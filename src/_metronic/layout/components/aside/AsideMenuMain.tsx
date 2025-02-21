@@ -1,16 +1,14 @@
-/* eslint-disable react/jsx-no-comment-textnodes */
-/* eslint-disable react/jsx-no-target-blank */
-import React from 'react'
+/* eslint-disable prefer-const */
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useIntl } from 'react-intl'
-// import { KTSVG, toAbsoluteUrl } from '../../../helpers'
-import { AsideMenuItemWithSub } from './AsideMenuItemWithSub'
 import { AsideMenuItem } from './AsideMenuItem'
 import { IOrganization, IPermission } from 'app/interface'
 import { useAuth } from 'app/modules/auth'
 import { useLocation, useParams } from 'react-router-dom'
 import { useSwr } from 'app/hooks'
 import { API_ROUTE } from 'app/api/api-route'
-import { Avatar, PermissionLayout } from 'components'
+import { Avatar, PermissionLayout } from 'app/components'
 import { useDispatch } from 'react-redux'
 import { onSetOrganization } from 'app/redux/organizationSlice'
 // import { checkMethod } from 'app/util'
@@ -37,7 +35,7 @@ export function AsideMenuMain() {
   const params: any = useParams()
   const location = useLocation()
   const permissions: IPermission[] = useAuth().permissionsUser
-  const generateRoute = permissions?.map((i: IPermission, index: number) => {
+  const generateRoute = permissions?.map((i: IPermission) => {
     const route = i.name.split('.')[1]
     // const method = checkMethod(i.name.split('.')[i.name.split('.').length - 1])
     let path = `pages/${route}`
@@ -65,7 +63,7 @@ export function AsideMenuMain() {
   ]
   const conditionOrg = validPathsOrg.includes(location.pathname)
   const { response: org } = useSwr(conditionOrg, API_ROUTE.ORGANIZATIONS_ID(params.id), {}, {
-    onSuccess(data, key, config) {
+    onSuccess(data) {
       dispatch(onSetOrganization(data.context))
     },
   })

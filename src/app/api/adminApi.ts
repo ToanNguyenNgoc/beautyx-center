@@ -1,5 +1,5 @@
-import { QrAdminAccount, QrAdminOrder, ReqAdminUser } from "@types";
-import { axiosClient } from "configs";
+import { QrAdminAccount, QrAdminOrder, ReqAdminUser } from "app/@types";
+import { axiosClient } from "app/configs";
 
 export const adminApi = {
   adminUsers: (params?: QrAdminAccount) => axiosClient.get('/admin/users', { params }),

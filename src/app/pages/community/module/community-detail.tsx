@@ -1,4 +1,4 @@
-import TitlePage from "components/TitlePage";
+import TitlePage from "app/components/TitlePage";
 import { FC } from "react";
 
 const CommunityDetail: FC = () => {

@@ -1,31 +1,28 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 // import Draggable from 'react-draggable';
-import React, { FC, useState } from "react";
+import { FC, useState } from "react";
 import './style.scss';
 import { Link, useNavigate } from "react-router-dom";
-import {
-  SortableContainer,
-  SortableContainerProps,
-  SortableElement,
-  SortableElementProps,
-  SortableHandle
-} from "react-sortable-hoc";
+// import {
+//   SortableContainer,
+//   SortableContainerProps,
+//   SortableElement,
+//   SortableElementProps,
+//   SortableHandle
+// } from "react-sortable-hoc";
 import { arrayMoveImmutable } from "array-move";
-// import { useVerifyRoute } from "app/hooks";
 import { useMutation, useQuery, useQueryClient } from "react-query";
-import { QR_KEY } from "common";
+import { QR_KEY } from "app/common";
 import bannerApi from "app/api/bannerApi";
 import { IBanner } from "app/interface";
-import TitlePage from "components/TitlePage";
-import { KTSVG, toAbsoluteUrl } from "_metronic/helpers";
+import TitlePage from "app/components/TitlePage";
+import { KTSVG, toAbsoluteUrl } from "../../../_metronic/helpers";
 import { BannerTypeElement, formatDate } from "app/util";
 import moment from "moment";
 import { Button, CircularProgress } from "@mui/material";
-import { PageCircularProgress, PermissionLayout } from "components";
+import { PageCircularProgress, PermissionLayout } from "app/components";
 
-function BannerWidget(props: any) {
+function BannerWidget() {
   const navigate = useNavigate()
-  // const { METHOD } = useVerifyRoute()
   const [banners, setBanners] = useState<IBanner[]>([])
   useQuery({
     queryKey: [QR_KEY.BANNER],
@@ -65,14 +62,9 @@ function BannerWidget(props: any) {
               <span className='text-muted mt-1 fw-semobold fs-7'>{banners.length}</span>
             </h3>
           </div>
-          {/* end::Header */}
-          {/* begin::Body */}
           <div className='card-body py-3'>
-            {/* begin::Table container */}
             <div className='table-responsive'>
-              {/* begin::Table */}
               <table className='table table-row-dashed table-row-gray-300 align-middle gs-0 gy-4'>
-                {/* begin::Table head */}
                 <thead>
                   <tr className='fw-bold text-muted'>
                     <th className='w-25px'>
@@ -88,22 +80,16 @@ function BannerWidget(props: any) {
                     <th className='min-w-100px text-end'>Actions</th>
                   </tr>
                 </thead>
-                {/* end::Table head */}
-                {/* begin::Table body */}
                 <SortableComponent
                   onSortEnd={onSortEnd}
                   banners={banners}
                 />
-                {/* end::Table body */}
               </table>
-              {/* end::Table */}
               <PageCircularProgress loading={banners.length === 0} />
             </div>
-            {/* end::Table container */}
           </div>
         </div>
       </div>
-      {/* <SortableComponent /> */}
     </>
   )
 }
@@ -114,35 +100,35 @@ interface SortableComponentProps {
   onSortEnd: (oldIndex: number, newIndex: number) => void
 }
 
-interface ISortableItem extends SortableElementProps {
-  children: React.ReactNode
-  className?: string
-}
-interface ISortableContainer extends SortableContainerProps {
-  children: React.ReactNode
-  className?: string
-}
+// interface ISortableItem extends SortableElementProps {
+//   children: React.ReactNode
+//   className?: string
+// }
+// interface ISortableContainer extends SortableContainerProps {
+//   children: React.ReactNode
+//   className?: string
+// }
 
-const SortableItem: React.ComponentClass<ISortableItem, any> = SortableElement(
-  ({ children, className }: { children: React.ReactNode; className: string }) => (
-    <tr>{children}</tr>
-  )
-)
-interface ISortableHandleElement {
-  children: React.ReactNode
-  className?: string
-}
+// const SortableItem: React.ComponentClass<ISortableItem, any> = SortableElement(
+//   ({ children }: { children: React.ReactNode; className: string }) => (
+//     <tr>{children}</tr>
+//   )
+// )
+// interface ISortableHandleElement {
+//   children: React.ReactNode
+//   className?: string
+// }
 
-const SortableList: React.ComponentClass<ISortableContainer, any> = SortableContainer(
-  ({ children, className }: { children: React.ReactNode; className: string }) => {
-    return <tbody>{children}</tbody>
-  }
-)
-const DndTrigger: React.ComponentClass<ISortableHandleElement, any> = SortableHandle(
-  ({ children, className }: { children: React.ReactNode; className: string }) => (
-    <div className={className || ''}>{children}</div>
-  )
-)
+// const SortableList: React.ComponentClass<ISortableContainer, any> = SortableContainer(
+//   ({ children }: { children: React.ReactNode; className: string }) => {
+//     return <tbody>{children}</tbody>
+//   }
+// )
+// const DndTrigger: React.ComponentClass<ISortableHandleElement, any> = SortableHandle(
+//   ({ children, className }: { children: React.ReactNode; className: string }) => (
+//     <div className={className || ''}>{children}</div>
+//   )
+// )
 const SortableComponent: FC<SortableComponentProps> = ({ banners, onSortEnd }) => {
   const handleSortEnd = ({ oldIndex, newIndex }: { oldIndex: number; newIndex: number }): void => {
     onSortEnd(oldIndex, newIndex)
@@ -157,25 +143,26 @@ const SortableComponent: FC<SortableComponentProps> = ({ banners, onSortEnd }) =
     onError: () => { }
   })
   return (
-    <SortableList
-      lockAxis="y"
-      lockToContainerEdges={true}
-      useDragHandle
-      onSortEnd={handleSortEnd}
+    // <SortableList
+    //   lockAxis="y"
+    //   lockToContainerEdges={true}
+    //   useDragHandle
+    //   onSortEnd={handleSortEnd}
 
-    >
+    // >
+    <>
       {banners.map((item: IBanner, index: number) => (
-        <SortableItem
-          key={`item-${index}`}
-          index={index} className="item"
-        >
+        // <SortableItem
+        //   key={`item-${index}`}
+        //   index={index} className="item"
+        // >
+
+        // </SortableItem>
+        <tr key={index} onClick={() => handleSortEnd({ newIndex: 1, oldIndex: 1 })}>
           <td>
-            {
-              // METHOD?.includes("UPDATE") &&
-              <DndTrigger className="itemTrigger">
-                <img src={toAbsoluteUrl("/media/icons/duotune/abstract/abs015.svg")} alt="" />
-              </DndTrigger>
-            }
+            {/* <DndTrigger className="itemTrigger"> */}
+            <img src={toAbsoluteUrl("/media/icons/duotune/abstract/abs015.svg")} alt="" />
+            {/* </DndTrigger> */}
           </td>
           <td>
             <div className='d-flex align-items-center'>
@@ -192,11 +179,6 @@ const SortableComponent: FC<SortableComponentProps> = ({ banners, onSortEnd }) =
               </div>
             </div>
           </td>
-          {/* <td>
-                        <span className='text-dark fw-bold text-hover-primary fs-6'>
-                            {item.priority}
-                        </span>
-                    </td> */}
           <td>
             <BannerTypeElement
               TYPE={item.type}
@@ -239,9 +221,10 @@ const SortableComponent: FC<SortableComponentProps> = ({ banners, onSortEnd }) =
               </PermissionLayout>
             </div>
           </td>
-        </SortableItem>
+        </tr>
       ))}
-    </SortableList>
+    </>
+    // </SortableList>
   )
 }
 

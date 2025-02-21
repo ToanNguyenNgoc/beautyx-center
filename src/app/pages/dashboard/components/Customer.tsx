@@ -1,13 +1,15 @@
-/* eslint-disable jsx-a11y/anchor-is-valid */
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable no-var */
+/* eslint-disable prefer-const */
 import React, { FC, useEffect, useRef, useState } from 'react'
 import ApexCharts, { ApexOptions } from 'apexcharts'
-import { useThemeMode } from '_metronic/partials/layout/theme-mode/ThemeModeProvider'
 import { useMutation, } from 'react-query'
-import { QR_KEY } from 'common'
+import { QR_KEY } from 'app/common'
 import { statisticApi } from 'app/api'
 import moment from 'moment'
 import { FormControl, InputLabel, MenuItem, Select, SelectChangeEvent } from '@mui/material'
 import dayjs from 'dayjs'
+import { useThemeMode } from '../../../../_metronic/partials'
 
 const generateYear = () => {
   let years: number[] = [];
@@ -140,7 +142,7 @@ export const CustomerChart: React.FC<Props> = ({ className, chartColor, chartHei
   )
 }
 
-const chartOptions = (chartColor: string, chartHeight: string, counts: any[]): ApexOptions => {
+const chartOptions = (_chartColor: string, _chartHeight: string, counts: any[]): ApexOptions => {
   return {
     chart: {
       type: 'area'

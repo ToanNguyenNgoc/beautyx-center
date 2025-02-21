@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unsafe-function-type */
+/* eslint-disable @typescript-eslint/no-empty-object-type */
 import {EventHandlerUtil, DataUtil, getUniqueIdWithPrefix, getCSS} from '../_utils/index'
 
 export interface IImageInputOptions {}
@@ -121,31 +123,31 @@ class ImageInputComponent {
     EventHandlerUtil.trigger(this.element, 'kt.imageinput.canceled', e)
   }
 
-  private _remove = (e: Event) => {
-    e.preventDefault()
+  // private _remove = (e: Event) => {
+  //   e.preventDefault()
 
-    // Fire remove event
-    if (EventHandlerUtil.trigger(this.element, 'kt.imageinput.remove', e) === false) {
-      return
-    }
+  //   // Fire remove event
+  //   if (EventHandlerUtil.trigger(this.element, 'kt.imageinput.remove', e) === false) {
+  //     return
+  //   }
 
-    this.element.classList.remove('image-input-changed')
-    this.element.classList.add('image-input-empty')
-    if (this.wrapperElement) {
-      this.wrapperElement.style.setProperty('background-image', 'none')
-    }
+  //   this.element.classList.remove('image-input-changed')
+  //   this.element.classList.add('image-input-empty')
+  //   if (this.wrapperElement) {
+  //     this.wrapperElement.style.setProperty('background-image', 'none')
+  //   }
 
-    if (this.inputElement) {
-      this.inputElement.value = ''
-    }
+  //   if (this.inputElement) {
+  //     this.inputElement.value = ''
+  //   }
 
-    if (this.hiddenElement !== null) {
-      this.hiddenElement.value = '1'
-    }
+  //   if (this.hiddenElement !== null) {
+  //     this.hiddenElement.value = '1'
+  //   }
 
-    // Fire removed event
-    EventHandlerUtil.trigger(this.element, 'kt.imageinput.removed', e)
-  }
+  //   // Fire removed event
+  //   EventHandlerUtil.trigger(this.element, 'kt.imageinput.removed', e)
+  // }
 
   ///////////////////////
   // ** Public API  ** //

@@ -1,12 +1,13 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable react-hooks/exhaustive-deps */
 import './style.scss'
 import Form from './form';
 import { Location, useLocation, useParams } from 'react-router-dom';
 import { useQuery } from 'react-query';
-import { QR_KEY } from 'common';
+import { QR_KEY } from 'app/common';
 import { discountsApi } from 'app/api';
-import TitlePage from 'components/TitlePage';
-import { PageCircularProgress, PermissionLayout } from 'components';
+import TitlePage from 'app/components/TitlePage';
+import { PageCircularProgress, PermissionLayout } from 'app/components';
 import { IDiscountPar } from 'app/interface';
 
 interface LocationPage extends Location {
@@ -51,4 +52,5 @@ function DiscountForm() {
 }
 
 export default DiscountForm;
+// eslint-disable-next-line react-refresh/only-export-components
 export * from './export-code'

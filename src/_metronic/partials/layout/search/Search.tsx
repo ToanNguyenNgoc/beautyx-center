@@ -1,4 +1,5 @@
-import React, {FC, useEffect, useRef, useState} from 'react'
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import  {FC, useEffect, useRef, useState} from 'react'
 import {SearchComponent} from '../../../assets/ts/components'
 import {KTSVG, toAbsoluteUrl} from '../../../helpers'
 
@@ -34,7 +35,7 @@ const Search: FC = () => {
     }, 1500)
   }
 
-  const clear = (search: SearchComponent) => {
+  const clear = (_search: SearchComponent) => {
     // Show recently viewed
     suggestionsElement.current!.classList.remove('d-none')
     // Hide results

@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unsafe-function-type */
 import {DataUtil} from './_DataUtil'
 import {getUniqueIdWithPrefix} from './_TypesHelpers'
 
@@ -15,22 +17,22 @@ export class EventHandlerUtil {
     }
   } = {}
 
-  private static setEventMetasByName(
-    name: string,
-    handlers: {
-      [handlerId: string]: EventMeta
-    }
-  ): void {
-    EventHandlerUtil.store[name] = handlers
-  }
+  // private static setEventMetasByName(
+  //   name: string,
+  //   handlers: {
+  //     [handlerId: string]: EventMeta
+  //   }
+  // ): void {
+  //   EventHandlerUtil.store[name] = handlers
+  // }
 
-  private static getEventMetaByName(name: string):
-    | {
-        [handlerId: string]: EventMeta
-      }
-    | undefined {
-    return EventHandlerUtil.store[name]
-  }
+  // private static getEventMetaByName(name: string):
+  //   | {
+  //       [handlerId: string]: EventMeta
+  //     }
+  //   | undefined {
+  //   return EventHandlerUtil.store[name]
+  // }
 
   private static setEventMetaByNameAndHandlerId(
     name: string,
@@ -45,23 +47,23 @@ export class EventHandlerUtil {
     EventHandlerUtil.store[name][handlerId] = meta
   }
 
-  private static getEventMetaByHandlerId(name: string, handlerId: string): EventMeta | undefined {
-    const handlersIds = EventHandlerUtil.store[name]
-    if (!handlersIds) {
-      return
-    }
-    return handlersIds[handlerId]
-  }
+  // private static getEventMetaByHandlerId(name: string, handlerId: string): EventMeta | undefined {
+  //   const handlersIds = EventHandlerUtil.store[name]
+  //   if (!handlersIds) {
+  //     return
+  //   }
+  //   return handlersIds[handlerId]
+  // }
 
-  private static setFiredByNameAndHandlerId(name: string, handerId: string, fired: boolean): void {
-    const meta = EventHandlerUtil.getEventMetaByHandlerId(name, handerId)
-    if (!meta) {
-      return
-    }
+  // private static setFiredByNameAndHandlerId(name: string, handerId: string, fired: boolean): void {
+  //   const meta = EventHandlerUtil.getEventMetaByHandlerId(name, handerId)
+  //   if (!meta) {
+  //     return
+  //   }
 
-    meta.fired = fired
-    EventHandlerUtil.setEventMetaByNameAndHandlerId(name, handerId, meta)
-  }
+  //   meta.fired = fired
+  //   EventHandlerUtil.setEventMetaByNameAndHandlerId(name, handerId, meta)
+  // }
 
   private static addEvent(
     element: HTMLElement,
@@ -97,7 +99,7 @@ export class EventHandlerUtil {
     delete EventHandlerUtil.store[name][handerId]
   }
 
-  public static trigger(element: HTMLElement, name: string, target?: any, e?: Event): boolean {
+  public static trigger(element: HTMLElement, name: string, target?: any): boolean {
     let returnValue = true
     if (!DataUtil.has(element, name)) {
       return returnValue

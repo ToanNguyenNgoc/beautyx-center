@@ -1,8 +1,7 @@
-import React from 'react';
 import { IItemView } from 'app/interface';
 import { useFetch } from 'app/hooks';
 import { API_3RD } from 'app/api/api-route';
-import { Avatar } from 'components';
+import { Avatar } from 'app/components';
 import { formatPrice } from 'app/util'
 
 interface TopServicesProps {

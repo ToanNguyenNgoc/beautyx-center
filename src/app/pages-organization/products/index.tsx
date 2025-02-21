@@ -1,28 +1,27 @@
-import {API_ROUTE} from 'app/api/api-route'
-import {useGetParamUrl, useSwr} from 'app/hooks'
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import {useGetParamUrl} from 'app/hooks'
 import {paramProduct} from 'app/query-params'
-import {SnackAlert, XPagination, XSwitch} from 'components'
+import {SnackAlert, XPagination, XSwitch} from 'app/components'
 import {useCallback, useRef, useState} from 'react'
-import {Link, useLocation, useNavigate, useParams} from 'react-router-dom'
-import TitlePage from '../../../components/TitlePage'
+import {Link, useLocation, useNavigate} from 'react-router-dom'
+import TitlePage from 'app/components/TitlePage'
 // import Select, {SelectChangeEvent} from '@mui/material/Select'
 import productsApi from 'app/api/productApi'
-import {IOrganization, IResponseProductOrg, ResponseType} from 'app/interface'
+import { IResponseProductOrg, ResponseType} from 'app/interface'
 import {formatPrice, formatSalePriceProduct, onErrorImg, StatusElement} from 'app/util'
-import {QR_KEY} from 'common'
-import {queryClient} from 'index'
+import {QR_KEY} from 'app/common'
 import {debounce, identity, pickBy} from 'lodash'
-import {useMutation, useQuery} from 'react-query'
+import {useMutation, useQuery, useQueryClient} from 'react-query'
 import {CircularProgress} from '@mui/material'
 import { useSelector } from 'react-redux'
 import { RootStore } from 'app/redux/store'
 
 export function OrgProducts() {
+  const queryClient = useQueryClient()
   const location = useLocation()
   const navigate = useNavigate()
-  let refSearch = useRef<any>()
+  const refSearch = useRef<any>(null)
   const query: any = useGetParamUrl() ?? {}
-  const paramsUrl: any = useParams()
   const [openAlert, setOpenAlert] = useState<{
     open: boolean
     title: string
@@ -65,7 +64,7 @@ export function OrgProducts() {
       return productsApi.getByOrgId(PARAMS)
     },
     keepPreviousData: true,
-    onSuccess: (data) => {},
+    onSuccess: () => {},
     onError: (error) => {
       setOpenAlert({open: true, title: `Lỗi: ${error}`, severity: 'error'})
     },
@@ -74,7 +73,7 @@ export function OrgProducts() {
     staleTime: 1000 * 60 * 2,
   })
 
-  let productList = data?.context?.data || []
+  const productList = data?.context?.data || []
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const onDebounceSearch = useCallback(
@@ -297,7 +296,7 @@ export function OrgProducts() {
                       </tr>
                     </thead>
                     <tbody>
-                      {productList.map((item, index: number) => (
+                      {productList.map((item) => (
                         <tr key={item.id} className='text-gray-400 fw-bold fs-7 gs-0'>
                           <td
                             className=' sorting'

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { STATUS } from "../status";
 
@@ -40,6 +41,5 @@ const serviceSlice = createSlice({
         },
     },
 });
-const { actions } = serviceSlice;
 // export const { clearPrevState } = actions;
 export default serviceSlice.reducer;

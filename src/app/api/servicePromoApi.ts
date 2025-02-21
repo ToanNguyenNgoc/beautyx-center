@@ -1,4 +1,4 @@
-import { axiosClient } from "configs";
+import { axiosClient } from "app/configs";
 import { pickBy, identity } from "lodash";
 // import { AUTH_LOCATION } from "./authLocation";
 

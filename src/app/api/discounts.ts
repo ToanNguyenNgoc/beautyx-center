@@ -1,9 +1,9 @@
 import { pickBy, identity } from 'lodash'
 import { API_ROUTE } from "./api-route";
-import { QrDiscount, QrDiscountCode, QrDiscountDetail, ReqDiscountBody, ResponseDetail, ResponseList } from "@types";
+import { QrDiscount, QrDiscountCode, QrDiscountDetail, ReqDiscountBody, ResponseDetail, ResponseList } from "app/@types";
 import { ICouponCodeCampaign, IDiscountPar } from "app/interface"
 import { AUTH_HEADER } from "app/api/config_header";
-import { axiosClient } from 'configs';
+import { axiosClient } from 'app/configs';
 
 class Discounts {
     postDiscount = (body: ReqDiscountBody) => {

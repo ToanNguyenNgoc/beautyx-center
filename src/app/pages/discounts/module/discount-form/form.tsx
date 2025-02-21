@@ -1,12 +1,13 @@
-/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Box, MenuItem, Select } from '@mui/material';
-import React, { useState } from 'react';
+import  { useState } from 'react';
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { AppSnack, FlatFormOrder, SelectionOrgMultiple, XDateRangePicker, XSwitch } from 'components'
+import { AppSnack, FlatFormOrder, SelectionOrgMultiple, XDateRangePicker, XSwitch } from 'app/components'
 import moment from 'moment';
 import { useMutation } from 'react-query';
-import { ReqDiscountBody } from '@types';
+import { ReqDiscountBody } from 'app/@types';
 import { discountsApi } from 'app/api';
 import { LoadingButton } from '@mui/lab';
 import { IDiscountPar, IITEMS_DISCOUNT } from 'app/interface';
@@ -45,7 +46,7 @@ function Form(props: IProps) {
     //[HANDLE POST]
     const { mutate, isLoading } = useMutation({
         mutationFn: (body: ReqDiscountBody) => discount ? discountsApi.putDiscount(discount.id, body) : discountsApi.postDiscount(body),
-        onSuccess: (data) => {
+        onSuccess: () => {
             resultLoad({
                 message: discount ? 'Cập nhật thành công' : 'Tạo thành công',
                 color: 'success'
@@ -53,7 +54,7 @@ function Form(props: IProps) {
             // const uuid = data.data?.context?.uuid
             setTimeout(() => navigate(-1), 2000)
         },
-        onError: (error, variables, context) => {
+        onError: (_error, _variables, _context) => {
             resultLoad({
                 message: 'Có lỗi xảy ra',
                 color: 'error'

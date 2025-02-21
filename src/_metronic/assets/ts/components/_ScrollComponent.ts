@@ -1,3 +1,5 @@
+/* eslint-disable no-var */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import {
   DataUtil,
   getObjectPropertyValueByKey,
@@ -153,8 +155,8 @@ class ScrollComponent {
   }
 
   private setupHeight = () => {
-    let height = this.getHeight()
-    let heightType = this.getHeightType() as string
+    const height = this.getHeight()
+    const heightType = this.getHeightType() as string
 
     // Set height
     if (height !== null && height.length > 0) {
@@ -261,7 +263,7 @@ class ScrollComponent {
     })
   }
 
-  public static destroyAll(attr: string = '[data-kt-scroll="true"]') {}
+  public static destroyAll(_attr: string = '[data-kt-scroll="true"]') {}
 
   public static bootstrap(attr: string = '[data-kt-scroll="true"]') {
     ScrollComponent.createInstances(attr)

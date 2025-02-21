@@ -1,4 +1,4 @@
-import React, {FC} from 'react'
+import  {FC} from 'react'
 import {toAbsoluteUrl} from '../../../helpers'
 
 const Demos: FC = () => {
@@ -70,7 +70,7 @@ const Demos: FC = () => {
               <div className='overlay-layer bg-dark bg-opacity-10'>
                 {item.available && (
                   <a
-                    href={`${process.env.REACT_APP_PREVIEW_REACT_URL}/${item.name}`}
+                    href={`${import.meta.env.REACT_APP_PREVIEW_REACT_URL}/${item.name}`}
                     className='btn btn-sm btn-success shadow'
                   >
                     {item.name.charAt(0).toUpperCase() + item.name.slice(1)}

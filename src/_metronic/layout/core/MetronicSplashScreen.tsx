@@ -1,4 +1,4 @@
-import React, {
+import {
   FC,
   createContext,
   useContext,
@@ -15,7 +15,7 @@ const MetronicSplashScreenContext = createContext<Dispatch<SetStateAction<number
 
 const MetronicSplashScreenProvider: FC<WithChildren> = ({children}) => {
   const [count, setCount] = useState(0)
-  let visible = count > 0
+  const visible = count > 0
 
   useEffect(() => {
     const splashScreen = document.getElementById('splash-screen')

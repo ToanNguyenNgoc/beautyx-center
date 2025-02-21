@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
 import {AuthModel} from '../interface/account_models';
@@ -34,7 +35,7 @@ const loginSlice = createSlice({
         [loginAsync.pending]: (state) => {
             return { ...state, status: STATUS.LOADING }
         },
-        [loginAsync.fulfilled]: (state, { payload }) => {
+        [loginAsync.fulfilled]: (_state, { payload }) => {
             return {
                 response: payload,
                 status: STATUS.SUCCESS

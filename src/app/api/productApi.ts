@@ -6,13 +6,12 @@ import {AUTH_LOCATION} from './config_header'
 import {
   IPRODUCT_GET_ALL,
   IPRODUCT_DETAIL_BY_ID,
-  IPRODUCT_DETAIL_BY_ORG_ID,
   IPRODUCT_BY_ORG_ID,
   IPRODUCT_UPDATE_STATUS,
 } from './product_models'
-import {axiosClient} from 'configs'
+// import {axiosClient} from 'configs'
 import {IResponseProductOrg, ResponseType} from 'app/interface'
-import {IPRODUCT} from 'app/interface/product_models'
+import { axiosClient } from 'app/configs'
 // end
 class ProductApi {
   getByOrgId = (values: IPRODUCT_BY_ORG_ID) => {

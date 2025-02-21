@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { LoadingButton } from "@mui/lab";
-import { QrDiscountCode } from "@types";
+import { QrDiscountCode } from "app/@types";
 import { discountsApi } from "app/api";
 import { ICouponCodeCampaign, IDiscountPar } from "app/interface";
 import { FC, useEffect, useState } from "react";
@@ -43,7 +43,7 @@ export const ExportCode: FC<Props> = ({ discount, title = ' Xuất mã giảm gi
   }
   useEffect(() => {
     if (totalPage > 1) {
-      for (var i = 2; i <= totalPage; i++) { mutate({ page: i }) }
+      for (let i = 2; i <= totalPage; i++) { mutate({ page: i }) }
     }
   }, [totalPage])
   useEffect(() => {

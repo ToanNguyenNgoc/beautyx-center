@@ -1,10 +1,11 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import {useGetParamUrl, useSwr} from 'app/hooks'
 import {API_ROUTE} from 'app/api/api-route'
 import {paramService} from 'app/query-params'
-import TitlePage from 'components/TitlePage'
+import TitlePage from 'app/components/TitlePage'
 import ServiceItem from './module/ServiceItem'
 import {IServiceSingle} from 'app/interface/service_single'
-import {XPagination} from 'components'
+import {XPagination} from 'app/components'
 import {useLocation, useNavigate} from 'react-router-dom'
 import {useCallback, useRef, useState} from 'react'
 import './style.scss'
@@ -24,7 +25,7 @@ export default function Services() {
     page: query?.page,
     sort: query?.sort,
   }
-  let refSearch = useRef<any>()
+  const refSearch = useRef<any>(null)
   const PARAMS = {
     ...paramService,
     page: query?.page ?? 1,

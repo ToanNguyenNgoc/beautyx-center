@@ -1,8 +1,7 @@
-import TitlePage from 'components/TitlePage';
-import React from 'react';
+import TitlePage from 'app/components/TitlePage';
 import { useGetRoles } from 'app/hooks'
-import { KTSVG } from '_metronic/helpers';
-import { InitAlert, PermissionLayout } from 'components'
+import { KTSVG } from '../../../_metronic/helpers';
+import { InitAlert, PermissionLayout } from 'app/components'
 import { useNavigate } from 'react-router-dom';
 import { roleAndPermissionApi } from 'app/api';
 import { Button } from '@mui/material';

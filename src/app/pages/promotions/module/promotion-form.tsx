@@ -1,25 +1,36 @@
-import TitlePage from "components/TitlePage";
+/* eslint-disable no-empty */
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/ban-ts-comment */
+import TitlePage from "app/components/TitlePage";
 import { useNavigate, useParams } from "react-router-dom";
 import { FileUploader } from "react-drag-drop-files";
 import { FILE_IMG_TYPE } from "app/util";
-import { IMGS } from "_metronic/assets/imgs/imgs";
-import { AppSnack, PermissionLayout, SelectionDiscounts, SelectionProductable, XDateRangePicker, XSwitch } from "components";
+//@ts-ignore
+import { IMGS } from "../../../../_metronic/assets/imgs/imgs";
+import { AppSnack, PermissionLayout, SelectionDiscounts, SelectionProductable, XDateRangePicker, XSwitch } from "app/components";
 import { useFormik } from "formik";
 import { LoadingButton } from "@mui/lab";
 import moment from "moment";
 import { useMessage, usePostMedia } from "app/hooks";
 import { CircularProgress, LinearProgress } from "@mui/material";
 import { useMutation, useQuery } from "react-query";
-import { QR_KEY } from "common";
+import { QR_KEY } from "app/common";
 import { promotionApi } from "app/api";
-import { ReqPromotionBody } from "@types";
+import { ReqPromotionBody } from "app/@types";
 import { IDiscountPar, Productable } from "app/interface";
 import { AxiosError } from "axios";
 import * as Yup from "yup"
 import '../style.scss'
 import { identity, pickBy } from "lodash";
-import ReactQuill from "react-quill";
-import 'react-quill/dist/quill.snow.css';
+
+//@ts-ignore
+import 'froala-editor/css/froala_style.min.css';
+//@ts-ignore
+import 'froala-editor/css/froala_editor.pkgd.min.css';
+
+// import FroalaEditorComponent from 'react-froala-wysiwyg';
+import FroalaEditor from 'react-froala-wysiwyg'
 
 function PromotionForm() {
   const navigate = useNavigate()
@@ -226,6 +237,7 @@ function PromotionForm() {
               <div className="required form-label">Hình ảnh</div>
               <div className="drag-banner">
                 <FileUploader
+                  over
                   className="form-input-file"
                   style={{ width: '100%' }}
                   multiple={false}
@@ -253,9 +265,6 @@ function PromotionForm() {
                 />
               </div>
               <input
-                // value={formik.values.media_url}
-                // onChange={formik.handleChange}
-                // readOnly
                 type="text"
                 name="image_url"
                 className="form-control form-control-solid mt-4 mb-2"
@@ -319,7 +328,11 @@ function PromotionForm() {
             </div>
             <div className="column">
               <div className="form-label">Mô tả</div>
-              <ReactQuill theme="snow" value={formik.values.content} onChange={(e) => formik.setFieldValue('content', e)} />
+              <FroalaEditor
+                model={formik.values.content}
+                onModelChange={(e: string) => formik.setFieldValue('content', e)}
+                tag='textarea'
+              />
             </div>
             <div className="column">
               <XDateRangePicker

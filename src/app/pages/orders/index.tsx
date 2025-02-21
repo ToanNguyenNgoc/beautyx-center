@@ -3,8 +3,8 @@ import Select from '@mui/material/Select'
 import { useDebounce, useGetRolesAndPermissions, useGetServiceDetail } from 'app/hooks'
 import { IOrderOrg, IOrganization, ITems } from 'app/interface'
 import { formatPrice, formatSalePriceService, onErrorImg, ORDER_STATUS, OrderStatusElement, PLAT_FORM } from 'app/util'
-import { FlatFormOrder, PaymentMethod, PermissionLayout, XPagination } from 'components'
-import TitlePage from 'components/TitlePage'
+import { FlatFormOrder, PaymentMethod, PermissionLayout, XPagination } from 'app/components'
+import TitlePage from 'app/components/TitlePage'
 import { identity, pickBy } from 'lodash'
 import moment from 'moment'
 import { FC, useState } from 'react'
@@ -12,7 +12,7 @@ import { useQuery } from 'react-query'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import queryString from "query-string"
 import './order.scss'
-import { QrAdminOrder, ResponseDetail, ResponseList } from '@types'
+import { QrAdminOrder, ResponseDetail, ResponseList } from 'app/@types'
 import { adminApi, orgApi } from 'app/api'
 
 const Orders = () => {
@@ -90,7 +90,7 @@ const Orders = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {orderData?.map((item: IOrderOrg, index: number) => (
+                  {orderData?.map((item: IOrderOrg) => (
                     <tr key={item.id}>
                       <td>
                         <Link to='#' className='text-dark fw-bold  fs-6'>
@@ -245,7 +245,7 @@ const Filter: FC<{ query: QrAdminOrder }> = ({
             options={data?.data || []}
             autoHighlight
             getOptionLabel={(option) => option.name}
-            onChange={(event, newValue) => onChangeOrg(newValue)}
+            onChange={(_event, newValue) => onChangeOrg(newValue)}
             value={dataOrg?.context || null}
             isOptionEqualToValue={(option, value) => option.id === value.id}
             renderOption={(props, option) => {

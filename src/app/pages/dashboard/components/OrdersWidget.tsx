@@ -1,8 +1,7 @@
-/* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useEffect, useRef } from 'react'
 import ApexCharts, { ApexOptions } from 'apexcharts'
-import { useThemeMode } from '_metronic/partials/layout/theme-mode/ThemeModeProvider'
-import { getCSSVariableValue } from '_metronic/assets/ts/_utils'
+import { useThemeMode } from '../../../../_metronic/partials/layout/theme-mode/ThemeModeProvider'
+import { getCSSVariableValue } from '../../../../_metronic/assets/ts/_utils'
 import dayjs from 'dayjs'
 
 type Props = {

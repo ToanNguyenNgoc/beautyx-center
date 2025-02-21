@@ -1,4 +1,3 @@
-/* eslint-disable jsx-a11y/anchor-is-valid */
 import clsx from 'clsx'
 import React from 'react'
 
@@ -15,6 +14,7 @@ const EngageWidget2: React.FC<Props> = ({
   innerPadding = '',
   color = 'primary',
 }) => {
+  console.log(innerPadding)
   return (
     <div className={`card overflow-hidden ${className}`}>
       <div className={`card-body p-0 d-flex card-rounded bg-light-${color}`}>

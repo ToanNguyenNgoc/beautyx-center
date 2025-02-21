@@ -1,16 +1,19 @@
-import TitlePage from 'components/TitlePage'
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/ban-ts-comment */
+import TitlePage from 'app/components/TitlePage'
 import { useFormik } from 'formik'
 import { ChangeEvent, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { useMessage, usePostMedia } from 'app/hooks'
 import { accept_image, accept_video } from 'app/util'
-import { IMGS } from '_metronic/assets/imgs/imgs'
+//@ts-ignore
+import { IMGS } from '../../../../_metronic/assets/imgs/imgs'
 import { CircularProgress } from '@mui/material'
 import { useMutation, useQuery } from 'react-query'
 import { request3rdApi } from 'app/api/api-3rd-client'
 import { LoadingButton } from '@mui/lab'
 import { IOrganization, IService } from 'app/interface'
-import { AppSnack, SelectionOrg } from 'components'
+import { AppSnack, SelectionOrg } from 'app/components'
 import { SelectService } from 'app/pages/discounts/module/discount-form/select-service'
 import './style.scss'
 import { AxiosError } from 'axios'

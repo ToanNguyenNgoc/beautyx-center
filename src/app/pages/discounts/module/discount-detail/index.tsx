@@ -1,13 +1,13 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
 import { IDiscountPar } from 'app/interface/discounts';
-import TitlePage from 'components/TitlePage';
-import FlatFormOrder from 'components/PlatForm';
+import TitlePage from 'app/components/TitlePage';
+import FlatFormOrder from 'app/components/PlatForm';
 import { useQuery } from 'react-query';
-import { QR_KEY } from 'common';
+import { QR_KEY } from 'app/common';
 import { discountsApi } from 'app/api';
 import moment from 'moment';
-import { PageCircularProgress, XPagination } from 'components';
+import { PageCircularProgress, XPagination } from 'app/components';
 import { ExportCode } from 'app/pages/discounts/module/discount-form';
 import queryString from 'query-string'
 import "./style.scss";

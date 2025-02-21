@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { identity, pickBy } from 'lodash'
 import useSWR from 'swr'
 import { Configuration, Fetcher } from 'swr/dist/types'
@@ -7,7 +8,7 @@ type CallBack = {
   onError?: ((err: any, key: string, config: Readonly<Required<Configuration<any, any, Fetcher<any>>>>) => void)
 }
 
-export function useSwr<T>(condition: any, API_URL: string, query?: any, callBack?: CallBack) {
+export function useSwr(condition: any, API_URL: string, query?: any, callBack?: CallBack) {
   let result
   let response
   let responseArray = []

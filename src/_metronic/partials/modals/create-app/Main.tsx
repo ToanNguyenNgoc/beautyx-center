@@ -1,5 +1,5 @@
-/* eslint-disable jsx-a11y/anchor-is-valid */
-import React, {FC, useEffect, useRef, useState} from 'react'
+/* eslint-disable @typescript-eslint/no-non-null-asserted-optional-chain */
+import  {FC, useEffect, useRef, useState} from 'react'
 import {KTSVG, toAbsoluteUrl} from '../../../helpers'
 import {Formik, Form, FormikValues, Field, ErrorMessage} from 'formik'
 import * as Yup from 'yup'
@@ -74,7 +74,7 @@ const Main: FC = () => {
     setCurrentSchema(createAppSchema[stepper.current.currentStepIndex - 1])
   }
 
-  const submitStep = (values: ICreateAccount, actions: FormikValues) => {
+  const submitStep = (_values: ICreateAccount, actions: FormikValues) => {
     if (!stepper.current) {
       return
     }
@@ -201,7 +201,7 @@ const Main: FC = () => {
                   onSubmit={submitStep}
                 >
                   {() => (
-                    <Form className='form' noValidate id='kt_modal_create_app_form'>
+                    <Form className='form' noValidate id='kt_modal_create_app_form' placeholder={undefined} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}>
                       <div className='current' data-kt-stepper-element='content'>
                         <div className='w-100'>
                           <div className='fv-row mb-10'>

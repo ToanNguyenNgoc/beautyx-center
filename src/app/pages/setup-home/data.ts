@@ -1,4 +1,6 @@
-import { ICONS } from '_metronic/assets/icons/icons';
+/* eslint-disable @typescript-eslint/ban-ts-comment */
+//@ts-ignore
+import { ICONS } from '../../../_metronic/assets/icons/icons';
 
 export interface IDataLayout {
     id: number,

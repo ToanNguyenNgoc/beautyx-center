@@ -1,18 +1,19 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { RequestRole, roleAndPermissionApi } from "app/api";
 import { useGetPermissions, useGetRolesAndPermissions } from "app/hooks";
 import { FC, useState } from "react";
 import { useMutation, useQuery } from "react-query";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
-import TitlePage from "components/TitlePage";
+import TitlePage from "app/components/TitlePage";
 import { Checkbox, Tooltip } from "@mui/material";
 import { IPermission } from "app/interface";
-import { InitAlert, PermissionLayout, XButton } from "components";
+import { InitAlert, PermissionLayout, XButton } from "app/components";
 
 const RoleFormPage: FC = () => {
   const navigate = useNavigate()
   const { hasEnabled } = useGetRolesAndPermissions()
   const locationName = useLocation().state as string
-  const params = useParams() as { id?: Number }
+  const params = useParams() as { id?: number }
   const type = params?.id ? 'update' : 'store'
 
   const [name, setName] = useState(locationName || '')

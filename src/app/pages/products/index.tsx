@@ -1,12 +1,13 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import {FormControl, MenuItem, Switch} from '@mui/material'
 import {API_ROUTE} from 'app/api/api-route'
 import {useGetParamUrl, useSwr} from 'app/hooks'
 import {IProductSingle} from 'app/interface/product_single'
 import {paramProduct} from 'app/query-params'
-import {XPagination} from 'components'
-import React, {useCallback, useRef, useState} from 'react'
+import {XPagination} from 'app/components'
+import  {useCallback, useRef, useState} from 'react'
 import {useLocation, useNavigate} from 'react-router-dom'
-import TitlePage from '../../../components/TitlePage'
+import TitlePage from 'app/components/TitlePage'
 import ProductItem from './components/ProductItem'
 import Select, {SelectChangeEvent} from '@mui/material/Select'
 import {debounce, identity, pickBy} from 'lodash'
@@ -15,7 +16,7 @@ import './style.scss'
 export default function Products() {
   const location = useLocation()
   const navigate = useNavigate()
-  let refSearch = useRef<any>()
+  const refSearch = useRef<any>(null)
   const queryStr: any = useGetParamUrl() ?? {}
   const [selector, setSelector] = useState('1')
   const [sortPro, setSortPro] = useState<string>(queryStr?.sort || '')

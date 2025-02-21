@@ -1,6 +1,6 @@
-import { QrCommunity, ReqPostBody, ResponseDetail, ResponseList } from "@types";
+import { QrCommunity, ReqPostBody, ResponseDetail, ResponseList } from "app/@types";
 import { Post } from "app/interface";
-import { axiosClient } from "configs";
+import { axiosClient } from "app/configs";
 import { identity, pickBy } from "lodash";
 
 export const communityApi = {

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import authApi from 'app/api/authApi';
 import { IPUT_PROFILE } from 'app/api/interface';
@@ -8,9 +9,9 @@ export const getRoles = async (token?: string) => {
     let roles: UserRole[] = []
     if (token || sessionStorage.getItem(AUTH_LOCAL_TOKEN)) {
         try {
-            const response = await authApi.getRoles(token)
+            const response = await authApi.getRoles()
             roles = typeof response.data.context.roles === 'string' ? [] : response.data.context.roles
-        } catch (error) { }
+        } catch (error) { console.log(error)}
     }
     return roles
 }
@@ -24,6 +25,7 @@ export const fetchAsyncUser: any = createAsyncThunk(
             const user = { ...res.data.context, ROLE }
             return Object.assign(user, { roles })
         } catch (error) {
+            console.log(error)
             // removeAuth();
         }
     }

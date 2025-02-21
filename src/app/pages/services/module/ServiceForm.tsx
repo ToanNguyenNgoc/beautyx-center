@@ -1,6 +1,5 @@
-import {XButton} from 'components'
-import TitlePage from 'components/TitlePage'
-import React from 'react'
+import {XButton} from 'app/components'
+import TitlePage from 'app/components/TitlePage'
 import {useNavigate, useParams} from 'react-router-dom'
 
 export default function ServiceForm() {

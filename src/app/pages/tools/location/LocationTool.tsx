@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Button, Container } from "@mui/material";
 import { FC, useState } from "react";
 import style from './location-tool.module.css'
@@ -164,7 +165,7 @@ export const LocationTool: FC = () => {
 }
 
 const onExportFile = (addresses: ILocation[]) => {
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve) => {
     const fileType =
       "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8";
     const fileExtension = ".xlsx";

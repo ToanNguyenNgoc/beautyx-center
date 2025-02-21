@@ -1,3 +1,8 @@
+/* eslint-disable prefer-const */
+/* eslint-disable @typescript-eslint/no-unsafe-function-type */
+/* eslint-disable no-empty */
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import {OffsetModel} from './models/OffsetModel'
 import {ViewPortModel} from './models/ViewPortModel'
 import {ElementStyleUtil} from './_ElementStyleUtil'
@@ -66,7 +71,7 @@ function getElementActualHeight(el: HTMLElement) {
   return getElementActualCss(el, 'height', false)
 }
 
-function getElementActualWidth(el: HTMLElement, cache?: boolean) {
+function getElementActualWidth(el: HTMLElement, _cache?: boolean) {
   return getElementActualCss(el, 'width', false)
 }
 
@@ -261,7 +266,7 @@ function slide(el: HTMLElement, dir: string, speed: number, callback: any) {
   }
 
   speed = speed ? speed : 600
-  let calcHeight = getElementActualHeight(el)
+  const calcHeight = getElementActualHeight(el)
   let calcPaddingTop: number = 0
   let calcPaddingBottom: number = 0
 
@@ -389,7 +394,7 @@ function getBreakpoint(breakpoint: string) {
 }
 
 function getAttributeValueByBreakpoint(incomingAttr: string): string | JSON {
-  let value = toJSON(incomingAttr)
+  const value = toJSON(incomingAttr)
   if (typeof value !== 'object') {
     return incomingAttr
   }

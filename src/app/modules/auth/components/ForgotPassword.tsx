@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import  {useState} from 'react'
 import * as Yup from 'yup'
 import clsx from 'clsx'
 import {Link} from 'react-router-dom'
@@ -29,6 +29,7 @@ export function ForgotPassword() {
       setTimeout(() => {
         requestPassword(values.email)
           .then(({data: {result}}) => {
+            console.log(result)
             setHasErrors(false)
             setLoading(false)
           })

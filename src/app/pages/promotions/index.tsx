@@ -1,11 +1,11 @@
 import { CircularProgress } from "@mui/material";
-import { KTSVG } from "_metronic/helpers";
+import { KTSVG } from "../../../_metronic/helpers";
 import { promotionApi } from "app/api";
 import { Promotion } from "app/interface";
 import { formatDate } from "app/util";
-import { QR_KEY } from "common";
-import { PageCircularProgress, PermissionLayout, XSwitch } from "components";
-import TitlePage from "components/TitlePage";
+import { QR_KEY } from "app/common";
+import { PageCircularProgress, PermissionLayout, XSwitch } from "app/components";
+import TitlePage from "app/components/TitlePage";
 import { FC } from "react";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { Link } from "react-router-dom";
@@ -78,7 +78,7 @@ const PromotionItem: FC<{ item: Promotion }> = ({ item }) => {
       <td>
         <div className='d-flex align-items-center'>
           <div className='symbol symbol-100px me-5'>
-            <img style={{ objectFit: 'contain' }} src={item.media_url || ''} alt='' />
+            <img style={{ objectFit: 'contain' }} src={String(item.media_url)} alt='' />
           </div>
         </div>
       </td>

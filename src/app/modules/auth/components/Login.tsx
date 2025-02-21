@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import  { useState } from "react"
 import { useDispatch } from 'react-redux';
 import { Link } from "react-router-dom"
 import { useFormik } from "formik"
@@ -76,7 +76,8 @@ export function Login() {
         try {
             const res = await request3rdApi.login({ email, password })
             localStorage.setItem('3rd-auth', res.data.context.token)
-        } catch (error) { }
+        } catch (error) { console.log(error);
+        }
     }
 
     return (

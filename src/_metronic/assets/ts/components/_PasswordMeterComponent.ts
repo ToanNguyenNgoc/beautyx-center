@@ -1,4 +1,3 @@
-/* eslint-disable array-callback-return */
 /* eslint-disable no-useless-escape */
 import {DataUtil} from '../_utils/index'
 
@@ -105,9 +104,9 @@ class PasswordMeterComponent {
     }
   }
 
-  private checkScore(): number {
-    return 0
-  }
+  // private checkScore(): number {
+  //   return 0
+  // }
 
   private checkLength(): boolean {
     if (this.inputElement) {

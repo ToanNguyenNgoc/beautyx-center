@@ -1,10 +1,9 @@
-import React from 'react';
-import { KTSVG, toAbsoluteUrl } from '_metronic/helpers';
+import { KTSVG,} from '../../../../_metronic/helpers';
 import { paramContract } from 'app/query-params'
 import { IContract } from 'app/interface';
 import { useSwrInfinite } from 'app/hooks';
 import { API_ROUTE } from 'app/api/api-route';
-import { Avatar } from 'components';
+import { Avatar } from 'app/components';
 import { ApproveStatusElement, ApproveTypeElement } from 'app/util/fileType'
 import { Link } from 'react-router-dom';
 import directRoute from 'app/routing/DirectRoute';

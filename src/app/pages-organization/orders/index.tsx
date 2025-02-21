@@ -1,13 +1,14 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { CircularProgress, Dialog, FormControl, InputLabel, MenuItem } from '@mui/material'
 import Select, { SelectChangeEvent } from '@mui/material/Select'
 import { API_ROUTE } from 'app/api/api-route'
 import orderApi from 'app/api/orders'
 import { useGetParamUrl, useGetServiceDetail, useSwr } from 'app/hooks'
 import { IOrderOrg, IRES_ORDER_BY_ORGID, ITems, ResponseType } from 'app/interface'
-import { formatPrice, formatSalePriceService, onErrorImg, OrderStatusElement, PAYMENT_METHOD } from 'app/util'
-import { QR_KEY } from 'common'
-import { PaymentMethod, XPagination } from 'components'
-import TitlePage from 'components/TitlePage'
+import { formatPrice, formatSalePriceService, onErrorImg, OrderStatusElement } from 'app/util'
+import { QR_KEY } from 'app/common'
+import { PaymentMethod, XPagination } from 'app/components'
+import TitlePage from 'app/components/TitlePage'
 import { identity, pickBy } from 'lodash'
 import moment from 'moment'
 import { FC, useState } from 'react'
@@ -29,7 +30,7 @@ export function OrgOrders() {
     page: query?.page || 1,
     sort: query?.sort || '',
   }
-  const [openAlert, setOpenAlert] = useState<{
+  const [, setOpenAlert] = useState<{
     open: boolean
     title: string
     severity: 'success' | 'info' | 'warning' | 'error'
@@ -56,7 +57,7 @@ export function OrgOrders() {
       return orderApi.getOrderOrgById(PARAMS)
     },
     keepPreviousData: true,
-    onSuccess: (data) => { },
+    onSuccess: () => { },
     onError: (error) => {
       setOpenAlert({ open: true, title: `Lỗi: ${error}`, severity: 'error' })
     },
@@ -244,7 +245,7 @@ export function OrgOrders() {
                   </tr>
                 </thead>
                 <tbody>
-                  {orderData?.map((item: IOrderOrg, index: number) => (
+                  {orderData?.map((item: IOrderOrg ) => (
                     <tr key={item.id}>
                       <td>
                         <Link to='#' className='text-dark fw-bold  fs-6'>

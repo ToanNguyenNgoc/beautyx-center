@@ -1,4 +1,5 @@
-import React, {FC, useEffect, useRef, useState} from 'react'
+/* eslint-disable @typescript-eslint/no-non-null-asserted-optional-chain */
+import  {FC, useEffect, useRef, useState} from 'react'
 import {KTSVG} from '../../../../_metronic/helpers'
 import {Step1} from './steps/Step1'
 import {Step2} from './steps/Step2'
@@ -29,7 +30,7 @@ const Vertical: FC = () => {
     setCurrentSchema(createAccountSchemas[stepper.current.currentStepIndex - 1])
   }
 
-  const submitStep = (values: ICreateAccount, actions: FormikValues) => {
+  const submitStep = (_values: ICreateAccount, actions: FormikValues) => {
     if (!stepper.current) {
       return
     }
@@ -138,7 +139,7 @@ const Vertical: FC = () => {
       <div className='d-flex flex-row-fluid flex-center bg-body rounded'>
         <Formik validationSchema={currentSchema} initialValues={initValues} onSubmit={submitStep}>
           {() => (
-            <Form className='py-20 w-100 w-xl-700px px-9' noValidate id='kt_create_account_form'>
+            <Form className='py-20 w-100 w-xl-700px px-9' noValidate id='kt_create_account_form' placeholder={undefined} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}>
               <div className='current' data-kt-stepper-element='content'>
                 <Step1 />
               </div>

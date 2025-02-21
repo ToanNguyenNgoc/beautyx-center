@@ -1,6 +1,6 @@
-import { QrCustomer, ResponseDetail, ResponseList } from "@types";
+import { QrCustomer, ResponseDetail, ResponseList } from "app/@types";
 import { Customer, Statistic } from "app/interface";
-import { axiosClient } from "configs";
+import { axiosClient } from "app/configs";
 
 type ResponseListCustomer = ResponseList<Customer[]> & {
   from_date: string;

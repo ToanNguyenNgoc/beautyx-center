@@ -1,17 +1,17 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import TitlePage from 'components/TitlePage';
+import TitlePage from 'app/components/TitlePage';
 import { formatDate, formatPrice } from 'app/util/format';
 import { DISCOUNTS_TYPE, DiscountsTypeElement } from 'app/util/fileType';
-import FlatFormOrder from 'components/PlatForm';
-import { KTSVG } from '_metronic/helpers';
+import FlatFormOrder from 'app/components/PlatForm';
+import { KTSVG } from '../../../_metronic/helpers';
 import { IDiscountPar } from 'app/interface';
-import { InitAlert, PageCircularProgress, PermissionLayout, XPagination } from 'components';
+import { InitAlert, PageCircularProgress, PermissionLayout, XPagination } from 'app/components';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
-import { QR_KEY } from 'common';
+import { QR_KEY } from 'app/common';
 import { discountsApi } from 'app/api';
 import queryString from 'query-string';
-import { QrDiscount } from '@types';
+import { QrDiscount } from 'app/@types';
 import { FormControl, MenuItem, Select, SelectChangeEvent } from '@mui/material';
 import { PLAT_FORM, PLAT_FORM_ARR } from 'app/util';
 import './style.scss'

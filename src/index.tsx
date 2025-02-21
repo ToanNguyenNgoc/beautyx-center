@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import { createRoot } from 'react-dom/client'
 import { Provider } from "react-redux";
 import store from "./app/redux/store";
@@ -16,26 +17,21 @@ import { MetronicI18nProvider } from './_metronic/i18n/Metronici18n'
 import './_metronic/assets/sass/style.scss'
 import './_metronic/assets/sass/plugins.scss'
 import './_metronic/assets/sass/style.react.scss'
+//@ts-ignore
 import 'react-date-range/dist/styles.css'; // main style file
+//@ts-ignore
 import 'react-date-range/dist/theme/default.css'; // theme css file
 import { AppRoutes } from './app/routing/AppRoutes'
 import { AuthProvider, setupAxios } from './app/modules/auth'
-import AppProvider from 'context/AppProvider'
+//@ts-ignore
+import AppProvider from "./app/context/AppProvider"
 //config SWR
-import { SWRConfig } from 'swr'
-import { AUTH_HEADER } from 'app/api/config_header'
-import { axiosClient } from 'configs';
-/**
- * Creates `axios-mock-adapter` instance for provided `axios` instance, add
- * basic Metronic mocks and returns it.
- *
- * @see https://github.com/ctimmerm/axios-mock-adapter
- */
-/**
- * Inject Metronic interceptors for axios.
- *
- * @see https://github.com/axios/axios#interceptors
- */
+import { SWRConfig } from 'swr';
+import { AUTH_HEADER } from './app/api/config_header';
+import { axiosClient } from 'app/configs';
+//@ts-ignore
+import '../public/font/style.css'
+
 setupAxios(axios)
 Chart.register(...registerables)
 
@@ -47,6 +43,7 @@ export const queryClient = new QueryClient({
     }
   }
 })
+
 const container = document.getElementById('root')
 if (container) {
   createRoot(container).render(

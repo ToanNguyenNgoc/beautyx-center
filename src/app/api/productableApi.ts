@@ -1,7 +1,6 @@
-import { QrProductable } from "@types";
-import { ResponseList } from "@types";
 import { Productable } from "app/interface";
-import { axiosV3Client } from "configs";
+import { axiosV3Client } from "app/configs";
+import { QrProductable, ResponseList } from "app/@types";
 
 export const productableApi = {
   getAll: (qr: QrProductable) => {

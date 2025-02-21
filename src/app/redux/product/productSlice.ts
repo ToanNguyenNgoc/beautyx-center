@@ -1,12 +1,11 @@
-import {AsyncThunk, createAsyncThunk, createSlice} from '@reduxjs/toolkit'
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { createAsyncThunk, createSlice} from '@reduxjs/toolkit'
 import productsApi from '../../api/productApi'
 // import categoryApi from "../../api/categoryApi";
 import {STATUS} from '../status'
 import {IHIT_PRODUCT} from '../../interface/product_models'
 import {
   IPRODUCT_GET_ALL,
-  IPRODUCT_DETAIL_BY_ID,
-  IPRODUCT_DETAIL_BY_ORG_ID,
 } from '../../api/product_models'
 interface IPRODUCTs {
   products: IHIT_PRODUCT[]

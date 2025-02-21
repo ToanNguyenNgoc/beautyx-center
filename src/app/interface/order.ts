@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import {IService} from './service'
 import {IPRODUCT} from './product_models'
 import {IOrganization} from './organization'
@@ -101,10 +102,6 @@ export interface IOrderV2 {
   origin?: IOrderOrigin
 }
 
-interface IORDER_ID_ORG {
-  org: string | number
-  id: string | number
-}
 
 // query order By ID
 export interface IRES_ORDER_BY_ORGID {

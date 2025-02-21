@@ -1,14 +1,15 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable react-hooks/exhaustive-deps */
 import { Avatar, Chip, FormControl, MenuItem, Select, SelectChangeEvent } from "@mui/material";
-import { KTSVG } from "_metronic/helpers";
+import { KTSVG } from "../../../_metronic/helpers";
 import { adminApi } from "app/api";
 import { formatDate } from "app/util";
-import { PageCircularProgress, PermissionLayout, XPagination } from "components";
-import TitlePage from "components/TitlePage";
+import { PageCircularProgress, PermissionLayout, XPagination } from "app/components";
+import TitlePage from "app/components/TitlePage";
 import { useQuery } from "react-query";
 import { useLocation, useNavigate } from "react-router-dom";
 import queryString from "query-string"
-import { QrAdminAccount, ResponseList } from "@types";
+import { QrAdminAccount, ResponseList } from "app/@types";
 import "./style.scss"
 import { AdminAccount } from "app/interface";
 import { useGetRolesAndPermissions } from "app/hooks";

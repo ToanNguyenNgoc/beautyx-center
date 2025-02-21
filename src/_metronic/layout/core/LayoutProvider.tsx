@@ -1,3 +1,5 @@
+/* eslint-disable react-refresh/only-export-components */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import {FC, createContext, useContext, useState, useEffect} from 'react'
 import {DefaultLayoutConfig} from './DefaultLayoutConfig'
 import {
@@ -27,7 +29,7 @@ const LayoutContext = createContext<LayoutContextModel>({
   classes: getEmptyCssClasses(),
   attributes: getEmptyHTMLAttributes(),
   cssVariables: getEmptyCSSVariables(),
-  setLayout: (config: LayoutSetup) => {},
+  setLayout: (_config: LayoutSetup) => {},
 })
 
 const enableSplashScreen = () => {

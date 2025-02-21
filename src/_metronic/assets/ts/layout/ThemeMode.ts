@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unsafe-function-type */
+/* eslint-disable @typescript-eslint/no-this-alias */
 import {EventHandlerUtil} from '../_utils'
 
 type Mode = 'light' | 'dark' | 'system'
@@ -121,13 +123,13 @@ class ThemeMode {
     }
   }
 
-  private getActiveMenuItem = (): HTMLElement | null => {
-    return (
-      this.menu?.querySelector(
-        '[data-kt-element="mode"][data-kt-value="' + this.getMenuMode() + '"]'
-      ) || null
-    )
-  }
+  // private getActiveMenuItem = (): HTMLElement | null => {
+  //   return (
+  //     this.menu?.querySelector(
+  //       '[data-kt-element="mode"][data-kt-value="' + this.getMenuMode() + '"]'
+  //     ) || null
+  //   )
+  // }
 
   private setActiveMenuItem = (item: HTMLElement): void => {
     const menuModeParam = this.getParamName('menu')

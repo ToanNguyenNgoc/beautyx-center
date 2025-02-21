@@ -1,6 +1,7 @@
-import { verifyUser } from "middleware"
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect, useState } from "react"
 import { USERROLE } from "app/modules/auth"
+import { verifyUser } from "app/middleware"
 
 export function useUser() {
     const [userAuth, setUserAuth] = useState<USERROLE>()

@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useRef, useState } from 'react'
 import { Dialog } from '@mui/material'
 import { IApprove } from 'app/interface'
@@ -13,7 +15,7 @@ import {
     ApproveStatusElement,
     APPROVE_STATUS
 } from 'app/util/fileType'
-import { XButton, SnackAlert, TextArea } from 'components'
+import { XButton, SnackAlert, TextArea } from 'app/components'
 
 interface ApproveDetailProps {
     open: boolean,
@@ -40,8 +42,8 @@ function ApproveDetail(props: ApproveDetailProps) {
             await approveApi.putApprove(approve.id, body)
             setRefetch(true)
             resultLoad("Đã lưu thay đổi")
-        } catch (error) {
-            resultLoad("Có lỗi xảy ra")
+        } catch (_error) {
+            resultLoad("Có lỗi xảy ra",)
         }
     }
     const onClose = () => {
@@ -49,7 +51,7 @@ function ApproveDetail(props: ApproveDetailProps) {
         setOpen(false)
     }
     //UI
-    const refStatus = useRef<any>()
+    const refStatus = useRef<any>(null)
     const onToggleListStatus = () => {
         refStatus.current?.classList?.toggle(style.approve_list_show)
     }

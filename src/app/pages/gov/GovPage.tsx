@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
+import TitlePage from "app/components/TitlePage";
 import { useGetStatistics } from "app/hooks";
-import TitlePage from "components/TitlePage";
-import { FC, memo, useEffect, useRef, useState } from "react";
+import { FC, memo } from "react";
 
 
 const randomRange = (from: number, to: number) => {
@@ -11,9 +11,7 @@ const randomRange = (from: number, to: number) => {
 export const GovPage: FC = () => {
   const {
     statistic,
-    dataOrgs,
     dataCustomers,
-    dataService,
     totalOrder,
     organizationsOpenCurrentMonth
   } = useGetStatistics()

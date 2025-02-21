@@ -1,6 +1,8 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import { Drawer } from '@mui/material';
-import React, { useState } from 'react'
-import { ICONS } from '_metronic/assets/icons/icons';
+import  { useState } from 'react'
+//@ts-ignore
+import { ICONS } from '../../../_metronic/assets/icons/icons';
 import style from './setup.module.scss';
 import dataLayout, { IDataLayout } from './data';
 import { useDispatch, useSelector } from 'react-redux';

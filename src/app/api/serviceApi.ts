@@ -1,5 +1,5 @@
 import {pickBy, identity} from 'lodash'
-import {axiosClient} from 'configs'
+import {axiosClient} from 'app/configs'
 import {ISERVICE_BY_ORG_ID, ISERVICE_UPDATE_STATUS} from 'app/interface/service_models'
 import {ResponseType, IService} from 'app/interface'
 

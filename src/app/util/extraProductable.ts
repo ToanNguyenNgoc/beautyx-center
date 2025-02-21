@@ -1,5 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { IDiscountPar, IITEMS_DISCOUNT } from "../interface/discounts";
-import { IService } from "../interface/service";
 import { PRODUCTABLE_TYPE } from "./fileType";
 
 export const extraServicesDiscount = (discount: IDiscountPar) => {

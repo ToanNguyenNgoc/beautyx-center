@@ -1,7 +1,9 @@
+/* eslint-disable no-var */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable react-hooks/exhaustive-deps */
-import TitlePage from 'components/TitlePage';
+import TitlePage from 'app/components/TitlePage';
 import { IOrganization } from 'app/interface';
-import { AppSnack, Avatar, PageCircularProgress, PermissionLayout, XPagination, XSwitch } from 'components';
+import { AppSnack, Avatar, PageCircularProgress, PermissionLayout, XPagination, XSwitch } from 'app/components';
 // import { StatusOrgE } from 'app/util/fileType'
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import directRoute from 'app/routing/DirectRoute';
@@ -11,7 +13,7 @@ import { FormControl, InputLabel, MenuItem, Select, SelectChangeEvent } from '@m
 import { LoadingButton } from '@mui/lab';
 import { useMutation, useQuery } from 'react-query';
 import { orgApi } from 'app/api';
-import { ResponseList } from '@types';
+import { ResponseList } from 'app/@types';
 import { identity, pickBy } from 'lodash';
 import * as FileSaver from "file-saver";
 import * as XLSX from "xlsx"
@@ -23,7 +25,7 @@ import { DIRECT_ORG } from 'app/util';
 function Organizations() {
   const location = useLocation()
   const navigate = useNavigate()
-  let qrPath = useDebounce(queryString.parse(location.search), 800) as any
+  const qrPath = useDebounce(queryString.parse(location.search), 800) as any
   const { data, isLoading } = useQuery({
     queryKey: ['ORG', qrPath],
     queryFn: () => orgApi.getAll({
@@ -287,7 +289,7 @@ const Export: FC<{ query: any, data: ResponseList<IOrganization[]> }> = ({ query
   )
 }
 const onExportFile = (customers: IOrganization[]) => {
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve) => {
     const fileType =
       "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8";
     const fileExtension = ".xlsx";

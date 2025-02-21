@@ -1,13 +1,15 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { ChangeEvent, FC, useCallback } from "react";
 import "./style.scss"
 import { useQuery } from "react-query";
-import { axiosClient } from "configs";
-import { QR_CACHE } from "common";
-import { PageCircularProgress, XPagination } from "components";
 import queryString from "query-string"
 import { useLocation, useNavigate } from "react-router-dom";
-import { QrCustomerEvent } from "@types";
 import { debounce } from "lodash";
+import { QrCustomerEvent } from "app/@types";
+import { axiosClient } from "app/configs";
+import { PageCircularProgress, XPagination } from "app/components";
+import { QR_CACHE } from "app/common";
 
 export const CustomerEvent: FC = () => {
   const location = useLocation()

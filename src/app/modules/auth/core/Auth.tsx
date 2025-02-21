@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable react-hooks/exhaustive-deps */
 import {
   FC,
@@ -17,8 +18,8 @@ import { WithChildren } from '../../../../_metronic/helpers'
 import { PAYLOAD_STATUS } from '../../../redux/status';
 import { useSwr } from 'app/hooks';
 import { API_ROUTE } from 'app/api/api-route';
-import { verifyUser } from 'middleware';
 import { IPermission } from 'app/interface/permissions'
+import { verifyUser } from 'app/middleware';
 
 type AuthContextProps = {
   auth: any | undefined

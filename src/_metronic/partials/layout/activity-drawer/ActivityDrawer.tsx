@@ -1,4 +1,4 @@
-import React, {FC} from 'react'
+import  {FC} from 'react'
 import {Link} from 'react-router-dom'
 import {KTSVG} from '../../../helpers'
 import {Item1} from '../../content/activity/Item1'

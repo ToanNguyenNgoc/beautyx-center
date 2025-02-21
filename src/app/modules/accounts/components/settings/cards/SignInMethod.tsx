@@ -1,4 +1,4 @@
-/* eslint-disable jsx-a11y/anchor-is-valid */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, {useState} from 'react'
 import {KTSVG} from '../../../../../../_metronic/helpers'
 import * as Yup from 'yup'
@@ -47,9 +47,9 @@ const SignInMethod: React.FC = () => {
       ...emailUpdateData,
     },
     validationSchema: emailFormValidationSchema,
-    onSubmit: (values) => {
+    onSubmit: (_values) => {
       setLoading1(true)
-      setTimeout((values) => {
+      setTimeout((values: React.SetStateAction<IUpdateEmail>) => {
         setEmailUpdateData(values)
         setLoading1(false)
         setShowEmailForm(false)
@@ -64,9 +64,9 @@ const SignInMethod: React.FC = () => {
       ...passwordUpdateData,
     },
     validationSchema: passwordFormValidationSchema,
-    onSubmit: (values) => {
+    onSubmit: (_values) => {
       setLoading2(true)
-      setTimeout((values) => {
+      setTimeout((values: React.SetStateAction<IUpdatePassword>) => {
         setPasswordUpdateData(values)
         setLoading2(false)
         setPasswordForm(false)

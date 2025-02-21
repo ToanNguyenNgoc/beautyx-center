@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unsafe-function-type */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import {
   DataUtil,
   ElementStyleUtil,
@@ -131,20 +133,20 @@ class FeedbackComponent {
   }
 
   // Create Instances
-  public static createInstances(selector: string) {
+  public static createInstances(_selector: string) {
     throw new Error('not implemented')
   }
 
   // Static methods
-  public static hasInstace(element: HTMLElement) {
+  public static hasInstace(_element: HTMLElement) {
     throw new Error('not implemented')
   }
 
-  public static getInstance(element: HTMLElement) {
+  public static getInstance(_element: HTMLElement) {
     throw new Error('not implemented')
   }
 
-  public static bootstrap(attr: string = '[data-Feedback]') {
+  public static bootstrap(_createOverlayattr: string = '[data-Feedback]') {
     throw new Error('not implemented')
   }
 }

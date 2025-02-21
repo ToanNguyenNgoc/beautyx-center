@@ -1,6 +1,6 @@
-import { QrPromotion, ReqPromotionBody, ResponseDetail, ResponseList } from "@types"
+import { QrPromotion, ReqPromotionBody, ResponseDetail, ResponseList } from "app/@types"
 import { Promotion } from "app/interface"
-import { axiosClient } from "configs"
+import { axiosClient } from "app/configs"
 
 export const promotionApi = {
   getAll: (req: QrPromotion) => {

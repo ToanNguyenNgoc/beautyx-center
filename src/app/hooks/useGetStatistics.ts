@@ -1,12 +1,13 @@
-import { QrProductable, ResponseList } from "@types";
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { orgApi, productableApi, statisticApi } from "app/api";
 import { IApprove, IOrganization } from "app/interface";
-import { QR_CACHE, QR_KEY } from "common";
 import { useQuery } from "react-query";
 import { useSwr } from "./useSwr";
 import { API_ROUTE } from "app/api/api-route";
 import { paramApproves } from "app/query-params";
 import dayjs from "dayjs";
+import { QR_CACHE, QR_KEY } from "app/common";
+import { QrProductable, ResponseList } from "app/@types";
 
 export function useGetStatistics() {
   const { data: dataStatistic } = useQuery({
@@ -19,7 +20,7 @@ export function useGetStatistics() {
   }
   const { data: dataOrgs } = useQuery<{ context: ResponseList<IOrganization[]> }>({
     queryKey: [QR_KEY.Organization, paramsOrg],
-    queryFn: () => orgApi.getAll(paramsOrg).then(res => res.data),
+    queryFn: () => orgApi.getAll(paramsOrg).then((res:any) => res.data),
     staleTime: QR_CACHE
   })
   const { data: dataCustomers } = useQuery({

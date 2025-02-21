@@ -1,11 +1,15 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect, useRef } from 'react';
+import  { useEffect, useRef } from 'react';
 import { IDataLayout } from '../data';
 import style from './cpn-style.module.scss';
 import { IBanner } from 'app/interface/banner';
 import { settingsSlick } from 'app/util';
 import Slider from "react-slick";
+//@ts-ignore
 import "slick-carousel/slick/slick.css";
+//@ts-ignore
 import "slick-carousel/slick/slick-theme.css";
 import { useDispatch, useSelector } from 'react-redux';
 import { IRoot } from 'app/redux/interface';
@@ -19,7 +23,7 @@ export function SectionBanners(props: SectionBannersProps) {
     const { sectionBanner } = props
     const dispatch = useDispatch()
     const settings = settingsSlick()
-    const refContainer = useRef<any>()
+    const refContainer = useRef<any>(null)
     const clientHeight = refContainer?.current ? refContainer?.current?.clientWidth / 2.5 : 121
     useEffect(() => {
         dispatch(fetchAsyncBanners())

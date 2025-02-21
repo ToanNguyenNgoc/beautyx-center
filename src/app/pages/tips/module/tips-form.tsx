@@ -1,8 +1,9 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import tipAPI from 'app/api/tipApi'
 import FormTip from 'app/pages/tips/module/form'
-import { QR_KEY } from 'common'
-import { PermissionLayout } from 'components'
-import TitlePage from 'components/TitlePage'
+import { QR_KEY } from 'app/common'
+import { PermissionLayout } from 'app/components'
+import TitlePage from 'app/components/TitlePage'
 import { useQuery } from 'react-query'
 import { useParams } from 'react-router-dom'
 export default function TipsForm() {

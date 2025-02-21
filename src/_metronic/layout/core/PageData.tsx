@@ -1,5 +1,7 @@
+/* eslint-disable react-refresh/only-export-components */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, {FC, createContext, useContext, useEffect, useState} from 'react'
+import  {FC, createContext, useContext, useEffect, useState} from 'react'
 import {WithChildren} from '../../helpers'
 
 export interface PageLink {

@@ -1,9 +1,8 @@
 import clsx from 'clsx'
-import React, {FC} from 'react'
+import  {FC} from 'react'
 import { useSelector } from 'react-redux'
-import { useAuth } from '../../../../app/modules/auth'
 import { IRoot } from '../../../../app/redux/interface'
-import {KTSVG, toAbsoluteUrl} from '../../../helpers'
+import {KTSVG} from '../../../helpers'
 import {
   HeaderNotificationsMenu,
   HeaderUserMenu,

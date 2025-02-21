@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 
 import { IBanner } from '../../interface/banner'
@@ -40,6 +41,7 @@ export const postAsyncBanner: any = createAsyncThunk(
   async (values: any) => {
     console.log(values)
     const res = await bannerApi.postBanner(values);
+    console.log(res)
   }
 )
 export const fetchAsyncBannerDetail: any = createAsyncThunk(

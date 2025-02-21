@@ -1,5 +1,5 @@
-import { PermissionLayout } from "components";
-import TitlePage from "components/TitlePage";
+import { PermissionLayout } from "app/components";
+import TitlePage from "app/components/TitlePage";
 import { Link } from "react-router-dom";
 
 function PushNotification() {

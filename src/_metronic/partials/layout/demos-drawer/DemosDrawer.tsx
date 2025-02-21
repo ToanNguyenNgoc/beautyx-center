@@ -1,6 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-/* eslint-disable jsx-a11y/anchor-is-valid */
-import React from 'react'
 import {Demos} from './Demos'
 import {KTSVG} from '../../../helpers'
 
@@ -134,7 +131,7 @@ export function DemosDrawer() {
                 </div>
               </div>
 
-              <a href={process.env.REACT_APP_PURCHASE_URL} className='btn btn-primary mb-15 w-100'>
+              <a href={import.meta.env.REACT_APP_PURCHASE_URL} className='btn btn-primary mb-15 w-100'>
                 Buy Now
               </a>
               <Demos />
