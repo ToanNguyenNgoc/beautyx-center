@@ -342,5 +342,8 @@
   "v1.admin.orders.index": "v1.admin.orders.index",
   "v1.admin.comments.index": "v1.admin.comments.index",
   "v1.admin.comments.show": "v1.admin.comments.show",
-  "v1.admin.comments.destroy": "v1.admin.comments.destroy"
+  "v1.admin.comments.destroy": "v1.admin.comments.destroy",
+  "v1.permissions.store": "v1.permissions.store",
+  "v1.admin.users.store": "v1.admin.users.store",
+  "v1.admin.users.destroy": "v1.admin.users.destroy"
 }

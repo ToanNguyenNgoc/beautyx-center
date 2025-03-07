@@ -1,19 +1,18 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable react-hooks/exhaustive-deps */
-import { Avatar, Chip, FormControl, MenuItem, Select, SelectChangeEvent } from "@mui/material";
+import { Avatar, Button, Chip, FormControl, MenuItem, Select, SelectChangeEvent } from "@mui/material";
 import { KTSVG } from "../../../_metronic/helpers";
 import { adminApi } from "app/api";
 import { formatDate } from "app/util";
-import { PageCircularProgress, PermissionLayout, XPagination } from "app/components";
+import { ConfirmAction, InitAlert, PageCircularProgress, PermissionLayout, XPagination, XSwitch } from "app/components";
 import TitlePage from "app/components/TitlePage";
-import { useQuery } from "react-query";
+import { useMutation, useQuery } from "react-query";
 import { useLocation, useNavigate } from "react-router-dom";
 import queryString from "query-string"
 import { QrAdminAccount, ResponseList } from "app/@types";
 import "./style.scss"
 import { AdminAccount } from "app/interface";
 import { useGetRolesAndPermissions } from "app/hooks";
-import { FC } from "react";
+import { FC, useState } from "react";
 import { identity, pickBy } from "lodash";
 
 function Accounts() {
@@ -21,7 +20,7 @@ function Accounts() {
   const navigate = useNavigate()
   const { hasEnabled } = useGetRolesAndPermissions()
   const query = queryString.parse(location.search) as QrAdminAccount
-  const { data, isLoading } = useQuery<{ context: ResponseList<AdminAccount[]> }>({
+  const { data, isLoading, refetch } = useQuery<{ context: ResponseList<AdminAccount[]> }>({
     queryKey: [query],
     queryFn: () => adminApi.adminUsers({
       'page': query['page'],
@@ -44,9 +43,36 @@ function Accounts() {
       search: queryString.stringify(newQuery)
     })
   }
+  const { mutate: mutateDelete } = useMutation({
+    mutationFn: (id: number) => adminApi.adminUserDelete(id),
+    onSuccess: () => {
+      InitAlert.open({ title: 'Xóa thành công', type: 'success' });
+      refetch()
+    },
+    onError: () => InitAlert.open({ title: 'Có lỗi xảy ra', type: 'error' })
+  })
+  const onDeleteAccount = (id: number) => {
+    ConfirmAction.open({
+      message: 'Xóa tài khoản',
+      callBack: () => mutateDelete(id)
+    })
+  }
   return (
     <PermissionLayout permissions={['v1.admin.users.index']}>
-      <TitlePage title="Danh sách" />
+      <TitlePage
+        element={
+          <PermissionLayout permissions={['v1.admin.users.store']}>
+            <Button
+              onClick={() => navigate('/pages/accounts-form')}
+              variant="contained"
+              size="large"
+            >
+              Tạo mới
+            </Button>
+          </PermissionLayout>
+        }
+        title="Danh sách"
+      />
       <div className={`card`}>
         <div className='card-header border-0 pt-5'>
           <div className="w-50">
@@ -66,75 +92,18 @@ function Accounts() {
                   <th className='min-w-140px'>Số điện thoại</th>
                   <th className='min-w-140px'>Quyền</th>
                   <th className='min-w-120px'>Ngày tạo</th>
+                  <th className='min-w-120px'>Trạng thái</th>
                   <th className='min-w-100px text-end'>Actions</th>
                 </tr>
               </thead>
               <tbody>
                 {
                   accounts.map((item) => (
-                    <tr key={item.id}>
-                      <td>
-                        <div className='d-flex align-items-center'>
-                          <div className='symbol symbol-45px me-5'>
-                            <Avatar src={item.avatar || item.fullname} alt={item.fullname} />
-                          </div>
-                          <div className='d-flex justify-content-start flex-column'>
-                            <span className='text-dark fw-bold fs-6'>
-                              {item.fullname}
-                            </span>
-                            <span className='fw-semobold text-muted d-block fs-7'>
-                              {item.email}
-                            </span>
-                          </div>
-                        </div>
-                      </td>
-                      <td>
-                        <a href={`tel:${item.telephone}`} className='text-dark fw-bold text-hover-primary d-block fs-6'>
-                          {item.telephone}
-                        </a>
-                      </td>
-                      <td>
-                        {
-                          item.roles.length > 0 ?
-                            item.roles.map(role => (
-                              <Chip
-                                key={role.id}
-                                label={role.name}
-                                color="success" size="small"
-                                onDelete={hasEnabled('v1.admin.users.update') ? () => console.log("OK") : undefined}
-                              />
-                            ))
-                            :
-                            <Chip size="small" color="primary" label="Khách" />
-                        }
-                      </td>
-                      <td>
-                        <span className='text-muted fw-semobold text-muted d-block fs-7'>
-                          {formatDate(item.created_at)}
-                        </span>
-                      </td>
-                      <td className="d-flex justify-content-end">
-                        <PermissionLayout permissions={['v1.admin.users.show', 'v1.admin.users.update']}>
-                          <button
-                            onClick={() => navigate(`/pages/accounts-form/${item.id}`)}
-                            aria-label='Xem chi tiết'
-                            className='btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1'
-                          >
-                            <KTSVG path='/media/icons/duotune/art/art005.svg' className='svg-icon-3' />
-                          </button>
-                        </PermissionLayout>
-                        {/* <PermissionLayout permissions={['v1.admin.users.update']}>
-                          <button
-                            aria-label='Xem chi tiết'
-                            className='btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1'
-                          >
-                            <KTSVG path='/media/icons/duotune/general/gen027.svg'
-                              className='svg-icon-3'
-                            />
-                          </button>
-                        </PermissionLayout> */}
-                      </td>
-                    </tr>
+                    <Item
+                      key={item.id}
+                      item={item}
+                      onDeleteAccount={id => onDeleteAccount(id)}
+                    />
                   ))
                 }
               </tbody>
@@ -153,6 +122,93 @@ function Accounts() {
 }
 
 export default Accounts;
+
+const Item: FC<{ item: AdminAccount, onDeleteAccount: (id: number) => void }> = ({ item, onDeleteAccount = () => null }) => {
+  const navigate = useNavigate();
+  const { hasEnabled } = useGetRolesAndPermissions();
+  const [active, setActive] = useState(item.is_active === 1 ? true : false)
+  const onActive = (e: boolean) => {
+    setActive(e);
+    adminApi.adminUserUpdate(item.id, {
+      is_active: e
+    }).then(() => {
+      InitAlert.open({ title: 'Cập nhật thành công', type: 'success' })
+    })
+  }
+  return (
+    <tr key={item.id}>
+      <td>
+        <div className='d-flex align-items-center'>
+          <div className='symbol symbol-45px me-5'>
+            <Avatar src={item.avatar || item.fullname} alt={item.fullname} />
+          </div>
+          <div className='d-flex justify-content-start flex-column'>
+            <span className='text-dark fw-bold fs-6'>
+              {item.fullname}
+            </span>
+            <span className='fw-semobold text-muted d-block fs-7'>
+              {item.email}
+            </span>
+          </div>
+        </div>
+      </td>
+      <td>
+        <a href={`tel:${item.telephone}`} className='text-dark fw-bold text-hover-primary d-block fs-6'>
+          {item.telephone}
+        </a>
+      </td>
+      <td>
+        {
+          item.roles.length > 0 ?
+            item.roles.map(role => (
+              <Chip
+                key={role.id}
+                label={role.name}
+                color="success" size="small"
+                onDelete={hasEnabled('v1.admin.users.update') ? () => console.log("OK") : undefined}
+              />
+            ))
+            :
+            <Chip size="small" color="primary" label="Khách" />
+        }
+      </td>
+      <td>
+        <span className='text-muted fw-semobold text-muted d-block fs-7'>
+          {formatDate(item.created_at)}
+        </span>
+      </td>
+      <PermissionLayout permissions={['v1.admin.users.update']}>
+        <td>
+          <XSwitch label='' value={active} onChange={e => onActive(e.target.checked)} />
+        </td>
+      </PermissionLayout>
+      <td className="d-flex justify-content-end">
+        <PermissionLayout permissions={['v1.admin.users.show', 'v1.admin.users.update']}>
+          <button
+            onClick={() => navigate(`/pages/accounts-form/${item.id}`)}
+            aria-label='Xem chi tiết'
+            className='btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1'
+          >
+            <KTSVG path='/media/icons/duotune/art/art005.svg' className='svg-icon-3' />
+          </button>
+        </PermissionLayout>
+        <PermissionLayout permissions={['v1.admin.users.destroy']}>
+          <button
+            onClick={() => onDeleteAccount(item.id)}
+            aria-label='Xem chi tiết'
+            className='btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1'
+          >
+            <KTSVG path='/media/icons/duotune/general/gen027.svg'
+              className='svg-icon-3'
+            />
+          </button>
+        </PermissionLayout>
+      </td>
+    </tr>
+  )
+}
+
+
 
 const Filter: FC = () => {
   const query = queryString.parse(useLocation().search) as any

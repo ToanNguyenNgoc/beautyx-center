@@ -18,6 +18,11 @@ export function useGetPermissions() {
       permissions: permissions.filter(i => i.name.includes('roles'))
     },
     {
+      name: 'permissions',
+      desc: 'Permissions',
+      permissions: permissions.filter(i => i.name.includes('permissions'))
+    },
+    {
       name: 'admin.users',
       desc: 'Người dùng',
       permissions: permissions.filter(i => i.name.includes('admin.users'))

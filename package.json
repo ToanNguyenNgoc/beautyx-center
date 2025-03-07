@@ -8,7 +8,8 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "gen:permissions":"node scripts/gen-permissions.js"
   },
   "dependencies": {
     "@ckeditor/ckeditor5-build-classic": "^19.0.2",

@@ -45,5 +45,7 @@ export type ReqAdminUser = {
   fullname?:string;
   email?:string;
   telephone?:string;
+  password?:string;
+  is_active?:boolean;
   roles_id?:number[]
 }

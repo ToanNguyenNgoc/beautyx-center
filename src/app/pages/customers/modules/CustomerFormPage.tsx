@@ -28,7 +28,7 @@ function getStyles(name: string, personName: string[], theme: Theme) {
   };
 }
 
-const AccountFormPage: FC = () => {
+const CustomerFormPage: FC = () => {
   const { hasEnabled } = useGetRolesAndPermissions()
   const navigate = useNavigate()
   const params = useParams() as { id?: number }
@@ -63,8 +63,8 @@ const AccountFormPage: FC = () => {
     enabled: !!(params.id && hasEnabled('v1.admin.users.index')),
     onSuccess: (response) => {
       formik.setFieldValue('fullname', response.context.fullname || "");
-      formik.setFieldValue('email', response.context.email);
-      formik.setFieldValue('telephone', response.context.telephone)
+      formik.setFieldValue('email', response.context.email || "");
+      formik.setFieldValue('telephone', response.context.telephone || "")
       formik.setFieldValue('roles_id', response.context.roles.map(i => String(i.id)))
     }
   })
@@ -81,7 +81,7 @@ const AccountFormPage: FC = () => {
       fullname: value.fullname,
       email: data?.context.email !== value.email ? value.email : undefined,
       telephone: data?.context.telephone !== value.telephone ? value.telephone : undefined,
-      password: params?.id ? undefined:value.password,
+      password: params?.id ? undefined : value.password,
       roles_id: value.roles_id.map(i => Number(i))
     })
   }
@@ -155,7 +155,7 @@ const AccountFormPage: FC = () => {
               }
             </div>
           </div>
-          <div className="flex-row-sp input-wrap">
+          <div className="flex-row-sp input-wrap" style={{display:'none'}}>
             <div className="wrap-item w-50 p-2">
               <p className="required form-label">Quyền</p>
               <Select
@@ -204,4 +204,4 @@ const AccountFormPage: FC = () => {
   )
 }
 
-export default AccountFormPage
+export default CustomerFormPage

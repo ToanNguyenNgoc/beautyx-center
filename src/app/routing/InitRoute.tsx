@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { lazy } from "react"
 import {
     OrgMobaGalleries,
@@ -31,6 +32,7 @@ const PushNotificationFormPage = lazy(() => import('../pages/push-notification/m
 
 const OrdersPage = lazy(() => import('../pages/orders/index'))
 const CustomersPage = lazy(() => import('../pages/customers'))
+const CustomerFormPage = lazy(()=> import('../pages/customers/modules/CustomerFormPage'))
 const Organizations = lazy(() => import('../pages/organizations'))
 const OrganizationsDetailPage = lazy(() => import('../pages/organizations/module/organizations-detail'))
 const ServicesPage = lazy(() => import('../pages/services'))
@@ -144,6 +146,14 @@ const InitRoute: any[] = [
     {
         path: "pages/customers",
         element: <CustomersPage />
+    },
+    {
+        path: "pages/customers-form/:id",
+        element: <CustomerFormPage />
+    },
+    {
+        path: "pages/customers-form",
+        element: <CustomerFormPage />
     },
     //organization
     {

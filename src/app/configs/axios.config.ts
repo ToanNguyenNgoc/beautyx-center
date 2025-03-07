@@ -3,7 +3,7 @@ import axios from 'axios'
 import queryString from 'query-string'
 
 // export const baseURL = import.meta.env.VITE_REACT_APP_API_URL_DEV;
-export const baseURL = import.meta.env.VITE_REACT_APP_API_URL ?? import.meta.env.REACT_APP_API_LIVE
+export const baseURL = import.meta.env.VITE_REACT_APP_API_URL ?? import.meta.env.VITE_REACT_APP_API_LIVE
 // export const baseURL = 'http://localhost:8000/v1'
 export const axiosClient = axios.create({
   baseURL: baseURL,

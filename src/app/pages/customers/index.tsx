@@ -1,13 +1,12 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable no-var */
-/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable react-hooks/exhaustive-deps */
 import { Avatar, FormControl, MenuItem, Select, SelectChangeEvent } from "@mui/material";
 import { KTSVG } from "../../../_metronic/helpers";
-import {  statisticApi } from "app/api";
+import { adminApi, statisticApi } from "app/api";
 import { PLAT_FORM_ARR, formatDate, getRangeOfDates } from "app/util";
-import { QR_CACHE, QR_KEY } from "app/common";
-import { AppSnack, FlatFormOrder, PageCircularProgress, XDateRangePicker, XPagination } from "app/components";
+import {  QR_KEY } from "app/common";
+import { AppSnack, FlatFormOrder, InitAlert, PageCircularProgress, PermissionLayout, XDateRangePicker, XPagination, XSwitch } from "app/components";
 import TitlePage from "app/components/TitlePage";
 import { useMutation, useQuery } from "react-query";
 import { Link, useLocation, useNavigate } from "react-router-dom";
@@ -37,7 +36,7 @@ function Customers() {
       'from_date': query['from_date'],
       'to_date': query['to_date']
     }),
-    staleTime: QR_CACHE
+    staleTime: 0
   })
   const customers = data?.data || []
   const onChangePage = (page: number) => {
@@ -73,55 +72,18 @@ function Customers() {
                   <th className='min-w-140px'>Số điện thoại</th>
                   <th className='min-w-140px'>Nền tảng</th>
                   <th className='min-w-120px'>Ngày đăng ký</th>
-                  <th className='min-w-100px text-end'>Actions</th>
+                  <PermissionLayout permissions={['v1.admin.users.update']}>
+                    <th className='min-w-120px'>Trạng thái</th>
+                  </PermissionLayout>
+                  <PermissionLayout permissions={['v1.admin.users.show', 'v1.admin.users.update']}>
+                    <th className='min-w-100px text-end'>Actions</th>
+                  </PermissionLayout>
                 </tr>
               </thead>
               <tbody>
                 {
-                  customers.map((item:any) => (
-                    <tr key={item.id}>
-                      <td>
-                        <div className='d-flex align-items-center'>
-                          <div className='symbol symbol-45px me-5'>
-                            <Avatar src={item.avatar || item.fullname} alt={item.fullname} />
-                          </div>
-                          <div className='d-flex justify-content-start flex-column'>
-                            <span className='text-dark fw-bold fs-6'>
-                              {item.fullname}
-                            </span>
-                            <span className='fw-semobold text-muted d-block fs-7'>
-                              {item.email}
-                            </span>
-                          </div>
-                        </div>
-                      </td>
-                      <td>
-                        <a href={`tel:${item.telephone}`} className='text-dark fw-bold text-hover-primary d-block fs-6'>
-                          {item.telephone}
-                        </a>
-                      </td>
-                      <td>
-                        <FlatFormOrder platForm={item.platform} />
-                      </td>
-                      <td>
-                        <span className='text-muted fw-semobold text-muted d-block fs-7'>
-                          {formatDate(item.created_at)}
-                        </span>
-                      </td>
-                      <td>
-                        <div className='d-flex justify-content-end flex-shrink-0'>
-                          <Link
-                            to={'#'}
-                            className='btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1'
-                          >
-                            <KTSVG
-                              path='/media/icons/duotune/general/gen019.svg'
-                              className='svg-icon-3'
-                            />
-                          </Link>
-                        </div>
-                      </td>
-                    </tr>
+                  customers.map((item) => (
+                    <Item key={item.id} item={item} />
                   ))
                 }
               </tbody>
@@ -140,6 +102,70 @@ function Customers() {
 }
 
 export default Customers;
+
+const Item: FC<{ item: Customer }> = ({ item }) => {
+  const [active, setActive] = useState(item.is_active === 1 ? true : false)
+  const onActive = (e: boolean) => {
+    setActive(e);
+    adminApi.adminUserUpdate(item.id, {
+      is_active: e
+    }).then(() => {
+      InitAlert.open({ title: 'Cập nhật thành công', type: 'success' })
+    })
+  }
+  return (
+    <tr>
+      <td>
+        <div className='d-flex align-items-center'>
+          <div className='symbol symbol-45px me-5'>
+            <Avatar src={item.avatar || item.fullname} alt={item.fullname} />
+          </div>
+          <div className='d-flex justify-content-start flex-column'>
+            <span className='text-dark fw-bold fs-6'>
+              {item.fullname}
+            </span>
+            <span className='fw-semobold text-muted d-block fs-7'>
+              {item.email}
+            </span>
+          </div>
+        </div>
+      </td>
+      <td>
+        <a href={`tel:${item.telephone}`} className='text-dark fw-bold text-hover-primary d-block fs-6'>
+          {item.telephone}
+        </a>
+      </td>
+      <td>
+        <FlatFormOrder platForm={item.platform} />
+      </td>
+      <td>
+        <span className='text-muted fw-semobold text-muted d-block fs-7'>
+          {formatDate(item.created_at)}
+        </span>
+      </td>
+      <PermissionLayout permissions={['v1.admin.users.update']}>
+        <td>
+          <XSwitch label='' value={active} onChange={e => onActive(e.target.checked)} />
+        </td>
+      </PermissionLayout>
+      <PermissionLayout permissions={['v1.admin.users.show', 'v1.admin.users.update']}>
+        <td>
+          <div className='d-flex justify-content-end flex-shrink-0'>
+            <Link
+              to={`/pages/customers-form/${item.id}`}
+              className='btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1'
+            >
+              <KTSVG
+                path='/media/icons/duotune/general/gen019.svg'
+                className='svg-icon-3'
+              />
+            </Link>
+          </div>
+        </td>
+      </PermissionLayout>
+    </tr>
+  )
+}
 
 const Filter: FC<{ query: QrCustomer }> = ({ query }) => {
   const location = useLocation()
@@ -282,7 +308,7 @@ const ExportFile: FC<ExportFileProps> = ({ data, qr }) => {
     onSuccess: (res) => setCustomers(prev => [...prev, ...res.data])
   })
   const onExport = () => {
-    if(data.data.length === 0) return
+    if (data.data.length === 0) return
     if (!qr['from_date'] || !qr['to_date'])
       return resultLoad({ message: 'Vui lòng chọn khoảng thời gian', color: 'warning' })
     const dateRange = getRangeOfDates(

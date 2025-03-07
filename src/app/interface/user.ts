@@ -10,6 +10,7 @@ export interface User {
   token: string
   token_expired_at: string,
   btx_points: number
+  is_active:0|1,
 }
 export interface Customer extends User {
   platform: string;
