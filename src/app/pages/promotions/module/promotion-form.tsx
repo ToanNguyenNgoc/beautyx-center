@@ -332,6 +332,7 @@ function PromotionForm() {
                 model={formik.values.content}
                 onModelChange={(e: string) => formik.setFieldValue('content', e)}
                 tag='textarea'
+                config={{attribution:false}}
               />
             </div>
             <div className="column">
