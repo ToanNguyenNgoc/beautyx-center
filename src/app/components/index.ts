@@ -20,3 +20,4 @@ export * from './AppSnack/AppSnackBar'
 export * from './RegisterGlobalLayout/RegisterGlobalLayout'
 export * from './ConfirmAction/ConfirmAction'
 export * from './ViewPdf/ViewPdf'
+export * from './ButtonUpload/ButtonUpload';

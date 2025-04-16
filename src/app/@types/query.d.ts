@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { ORDER_STATUS, PLAT_FORM } from "app/util";
 
 
@@ -61,11 +62,25 @@ export type QrAdminAccount = QrPage & {
 export type QrAdminOrder = QrPage & {
   "filter[keyword]"?: string;
   "filter[status]"?: keyof typeof ORDER_STATUS;
-  "filter[platform]"?:keyof typeof PLAT_FORM;
-  "filter[withServicesSold]"?:boolean;
-  "filter[productable]"?:boolean;
-  "filter[organization_id]"?:number;
-  "include"?:string;
-  "sort"?:string;
-  "append"?:string;
+  "filter[platform]"?: keyof typeof PLAT_FORM;
+  "filter[withServicesSold]"?: boolean;
+  "filter[productable]"?: boolean;
+  "filter[organization_id]"?: number;
+  "include"?: string;
+  "sort"?: string;
+  "append"?: string;
+}
+
+export type QrBrandApp = QrPage & {
+  "filter[keyword]"?: string;
+  "append"?: "media_url",
+  "sort"?: "id" | "-created_at"
+}
+
+export type QrBrandAppVersion = QrPage & {
+  "filter[os_platform]"?: string;
+  "filter[status]"?: boolean;
+  "append"?: string;
+  "include"?: string;
+  "sort"?: string
 }

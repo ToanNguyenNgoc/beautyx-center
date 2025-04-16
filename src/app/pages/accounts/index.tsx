@@ -58,7 +58,7 @@ function Accounts() {
     })
   }
   return (
-    <PermissionLayout permissions={['v1.admin.users.index']}>
+    <PermissionLayout permissions={['v1.admin.users.index']} showEmpty>
       <TitlePage
         element={
           <PermissionLayout permissions={['v1.admin.users.store']}>

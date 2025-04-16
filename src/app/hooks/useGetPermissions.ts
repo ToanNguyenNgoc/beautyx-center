@@ -71,6 +71,16 @@ export function useGetPermissions() {
       name: 'versions',
       desc: 'Danh sách phiên bản phần mềm',
       permissions: permissions.filter(i => i.name.includes('versions'))
+    },
+    {
+      name: 'brand_apps',
+      desc: 'Danh sách phiên bản App thương hiệu',
+      permissions: permissions.filter(i => i.name.includes('brand_apps'))
+    },
+    {
+      name: 'brand_app_versions',
+      desc: 'Danh sách phiên bản Bundle app thương hiệu',
+      permissions: permissions.filter(i => i.name.includes('brand_app_versions'))
     }
   ]
   return {

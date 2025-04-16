@@ -2,13 +2,13 @@ import axios from "axios";
 import fs from "fs";
 import path from "path";
 
-const baseURL = 'http://127.0.0.1:8000/v1';
+const baseURL = 'https://devapi.myspa.vn/v1';
 
 async function fetchData() {
     try {
         const response = await axios.get(`${baseURL}/permissions`, {
             headers: {
-                'Authorization': `Bearer 67c916b5f876254a020a9b86|LSgWez2O3KykY6c0ylk2`
+                'Authorization': `Bearer`
             }
         });
 

@@ -157,6 +157,13 @@ export function AsideMenuMain() {
           title='Danh sách đơn hàng'
         />
       </PermissionLayout>
+      <PermissionLayout permissions={['v1.brand_apps.index']}>
+      <AsideMenuItem
+        to='pages/brand-apps'
+        icon='/media/icons/duotune/finance/fin008.svg'
+        title='Danh sách App thương hiệu'
+      />
+      </PermissionLayout>
       {/* <AsideMenuItem
         to='pages/trends'
         icon='/media/icons/duotune/files/fil004.svg'

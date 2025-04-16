@@ -12,6 +12,8 @@ export const QR_KEY = {
   ORDER_ORG: 'ORDER_ORG',
   Statistic: 'Statistic',
   Organization: 'Organization',
-  Productable: 'Productable'
+  Productable: 'Productable',
+  BrandApps: 'BrandApps',
+  BrandAppVersions:'BrandAppVersions'
 }
 export const QR_CACHE = 15 * (60 * 1000)

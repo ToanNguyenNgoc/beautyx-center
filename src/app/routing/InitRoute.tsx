@@ -32,7 +32,7 @@ const PushNotificationFormPage = lazy(() => import('../pages/push-notification/m
 
 const OrdersPage = lazy(() => import('../pages/orders/index'))
 const CustomersPage = lazy(() => import('../pages/customers'))
-const CustomerFormPage = lazy(()=> import('../pages/customers/modules/CustomerFormPage'))
+const CustomerFormPage = lazy(() => import('../pages/customers/modules/CustomerFormPage'))
 const Organizations = lazy(() => import('../pages/organizations'))
 const OrganizationsDetailPage = lazy(() => import('../pages/organizations/module/organizations-detail'))
 const ServicesPage = lazy(() => import('../pages/services'))
@@ -42,10 +42,14 @@ const PermissionsPage = lazy(() => import('../pages/permissions'))
 const TipsPage = lazy(() => import('../pages/tips'))
 const TipsForm = lazy(() => import('../pages/tips/module/tips-form'))
 
-const VoucherFormPage = lazy(()=> import('../pages/voucher/VoucherFormPage'))
-const RoleFormPage = lazy(()=> import('../pages/roles/role-form/RoleFormPage'))
-const AccountsPage = lazy(()=> import('../pages/accounts'))
-const AccountFormPage = lazy(()=> import('../pages/accounts/modules/AccountForm/AccountFormPage'))
+const VoucherFormPage = lazy(() => import('../pages/voucher/VoucherFormPage'))
+const RoleFormPage = lazy(() => import('../pages/roles/role-form/RoleFormPage'))
+const AccountsPage = lazy(() => import('../pages/accounts'))
+const AccountFormPage = lazy(() => import('../pages/accounts/modules/AccountForm/AccountFormPage'))
+
+const BrandAppPage = lazy(() => import('../pages/brand-apps/BrandAppPage'))
+const BrandAppVersionPage = lazy(() => import('../pages/brand-apps/BrandAppVersionPage'))
+const BrandAppVersionFromPage = lazy(() => import('../pages/brand-apps/BrandAppVersionFromPage'))
 
 //-------------
 // const OrgMobaGalleriesPage = lazy(() => import('../pages-organization/moba-galleries'))
@@ -57,8 +61,8 @@ const InitRoute: any[] = [
     },
     //gov
     {
-        path:"/pages/gov",
-        element:<GovPage/>
+        path: "/pages/gov",
+        element: <GovPage />
     },
     //banner
     {
@@ -175,15 +179,15 @@ const InitRoute: any[] = [
     },
     //
     {
-        path:"pages/accounts",
+        path: "pages/accounts",
         element: <AccountsPage />
     },
     {
-        path:"pages/accounts-form/:id",
+        path: "pages/accounts-form/:id",
         element: <AccountFormPage />
     },
     {
-        path:"pages/accounts-form",
+        path: "pages/accounts-form",
         element: <AccountFormPage />
     },
     //-------------------------------
@@ -240,6 +244,18 @@ const InitRoute: any[] = [
         path: "pages/tips-form/:id",
         element: <TipsForm />
     },
+    {
+        path: "pages/brand-apps",
+        element: <BrandAppPage />
+    },
+    {
+        path: "pages/brand-apps/:bundle/:os_platform",
+        element: <BrandAppVersionPage />
+    },
+    {
+        path: "pages/brand-apps/:bundle/:os_platform/form",
+        element: <BrandAppVersionFromPage />
+    }
 
 
 ]

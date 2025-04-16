@@ -331,8 +331,9 @@ function PromotionForm() {
               <FroalaEditor
                 model={formik.values.content}
                 onModelChange={(e: string) => formik.setFieldValue('content', e)}
+                // onModelChange={(e: string) => console.log(e)}
                 tag='textarea'
-                config={{attribution:false}}
+                // config={{attribution:false}}
               />
             </div>
             <div className="column">

@@ -34,18 +34,30 @@ export type ReqPostBody = {
   tag_id?: number;
   service_ids?: number[]
 }
-export type ReqPostNotification={
-  title?:string;
-  description?:string;
-  type?:string|number;
-  link?:string;
-  payload_id?:string
+export type ReqPostNotification = {
+  title?: string;
+  description?: string;
+  type?: string | number;
+  link?: string;
+  payload_id?: string
 }
 export type ReqAdminUser = {
-  fullname?:string;
-  email?:string;
-  telephone?:string;
-  password?:string;
-  is_active?:boolean;
-  roles_id?:number[]
+  fullname?: string;
+  email?: string;
+  telephone?: string;
+  password?: string;
+  is_active?: boolean;
+  roles_id?: number[]
+}
+export type ReqBrandApp = {
+  name?: string,
+  bundle_id?: string,
+  status?: boolean,
+  media_id?: number
+}
+export type ReqBrandAppVersion = {
+  version: string,
+  os_platform: string,
+  status: boolean,
+  media_id?: number
 }
