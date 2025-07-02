@@ -32,6 +32,14 @@ import 'froala-editor/css/froala_editor.pkgd.min.css';
 // import FroalaEditorComponent from 'react-froala-wysiwyg';
 import FroalaEditor from 'react-froala-wysiwyg'
 
+function removeFroalaFooter(html?:string) {
+  if(!html) return;
+  return html.replace(
+    /<p\s+data-f-id="pbf"[^>]*>Powered by\s*<a[^>]*>Froala Editor<\/a><\/p>/g,
+    ' '
+  );
+}
+
 function PromotionForm() {
   const navigate = useNavigate()
   const params: any = useParams()
@@ -85,7 +93,7 @@ function PromotionForm() {
         ...values,
         productables: values.productables.map((i: Productable) => i.id),
         discounts: values.discounts.map((i: IDiscountPar) => i.id),
-        content: values.priority < 0 ? JSON.stringify({ url, token, platform, color }) : values.content,
+        content: values.priority < 0 ? JSON.stringify({ url, token, platform, color }) : removeFroalaFooter(values.content),
       }, identity)
       const res = await mutateAsync({ ...body, is_popup: values.is_popup ? 1 : 0, })
       if (res) {

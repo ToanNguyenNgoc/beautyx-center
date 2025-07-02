@@ -243,7 +243,7 @@ const BrandAppForm: FC<{ brandAppId?: number, onClose?: () => void, refetch?: ()
       e: eF,
       callBack(data) {
         formik.setFieldValue('media_id', data[0]?.model_id);
-        formik.setFieldValue('media_ul', data[0]?.original_url);
+        formik.setFieldValue('media_url', data[0]?.original_url);
       },
       version: 'myspa',
       resetOriginalResult: true

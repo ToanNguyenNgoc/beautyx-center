@@ -45,7 +45,7 @@ export function OrgServices() {
     page: query?.page ?? 1,
     limit: '15',
     filter: {
-      keyword: keyWord,
+      keyword: 'LT Đốt nốt ruồi nhỏ',
     },
   }
 

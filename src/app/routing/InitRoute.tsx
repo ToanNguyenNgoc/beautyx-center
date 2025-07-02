@@ -53,6 +53,7 @@ const BrandAppVersionFromPage = lazy(() => import('../pages/brand-apps/BrandAppV
 
 //-------------
 // const OrgMobaGalleriesPage = lazy(() => import('../pages-organization/moba-galleries'))
+const ChatPage = lazy(()=>import('../pages/chat/ChatPage'));
 
 const InitRoute: any[] = [
     {
@@ -255,6 +256,10 @@ const InitRoute: any[] = [
     {
         path: "pages/brand-apps/:bundle/:os_platform/form",
         element: <BrandAppVersionFromPage />
+    },
+    {
+        path: "pages/chat",
+        element: <ChatPage />
     }
 
 
