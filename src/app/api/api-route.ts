@@ -1,4 +1,4 @@
-export const DOMAIN = 'https://api.beautyx.life/v1'
+export const DOMAIN = 'https://api-node-myspa.nntx.vn/v1'
 export const API_ROUTE = {
   BANNERS: '/banners',
   BANNERS_ID: (id: number | string) => `/banners/${id}`,

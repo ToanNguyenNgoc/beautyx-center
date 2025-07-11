@@ -1,7 +1,7 @@
 import axios from 'axios'
 import queryString from 'query-string'
 
-export const baseURL = 'https://api.beautyx.life/v1'
+export const baseURL = 'https://api-node-myspa.nntx.vn/v1'
 // export const baseURL = 'http://localhost:3004/v1'
 export const mediaBaseURL = 'https://media.beautyx.life'
 

@@ -71,7 +71,7 @@ export const GovPage: FC = () => {
 }
 
 const Traffic = memo(() => {
-  // const host = "https://api.beautyx.life";
+  // const host = "https://api-node-myspa.nntx.vn";
   // const host = "http://localhost:3004";
   // const socket = socketIOClient(host);
   // const socketRef = useRef<Socket<any, any>>();
