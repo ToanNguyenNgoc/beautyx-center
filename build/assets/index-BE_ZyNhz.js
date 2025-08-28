@@ -1,0 +1,1 @@
+import{ad as r,Z as n,j as s,a8 as t,$ as i}from"./index-BHl1vF-Z.js";function u(){const e=r().id,{response:a}=n(!0,i.ROLES_ID_PERMISSIONS(e));return console.log(a),s.jsxs(s.Fragment,{children:[s.jsx(t,{title:"Phân quyền"}),s.jsx("div",{children:JSON.stringify(a)})]})}export{u as default};

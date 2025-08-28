@@ -60,5 +60,3 @@ yarn copy.lock
 .env
 ./history
 .history/
-
-build
