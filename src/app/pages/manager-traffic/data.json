@@ -1,0 +1,18 @@
+{
+  "manager_trackings": {
+    "_id": "68ad36bbf74237c9f5d8a9c5",
+    "subdomain": "demo",
+    "api_url": "https://api.myspa.vn/v1/users/profile",
+    "header": "{\"Accept\":\"application/json, text/plain, */*\",\"Content-Type\":\"application/json\",\"User-Agent\":\"mobile\"}",
+    "ip_address": "192.168.1.58",
+    "ip_device": "51728019-DE23-4767-946B-0D74899F6CE8",
+    "device": "iPhone12,5",
+    "screen": "",
+    "method": "GET",
+    "type": "API",
+    "manager_tracking_url_id": "68ad2601a5be50f51cff0fb4",
+    "createdAt": "2025-08-26T04:23:23.964Z",
+    "updatedAt": "2025-08-26T04:23:23.964Z",
+    "__v": 0
+  }
+}

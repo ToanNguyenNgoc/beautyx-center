@@ -14,6 +14,7 @@ import { App } from '../App'
 import { CustomerEvent } from 'app/pages/customers-event/CustomerEvent'
 import { LocationTool } from 'app/pages/tools'
 import { RegisterGlobalLayout } from 'app/components'
+import ManagerTraffic from 'app/pages/manager-traffic/ManagerTraffic'
 
 /**
  * Base URL of the website.
@@ -41,6 +42,7 @@ const AppRoutes: FC = () => {
               <>
                 <Route path='vong-quay' element={<CustomerEvent />} />
                 <Route path='location-tool' element={<LocationTool />} />
+                <Route path='manager-traffic' element={<ManagerTraffic />} />
                 <Route path='auth/*' element={<AuthPage />} />
                 <Route path='*' element={<Navigate to='/auth' />} />
               </>

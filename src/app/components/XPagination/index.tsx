@@ -7,17 +7,18 @@ import style from './style.module.scss'
 interface XPaginationProps {
     totalPage: number,
     onChangePage: (page: number) => void,
-    defaultPage: any
+    defaultPage: any,
+    className?:string,
 }
 
 export function XPagination(props: XPaginationProps) {
-    const { totalPage, onChangePage, defaultPage } = props;
+    const { totalPage, onChangePage, defaultPage, className='' } = props;
     const onChange = (_event: React.ChangeEvent<unknown>, value: number) => {
         onChangePage(value)
         scrollTop()
     }
     return (
-        <div className={style.container}>
+        <div className={`${style.container} ${className}`}>
             <Pagination
                 onChange={onChange}
                 defaultPage={parseInt(defaultPage)} 

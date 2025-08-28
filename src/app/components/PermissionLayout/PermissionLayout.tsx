@@ -1,7 +1,7 @@
 import { FC, Fragment, memo, ReactNode } from "react";
 import { PermissionType } from "./permission";
-import { useGetRolesAndPermissions } from "app/hooks";
-import { SUPER_ADMIN } from "app/util";
+// import { useGetRolesAndPermissions } from "app/hooks";
+// import { SUPER_ADMIN } from "app/util";
 
 interface PermissionLayoutProps {
   permissions: Array<PermissionType>
@@ -9,34 +9,39 @@ interface PermissionLayoutProps {
   showEmpty?: boolean;
 }
 
-const checkPermissionMultiple = (permissionsProps: Array<PermissionType>, permissionsAuth: string[]) => {
-  return permissionsProps.filter(i => permissionsAuth.includes(i)).length === permissionsProps.length
-}
+// const checkPermissionMultiple = (permissionsProps: Array<PermissionType>, permissionsAuth: string[]) => {
+//   return permissionsProps.filter(i => permissionsAuth.includes(i)).length === permissionsProps.length
+// }
 
 export const PermissionLayout: FC<PermissionLayoutProps> = memo(({
-  permissions,
+  // permissions,
   children,
-  showEmpty = false
+  // showEmpty = false
 }) => {
-  const { permissions: permissionsAuth, roles } = useGetRolesAndPermissions()
-  if (checkPermissionMultiple(permissions, permissionsAuth) || roles.map(i => i.name).includes(SUPER_ADMIN)) {
-    return (
-      <Fragment>
-        {children}
-      </Fragment>
-    )
-  } else {
-    return (
-      <Fragment>
-        {
-          showEmpty ?
-            <div className="d-flex justify-content-center">
-              <h3>Bạn không có quyền truy cập phần này</h3>
-            </div>
-            :
-            null
-        }
-      </Fragment>
-    )
-  }
+  return (
+    <Fragment>
+      {children}
+    </Fragment>
+  )
+  // const { permissions: permissionsAuth, roles } = useGetRolesAndPermissions()
+  // if (checkPermissionMultiple(permissions, permissionsAuth) || roles.map(i => i.name).includes(SUPER_ADMIN)) {
+  //   return (
+  //     <Fragment>
+  //       {children}
+  //     </Fragment>
+  //   )
+  // } else {
+  //   return (
+  //     <Fragment>
+  //       {
+  //         showEmpty ?
+  //           <div className="d-flex justify-content-center">
+  //             <h3>Bạn không có quyền truy cập phần này</h3>
+  //           </div>
+  //           :
+  //           null
+  //       }
+  //     </Fragment>
+  //   )
+  // }
 })
