@@ -1,11 +1,14 @@
-import {FC, useRef} from 'react'
+import {FC, Fragment, useRef} from 'react'
 import {Link} from 'react-router-dom'
 import clsx from 'clsx'
 import {useLayout} from '../../core'
 import {KTSVG, toAbsoluteUrl} from '../../../helpers'
 import {AsideMenu} from './AsideMenu'
+import { useRootContext } from 'app/hooks'
+import { SITE } from 'app/context'
 
 const AsideDefault: FC = () => {
+  const {rootSite} = useRootContext();
   const {config, classes} = useLayout()
   const asideRef = useRef<HTMLDivElement | null>(null)
   const {aside} = config
@@ -15,6 +18,33 @@ const AsideDefault: FC = () => {
     setTimeout(() => {
       asideRef.current?.classList.remove('animating')
     }, 300)
+  }
+
+  const renderLogo = () => {
+    let logoComponent = (
+      <Fragment>
+        <img
+          alt='Logo'
+          className='h-30px logo'
+          src={toAbsoluteUrl('/media/logos/default-small.png')}
+        />
+        <img
+          alt='Logo'
+          className='h-35px logo'
+          src={toAbsoluteUrl('/media/logos/default.svg')}
+        />
+      </Fragment>
+    );
+    if (rootSite == SITE.GMUP) {
+      logoComponent = (
+        <img
+          alt='Logo'
+          className='h-35px logo'
+          src={toAbsoluteUrl('/media/logos/gmup-text-logo.svg')}
+        />
+      )
+    };
+    return logoComponent;
   }
 
   return (
@@ -35,30 +65,12 @@ const AsideDefault: FC = () => {
         {/* begin::Logo */}
         {aside.theme === 'dark' && (
           <Link to='/dashboard'>
-            <img
-              alt='Logo'
-              className='h-30px logo'
-              src={toAbsoluteUrl('/media/logos/default-small.png')}
-            />
-            <img
-              alt='Logo'
-              className='h-35px logo'
-              src={toAbsoluteUrl('/media/logos/default.svg')}
-            />
+            {renderLogo()}
           </Link>
         )}
         {aside.theme === 'light' && (
           <Link to='/dashboard'>
-           <img
-              alt='Logo'
-              className='h-30px logo'
-              src={toAbsoluteUrl('/media/logos/default-small.png')}
-            />
-            <img
-              alt='Logo'
-              className='h-35px logo'
-              src={toAbsoluteUrl('/media/logos/default.svg')}
-            />
+           {renderLogo()}
           </Link>
         )}
         {/* end::Logo */}

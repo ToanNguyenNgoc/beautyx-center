@@ -23,14 +23,13 @@ import 'react-date-range/dist/styles.css'; // main style file
 import 'react-date-range/dist/theme/default.css'; // theme css file
 import { AppRoutes } from './app/routing/AppRoutes'
 import { AuthProvider, setupAxios } from './app/modules/auth'
-//@ts-ignore
-import AppProvider from "./app/context/AppProvider"
 //config SWR
 import { SWRConfig } from 'swr';
 import { AUTH_HEADER } from './app/api/config_header';
 import { axiosClient } from 'app/configs';
 //@ts-ignore
 import '../public/font/style.css'
+import { RootProvider } from 'app/context';
 
 setupAxios(axios)
 Chart.register(...registerables)
@@ -50,8 +49,8 @@ if (container) {
     <SWRConfig
       value={{ fetcher: (url) => axiosClient.get(url, AUTH_HEADER()), shouldRetryOnError: false }}
     >
-      <QueryClientProvider client={queryClient}>
-        <AppProvider>
+      <RootProvider>
+        <QueryClientProvider client={queryClient}>
           <MetronicI18nProvider>
             <Provider store={store}>
               <AuthProvider>
@@ -60,8 +59,8 @@ if (container) {
             </Provider>
           </MetronicI18nProvider>
           <ReactQueryDevtools initialIsOpen={false} />
-        </AppProvider>
-      </QueryClientProvider>
+        </QueryClientProvider>
+      </RootProvider>
     </SWRConfig>
   )
 }

@@ -21,3 +21,5 @@ export * from './RegisterGlobalLayout/RegisterGlobalLayout'
 export * from './ConfirmAction/ConfirmAction'
 export * from './ViewPdf/ViewPdf'
 export * from './ButtonUpload/ButtonUpload';
+export * from './SiteLayout/SiteLayout';
+export * from './FileUpload/FileUpload';

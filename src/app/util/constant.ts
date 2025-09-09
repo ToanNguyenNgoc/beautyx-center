@@ -1,4 +1,5 @@
 import queryString from "query-string"
+import { PLAT_FORM } from "./platForm"
 export const TYPE = {
   PROMOTION: { type: 'PROMOTION', id: 16, title: 'Promotion' },
   ORG: { type: 'ORGANIZATION', id: 17, title: 'Doanh nghiệp' },
@@ -24,7 +25,7 @@ export const PAYMENT_METHOD = {
     "created_at": "2022-01-07 18:00:07",
     "updated_at": "2022-01-07 18:00:07",
     "name": "Ví MOMO",
-    "color":"#A9206D"
+    "color": "#A9206D"
   },
   VNPAY: {
     "id": 2,
@@ -33,7 +34,7 @@ export const PAYMENT_METHOD = {
     "created_at": "2022-01-07 18:00:07",
     "updated_at": "2022-01-07 18:00:07",
     "name": "VNPAY",
-    "color":"#A2CAED"
+    "color": "#A2CAED"
   },
   VIETTELPAY: {
     "id": 7,
@@ -42,7 +43,7 @@ export const PAYMENT_METHOD = {
     "created_at": "2022-01-07 18:00:07",
     "updated_at": "2022-01-07 18:00:07",
     "name": "Viettel Money",
-    "color":"#DD1437"
+    "color": "#DD1437"
   },
   PAYON: {
     "id": 15,
@@ -51,6 +52,11 @@ export const PAYMENT_METHOD = {
     "created_at": "2023-10-13 10:00:00",
     "updated_at": "2023-10-13 10:00:00",
     "name": "PAYON",
-    "color":"#1466D8"
+    "color": "#1466D8"
   }
 }
+
+export const ROOT_SITE = {
+  BTX: PLAT_FORM.BEAUTYX,
+  GMUP: PLAT_FORM.GMUP,
+};

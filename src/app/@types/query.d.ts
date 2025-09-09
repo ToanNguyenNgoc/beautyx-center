@@ -84,3 +84,17 @@ export type QrBrandAppVersion = QrPage & {
   "include"?: string;
   "sort"?: string
 }
+
+export type QrGmupTag = QrPage & {
+  "filter[is_root]"?: boolean;
+  "filter[status]"?: boolean;
+  "sort"?: boolean;
+}
+
+export type QrTrend = QrPage & {
+  "filter[organization_id]"?: number;
+  "filter[status]"?: boolean;
+  "append"?: string; //media_url|media_thumbnail_url
+  "include"?: string; //organization|productables|discounts
+  "sort"?: string; //id|-created_at
+}

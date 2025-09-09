@@ -12,8 +12,9 @@ interface SelectionDiscountsProps {
   required?: boolean,
   discounts?: IDiscountPar[],
   onChangeDiscounts?: (productable: IDiscountPar[]) => void,
-  filterAll?:boolean,
-  platform?:string
+  filterAll?: boolean,
+  platform?: string,
+  organization_id?: number,
 }
 
 export const SelectionDiscounts: FC<SelectionDiscountsProps> = ({
@@ -22,14 +23,15 @@ export const SelectionDiscounts: FC<SelectionDiscountsProps> = ({
   discounts = [],
   onChangeDiscounts,
   filterAll = true,
-  platform=''
+  platform = '',
+  organization_id
 }) => {
   // const [discounts, setDiscounts] = useState<IDiscountPar[]>([])
   const refDiscountSearch = useRef<HTMLDivElement>(null)
   const onTriggerOrgSearch = (arg: 'hide' | 'show') => {
     if (refDiscountSearch.current) {
       if (arg === 'hide') { refDiscountSearch.current.classList.remove('org-search-show') }
-      if (arg === 'show') { refDiscountSearch.current.classList.add('org-search-show') }
+      if (arg === 'show') { refDiscountSearch.current.classList.add('org-search-show'); mutate('') }
     }
   }
   window.addEventListener('click', () => onTriggerOrgSearch('hide'))
@@ -38,7 +40,8 @@ export const SelectionDiscounts: FC<SelectionDiscountsProps> = ({
       'filter[keyword]': keyword,
       'sort': '-created_at',
       'filter[filter_all]': filterAll,
-      'filter[platform]':platform
+      'filter[platform]': platform,
+      'filter[organization_id]': organization_id,
     })
   })
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -60,7 +63,7 @@ export const SelectionDiscounts: FC<SelectionDiscountsProps> = ({
   return (
     <div className="col col-org">
       <label className={`${required ? 'required' : ''} form-label`}>
-        {label} ({discounts.length} deal giảm giá)
+        {label} (Số lượng: {discounts.length})
       </label>
       <div
         onClick={(e) => { e.stopPropagation(); onTriggerOrgSearch('show') }}
@@ -68,10 +71,10 @@ export const SelectionDiscounts: FC<SelectionDiscountsProps> = ({
       >
         {
           discounts.length > 0 ?
-            discounts.map(o => (
-              <Chip variant="filled" className="m-1" key={o.id} color='success'
+            discounts.map((o, index) => (
+              <Chip variant="filled" className="m-1" key={index} color='success'
                 label={o.title + " [" + o.platform + "]"}
-                avatar={<Avatar alt={o.title} src={o.items.length > 0 ? o.items[0]?.productable?.image_url : o.title} />}
+                avatar={<Avatar alt={o.title} src={o?.items?.length > 0 ? o?.items[0]?.productable?.image_url : o.title} />}
                 onDelete={() => onSelectProductable(o)}
               />
             ))
@@ -89,14 +92,14 @@ export const SelectionDiscounts: FC<SelectionDiscountsProps> = ({
           <div className="org-list">
             <ul className="list">
               {
-                data?.data?.map(item => {
+                data?.data?.map((item, index) => {
                   let image_url = item.title
                   if (item.items.length > 0) { image_url = item.items[0].productable?.image_url }
                   else if (item.organizations.length > 0) { image_url = item.organizations[0].image_url }
                   return (
                     <MenuItem
                       selected={discounts.map(i => i.id).includes(item.id)}
-                      onClick={() => onSelectProductable(item)} key={item.id}
+                      onClick={() => onSelectProductable(item)} key={index}
                     >
                       <Avatar alt={item.title}
                         src={image_url}

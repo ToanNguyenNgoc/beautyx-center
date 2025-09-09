@@ -14,6 +14,10 @@ export const QR_KEY = {
   Organization: 'Organization',
   Productable: 'Productable',
   BrandApps: 'BrandApps',
-  BrandAppVersions:'BrandAppVersions'
+  BrandAppVersions:'BrandAppVersions',
+  GmupTag:'GmupTag',
+  GmupTagId:'GmupTagId',
+  Trend:'Trend',
+  TrendId:'TrendId',
 }
 export const QR_CACHE = 15 * (60 * 1000)

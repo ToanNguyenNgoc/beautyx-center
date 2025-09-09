@@ -34,6 +34,12 @@ const PrivateRoutes = (_props: IProps) => {
   const TrendFormPage = lazy(() => import('../pages/trends/module/trend-form'))
   const ServiceFormPage = lazy(() => import('../pages/services/module/ServiceForm'))
 
+  const TagPage = lazy(() => import('../pages/tags/TagPage'));
+  const TagFormPage = lazy(() => import('../pages/tags/TagFormPage'));
+
+  const MediaPage = lazy(() => import('../pages/medias/MediaPage'));
+  const MediaFormPage = lazy(() => import('../pages/medias/MediaFormPage'));
+
   // end
 
   const routes: IRoutes[] = [
@@ -91,6 +97,30 @@ const PrivateRoutes = (_props: IProps) => {
       path: '/pages/service-form/view_service/:id',
       element: <ServiceFormPage />,
     },
+    {
+      path: '/pages/tags',
+      element: <TagPage />,
+    },
+    {
+      path: '/pages/tags-form',
+      element: <TagFormPage/>,
+    },
+    {
+      path: '/pages/tags-form/:id',
+      element: <TagFormPage/>,
+    },
+    {
+      path: '/pages/medias',
+      element: <MediaPage/>,
+    },
+    {
+      path: '/pages/medias-form',
+      element: <MediaFormPage/>,
+    },
+    {
+      path: '/pages/medias-form/:id',
+      element: <MediaFormPage/>,
+    },
   ]
 
   return (
@@ -105,16 +135,9 @@ const PrivateRoutes = (_props: IProps) => {
         {/* Lazy Modules */}
         {routes.map((item: IRoutes, index: number) => (
           <Route
-            // path={item.ROLE.includes(USER_ROLE) ? item.path : "*"}
             path={item.path}
             key={index}
             element={
-              // item.ROLE.includes(USER_ROLE) ?
-              //   <SuspensedView>
-              //     {item.element}
-              //   </SuspensedView>
-              //   :
-              //   <Navigate to='/error/404' />
               <SuspensedView>{item.element}</SuspensedView>
             }
           />

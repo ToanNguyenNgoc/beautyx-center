@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable react-hooks/exhaustive-deps */
 import { ChangeEvent, Dispatch, FC, SetStateAction, useCallback, useRef } from "react";
 import './org-select.scss'
@@ -7,14 +8,17 @@ import { ResponseDetail, ResponseList } from "app/@types";
 import { useMutation, useQuery } from "react-query";
 import { debounce } from "lodash";
 import { Avatar, Box, Chip, CircularProgress, MenuItem } from "@mui/material";
+import { useRootContext } from "app/hooks";
 
 interface OrgSelectProps {
   required?: boolean
   organization_id: number | string | undefined | null
   origin: IOrganization | undefined
   setOrigin: Dispatch<SetStateAction<IOrganization | undefined>>
+  onChange?: (org?: IOrganization) => void
 }
-export const SelectionOrg: FC<OrgSelectProps> = ({ origin, setOrigin, organization_id, required }) => {
+export const SelectionOrg: FC<OrgSelectProps> = ({ origin, setOrigin, organization_id, required, onChange }) => {
+  const { isGmupSite } = useRootContext();
   useQuery({
     queryKey: ['ORG_SELECTION', organization_id],
     queryFn: () => orgApi.getOrgById(organization_id).then<ResponseDetail<IOrganization>>(res => res.data),
@@ -25,12 +29,17 @@ export const SelectionOrg: FC<OrgSelectProps> = ({ origin, setOrigin, organizati
   const onTriggerOrgSearch = (arg: 'hide' | 'show') => {
     if (refOrgSearch.current) {
       if (arg === 'hide') { refOrgSearch.current.classList.remove('org-search-show') }
-      if (arg === 'show') { refOrgSearch.current.classList.add('org-search-show') }
+      if (arg === 'show') { refOrgSearch.current.classList.add('org-search-show'); mutate('') }
     }
   }
-  window.addEventListener('click', () => onTriggerOrgSearch('hide'))
+  window.addEventListener('click', () => onTriggerOrgSearch('hide'));
+  const getParams = (keyword: string) => {
+    const params = { keyword, is_ecommerce: true, is_gmup: undefined } as any;
+    if (isGmupSite) params.is_gmup = true;
+    return params
+  }
   const { data, mutate, isLoading } = useMutation({
-    mutationFn: (keyword: string) => orgApi.getAll({ keyword, is_ecommerce: true })
+    mutationFn: (keyword: string) => orgApi.getAll(getParams(keyword))
       .then<ResponseList<IOrganization[]>>(res => res.data.context)
   })
   const debounceOrgs = useCallback(
@@ -48,7 +57,7 @@ export const SelectionOrg: FC<OrgSelectProps> = ({ origin, setOrigin, organizati
         {
           origin ?
             <Chip avatar={<Avatar src={origin.image_url} alt={origin.subdomain} />} color='success'
-              label={origin.name} onDelete={() => setOrigin(undefined)}
+              label={origin.name} onDelete={() => { setOrigin(undefined); onChange?.(undefined) }}
             />
             :
             'Gắn doanh nghiệp'
@@ -62,7 +71,7 @@ export const SelectionOrg: FC<OrgSelectProps> = ({ origin, setOrigin, organizati
             <ul className="list">
               {
                 data?.data?.map(item => (
-                  <MenuItem onClick={() => setOrigin(item)} key={item.id} >{item.name}</MenuItem>
+                  <MenuItem onClick={() => { setOrigin(item); onChange?.(item) }} key={item.id} >{item.name}</MenuItem>
                 ))
               }
             </ul>

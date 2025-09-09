@@ -17,9 +17,13 @@ import { PLAT_FORM, PLAT_FORM_ARR } from 'app/util';
 import './style.scss'
 import { debounce, identity, pickBy } from 'lodash';
 import { ExportCode } from './module/discount-form'
-import { ChangeEvent, useCallback } from 'react';
+import { ChangeEvent, Fragment, useCallback, useEffect } from 'react';
+import { useRootContext } from 'app/hooks';
+import { SITE } from 'app/context';
+import { AxiosInstance } from 'app/configs';
 
 function Discounts() {
+  const { rootSite, isBeautyxSite } = useRootContext();
   // const { METHOD } = useVerifyRoute()
   const location = useLocation()
   const navigate = useNavigate()
@@ -31,7 +35,7 @@ function Discounts() {
       limit: 15,
       'filter[keyword]': query['filter[keyword]'],
       'filter[filter_all]': true,
-      'filter[platform]': query['filter[platform]'],
+      'filter[platform]': isBeautyxSite ? query['filter[platform]'] : PLAT_FORM.GMUP,
       'filter[discount_type]': query['filter[discount_type]'],
       'sort': query.sort ?? '-created_at'
     })
@@ -55,6 +59,14 @@ function Discounts() {
     },
     onError: () => InitAlert.open({ title: 'Có lỗi xảy ra', type: 'error' })
   })
+
+
+  const getTags = async () =>{
+    AxiosInstance({version:'v4'}).get('/tags');
+  }
+  useEffect(() => {getTags()},[])
+
+
   return (
     <>
       <TitlePage
@@ -65,16 +77,16 @@ function Discounts() {
               className="btn btn-sm btn-primary"
               style={{ marginLeft: 12 }}
             >
-              Tạo mới mã giảm giá
+              {rootSite == SITE.BEAUTYX ? 'Tạo mới mã giảm giá' : 'Tạo mới'}
             </Link>
           </PermissionLayout>
         }
-        title="Danh sách Mã giảm giá"
+        title="Danh sách"
       />
       <div className={`card mb-5 mb-xl-8`}>
         <div className='card-header border-0 pt-5'>
           <h3 className='card-title align-items-start flex-column'>
-            <span className='card-label fw-bold fs-3 mb-1'>Mã giảm giá</span>
+            <span className='card-label fw-bold fs-3 mb-1'>{rootSite == SITE.BEAUTYX ? 'Mã giảm giá' : 'Dịch vụ GMUP'}</span>
             <span className='text-muted mt-1 fw-semobold fs-7'>Số lượng : {data?.total ?? 1}</span>
           </h3>
         </div>
@@ -84,18 +96,20 @@ function Discounts() {
             <table className='table table-row-dashed table-row-gray-300 align-middle gs-0 gy-4'>
               <thead>
                 <tr className='fw-bold text-muted'>
-                  {/* <th className='min-w-120px'>Mã</th> */}
                   <th className='min-w-150px'>Tiêu đề</th>
                   <th className='min-w-80px'>Ưu tiên</th>
-                  {/* <th className='min-w-150px'>Mô tả</th> */}
-                  <th className='min-w-150px'>Hình thức giảm</th>
-                  <th className='min-w-150px'>Giá giảm</th>
-                  {/* <th className='min-w-150px'>Loại giảm giá</th> */}
+                  <th className='min-w-150px'>{isBeautyxSite ? 'Giá giảm' : 'Giá bán'}</th>
                   <th className='min-w-100px'>Từ ngày</th>
                   <th className='min-w-100px'>Đến ngày</th>
-                  <th className='min-w-100px text-end'>Nền tảng</th>
-                  <th className='min-w-100px text-end'>Số lượng mã</th>
-                  <th className='min-w-150px text-end'>Sử dụng/1 khách</th>
+                  {
+                    isBeautyxSite &&
+                    <Fragment>
+                      <th className='min-w-150px'>Hình thức giảm</th>
+                      <th className='min-w-100px text-end'>Nền tảng</th>
+                      <th className='min-w-100px text-end'>Số lượng mã</th>
+                      <th className='min-w-150px text-end'>Sử dụng/1 khách</th>
+                    </Fragment>
+                  }
                   <th className='min-w-100px text-end'>Actions</th>
                 </tr>
               </thead>
@@ -126,13 +140,6 @@ function Discounts() {
                       </td>
                       <td>
                         <div className='d-flex flex-column w-100 me-2'>
-                          <DiscountsTypeElement
-                            TYPE={item.discount_type}
-                          />
-                        </div>
-                      </td>
-                      <td>
-                        <div className='d-flex flex-column w-100 me-2'>
                           {formatPrice(item.discount_value || 0)}{item.discount_type === "PERCENT" ? "%" : "đ"}
                         </div>
                       </td>
@@ -146,21 +153,33 @@ function Discounts() {
                           {formatDate(item.valid_util)}
                         </span>
                       </td>
-                      <td>
-                        <FlatFormOrder
-                          platForm={item.platform}
-                        />
-                      </td>
-                      <td>
-                        <span className='text-muted fw-semobold text-muted d-block fs-7'>
-                          {item.total ?? 'Không giới hạn'}
-                        </span>
-                      </td>
-                      <td>
-                        <span className='text-muted text-end fw-semobold text-muted d-block fs-7'>
-                          {item.limit ?? 'Không giới hạn'}
-                        </span>
-                      </td>
+                      {
+                        isBeautyxSite &&
+                        <Fragment>
+                          <td>
+                            <div className='d-flex flex-column w-100 me-2'>
+                              <DiscountsTypeElement
+                                TYPE={item.discount_type}
+                              />
+                            </div>
+                          </td>
+                          <td>
+                            <FlatFormOrder
+                              platForm={item.platform}
+                            />
+                          </td>
+                          <td>
+                            <span className='text-muted fw-semobold text-muted d-block fs-7'>
+                              {item.total ?? 'Không giới hạn'}
+                            </span>
+                          </td>
+                          <td>
+                            <span className='text-muted text-end fw-semobold text-muted d-block fs-7'>
+                              {item.limit ?? 'Không giới hạn'}
+                            </span>
+                          </td>
+                        </Fragment>
+                      }
                       <td>
                         <div className='d-flex justify-content-end flex-shrink-0 tb-control'>
                           <PermissionLayout permissions={['v1.discounts.update']}>
@@ -237,11 +256,13 @@ function Discounts() {
   );
 }
 const Filter = ({ query }: { query: QrDiscount }) => {
-  const sorts = [
+  const { isBeautyxSite } = useRootContext();
+  let sorts = [
     { sort: '-created_at', title: 'Ngày tạo' },
     { sort: '-total', title: 'Số lượng mã' },
     { sort: '-priority', title: 'Độ ưu tiên' },
-  ]
+  ];
+  if (!isBeautyxSite) sorts = [{ sort: '-created_at', title: 'Ngày tạo' },]
   const navigate = useNavigate()
   const location = useLocation()
   const debounceKeyword = useCallback(
@@ -297,46 +318,51 @@ const Filter = ({ query }: { query: QrDiscount }) => {
         />
       </div>
       <div className="filter-row">
-        <div className="filter-row_platform">
-          <label className="filter-row_label">Hình thức giảm giá</label>
-          <FormControl sx={{ m: 1, minWidth: 150 }} size="small">
-            <Select
-              labelId="demo-select-small-label"
-              id="demo-select-small"
-              value={query['filter[discount_type]'] ?? ''}
-              onChange={onChangeType}
-            >
-              <MenuItem value="">
-                <em>Tất cả</em>
-              </MenuItem>
-              {
-                DISCOUNTS_TYPE.map(item => (
-                  <MenuItem key={item.id} value={item.TYPE}>{item.title}</MenuItem>
-                ))
-              }
-            </Select>
-          </FormControl>
-        </div>
-        <div className="filter-row_platform">
-          <label className="filter-row_label">Nền tảng</label>
-          <FormControl sx={{ m: 1, minWidth: 150 }} size="small">
-            <Select
-              labelId="demo-select-small-label"
-              id="demo-select-small"
-              value={query['filter[platform]'] ?? ''}
-              onChange={handleChange}
-            >
-              <MenuItem value="">
-                <em>Tất cả</em>
-              </MenuItem>
-              {
-                PLAT_FORM_ARR.map(item => (
-                  <MenuItem key={item} value={item}>{item}</MenuItem>
-                ))
-              }
-            </Select>
-          </FormControl>
-        </div>
+        {
+          isBeautyxSite &&
+          <Fragment>
+            <div className="filter-row_platform">
+              <label className="filter-row_label">Type</label>
+              <FormControl sx={{ m: 1, minWidth: 150 }} size="small">
+                <Select
+                  labelId="demo-select-small-label"
+                  id="demo-select-small"
+                  value={query['filter[discount_type]'] ?? ''}
+                  onChange={onChangeType}
+                >
+                  <MenuItem value="">
+                    <em>Tất cả</em>
+                  </MenuItem>
+                  {
+                    DISCOUNTS_TYPE.map(item => (
+                      <MenuItem key={item.id} value={item.TYPE}>{item.title}</MenuItem>
+                    ))
+                  }
+                </Select>
+              </FormControl>
+            </div>
+            <div className="filter-row_platform">
+              <label className="filter-row_label">Nền tảng</label>
+              <FormControl sx={{ m: 1, minWidth: 150 }} size="small">
+                <Select
+                  labelId="demo-select-small-label"
+                  id="demo-select-small"
+                  value={query['filter[platform]'] ?? ''}
+                  onChange={handleChange}
+                >
+                  <MenuItem value="">
+                    <em>Tất cả</em>
+                  </MenuItem>
+                  {
+                    PLAT_FORM_ARR.map(item => (
+                      <MenuItem key={item} value={item}>{item}</MenuItem>
+                    ))
+                  }
+                </Select>
+              </FormControl>
+            </div>
+          </Fragment>
+        }
         <div className="filter-row_platform">
           <label className="filter-row_label">Sắp xếp theo</label>
           <FormControl sx={{ m: 1, minWidth: 150 }} size="small">

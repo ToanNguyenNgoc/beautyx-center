@@ -17,7 +17,8 @@ class Auth {
     return axiosClient.post(url, params);
   };
   getUserProfile = () => {
-    const url = `/users/profile`;
+    // const url = `/users/profile`;
+    const url = `/auth/profile`;
     if (localStorage.getItem(AUTH_LOCAL_TOKEN) || sessionStorage.getItem(AUTH_LOCAL_TOKEN)) {
       return axiosClient.get(url, AUTH_HEADER());
     }

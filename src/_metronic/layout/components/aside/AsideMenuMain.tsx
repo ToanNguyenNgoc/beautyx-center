@@ -1,18 +1,16 @@
 /* eslint-disable prefer-const */
-/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useIntl } from 'react-intl'
 import { AsideMenuItem } from './AsideMenuItem'
 import { IOrganization, IPermission } from 'app/interface'
 import { useAuth } from 'app/modules/auth'
 import { useLocation, useParams } from 'react-router-dom'
-import { useSwr } from 'app/hooks'
+import { useRootContext, useSwr } from 'app/hooks'
 import { API_ROUTE } from 'app/api/api-route'
-import { Avatar, PermissionLayout } from 'app/components'
+import { Avatar, PermissionLayout, SiteLayout } from 'app/components'
 import { useDispatch } from 'react-redux'
 import { onSetOrganization } from 'app/redux/organizationSlice'
-// import { checkMethod } from 'app/util'
-// import { toAbsoluteUrl } from '_metronic/helpers'
+import { SITE } from 'app/context'
 
 const AsideMenuInitList = [
   { to: 'pages/banners', icon: '/media/icons/duotune/general/gen006.svg', title: 'Banners' },
@@ -30,6 +28,7 @@ const AsideMenuInitList = [
 ]
 
 export function AsideMenuMain() {
+  const { rootSite } = useRootContext();
   const dispatch = useDispatch()
   const intl = useIntl()
   const params: any = useParams()
@@ -83,53 +82,59 @@ export function AsideMenuMain() {
           <span className='menu-section text-muted text-uppercase fs-8 ls-1'>Menu</span>
         </div>
       </div>
-      <AsideMenuItem
-        to='pages/gov'
-        icon='/media/icons/duotune/files/fil001.svg'
-        title='Thống kê'
-      />
-      <AsideMenuItem
-        to='pages/banners'
-        icon='/media/icons/duotune/general/gen006.svg'
-        title='Banners'
-      />
-      <AsideMenuItem
-        to='pages/promotions'
-        icon='/media/icons/duotune/finance/fin008.svg'
-        title='Promotions'
-      />
+      <SiteLayout site={SITE.BEAUTYX}>
+        <AsideMenuItem
+          to='pages/gov'
+          icon='/media/icons/duotune/files/fil001.svg'
+          title='Thống kê'
+        />
+        <AsideMenuItem
+          to='pages/banners'
+          icon='/media/icons/duotune/general/gen006.svg'
+          title='Banners'
+        />
+        <AsideMenuItem
+          to='pages/promotions'
+          icon='/media/icons/duotune/finance/fin008.svg'
+          title='Promotions'
+        />
+      </SiteLayout>
+      <SiteLayout site={SITE.GMUP}>
+        <AsideMenuItem
+          to='pages/tags'
+          icon='/media/icons/duotune/general/gen006.svg'
+          title='Tag'
+        />
+      </SiteLayout>
       <AsideMenuItem
         to='pages/discounts'
         icon='/media/icons/duotune/finance/fin008.svg'
-        title='Giảm giá'
+        title={rootSite == SITE.BEAUTYX ? 'Giảm giá' : 'Dịch vụ GMUP'}
       />
-      <PermissionLayout permissions={['v1.beautyx.notification.sendNotification']}>
+      <PermissionLayout permissions={['v1.trends.index']}>
+          <AsideMenuItem
+            to='pages/medias'
+            icon='/media/icons/duotune/social/soc007.svg'
+            title='Media'
+          />
+        </PermissionLayout>
+      <SiteLayout site={SITE.BEAUTYX}>
+        <AsideMenuItem to='pages/tips' icon='/media/icons/duotune/coding/cod004.svg' title='Tip' />
         <AsideMenuItem
-          to='pages/push-notifications'
-          icon='/media/icons/duotune/communication/com004.svg'
-          title='Push thông báo'
+          to='pages/approves'
+          icon='/media/icons/duotune/general/gen051.svg'
+          title='Lịch sử kiểm duyệt'
         />
-      </PermissionLayout>
-      {/* <AsideMenuItem
-        to='pages/setup-home'
-        icon='/media/icons/duotune/coding/cod001.svg'
-        title='Thiết kế Trang chủ Beautyx'
-      /> */}
-      <AsideMenuItem to='pages/tips' icon='/media/icons/duotune/coding/cod004.svg' title='Tip' />
-      <AsideMenuItem
-        to='pages/approves'
-        icon='/media/icons/duotune/general/gen051.svg'
-        title='Lịch sử kiểm duyệt'
-      />
+        <AsideMenuItem
+          to='pages/contracts'
+          icon='/media/icons/duotune/files/fil004.svg'
+          title='Hợp đồng'
+        />
+      </SiteLayout>
       <AsideMenuItem
         to='pages/organizations'
         icon='/media/icons/duotune/general/gen051.svg'
         title='Danh sách Merchant'
-      />
-      <AsideMenuItem
-        to='pages/contracts'
-        icon='/media/icons/duotune/files/fil004.svg'
-        title='Hợp đồng'
       />
       <AsideMenuItem
         to='pages/customers'
@@ -158,11 +163,11 @@ export function AsideMenuMain() {
         />
       </PermissionLayout>
       <PermissionLayout permissions={['v1.brand_apps.index']}>
-      <AsideMenuItem
-        to='pages/brand-apps'
-        icon='/media/icons/duotune/finance/fin008.svg'
-        title='Danh sách App thương hiệu'
-      />
+        <AsideMenuItem
+          to='pages/brand-apps'
+          icon='/media/icons/duotune/finance/fin008.svg'
+          title='Danh sách App thương hiệu'
+        />
       </PermissionLayout>
       {/* <AsideMenuItem
         to='pages/trends'

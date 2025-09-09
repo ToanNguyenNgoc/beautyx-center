@@ -27,6 +27,7 @@ class Organization {
             "filter[min_price]": values.min_price,
             "filter[max_price]": values.max_price,
             "filter[is_momo_ecommerce_enable]": values.is_ecommerce,
+            "filter[is_gmup_enable]":values.is_gmup,
             "filter[location]": values.sort === "distance" ? LOCATION : null,
             "filter[province_code]": values.province_code,
             "filter[district_code]": values.district_code,

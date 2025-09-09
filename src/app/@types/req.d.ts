@@ -61,3 +61,14 @@ export type ReqBrandAppVersion = {
   status: boolean,
   media_id?: number
 }
+
+export type ReqTrend = {
+  organization_id?: number;
+  title?: string;
+  content?: string;
+  media_id?: number;
+  media_thumbnail_id?: number;
+  productables?: number[];
+  discounts?: number[];
+  status?: boolean;
+}

@@ -64,7 +64,15 @@ export const FlatFormOrder = (props: IProps) => {
                     <span className='plat-form-item' style={{ backgroundColor: "#115fe3", color: 'white' }}>
                         {PLAT_FORM.ZALO}
                     </span>
-                ); default:
+                )
+
+            case PLAT_FORM.GMUP:
+                return (
+                    <span className='plat-form-item' style={{ backgroundColor: "#000", color: 'white' }}>
+                        {PLAT_FORM.GMUP}
+                    </span>
+                )
+            default:
                 return <span className='plat-form-item'>
                     Không xác định{element}
                 </span>;

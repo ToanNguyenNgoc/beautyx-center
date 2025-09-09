@@ -28,7 +28,6 @@ export default function FormTip(props: Props) {
       console.log(error)
     },
   })
-  console.log(isLoading)
   const {mutate: addTip, isLoading: loadingTip} = useMutation({
     mutationFn: (value: any) => tipAPI.postTip(value),
     onSuccess: () => {

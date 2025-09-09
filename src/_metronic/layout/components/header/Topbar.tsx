@@ -7,15 +7,15 @@ import {
   HeaderNotificationsMenu,
   HeaderUserMenu,
   QuickLinks,
-  Search,
+  // Search,
   ThemeModeSwitcher,
 } from '../../../partials'
 import {useLayout} from '../../core'
 
 const toolbarButtonMarginClass = 'ms-1 ms-lg-3',
   toolbarButtonHeightClass = 'w-30px h-30px w-md-40px h-md-40px',
-  toolbarUserAvatarHeightClass = 'symbol-30px symbol-md-40px',
-  toolbarButtonIconSizeClass = 'svg-icon-1'
+  toolbarUserAvatarHeightClass = 'symbol-30px symbol-md-40px'
+  // toolbarButtonIconSizeClass = 'svg-icon-1'
 
 const Topbar: FC = () => {
   const {config} = useLayout()
@@ -25,12 +25,12 @@ const Topbar: FC = () => {
     <div className='d-flex align-items-stretch flex-shrink-0'>
       {/* Search */}
       <div className={clsx('d-flex align-items-stretch', toolbarButtonMarginClass)}>
-        <Search />
+        {/* <Search /> */}
       </div>
       {/* Activities */}
       <div className={clsx('d-flex align-items-center', toolbarButtonMarginClass)}>
         {/* begin::Drawer toggle */}
-        <div
+        {/* <div
           className={clsx(
             'btn btn-icon btn-active-light-primary btn-custom',
             toolbarButtonHeightClass
@@ -41,14 +41,14 @@ const Topbar: FC = () => {
             path='/media/icons/duotune/general/gen032.svg'
             className={toolbarButtonIconSizeClass}
           />
-        </div>
+        </div> */}
         {/* end::Drawer toggle */}
       </div>
 
       {/* NOTIFICATIONS */}
       <div className={clsx('d-flex align-items-center', toolbarButtonMarginClass)}>
         {/* begin::Menu- wrapper */}
-        <div
+        {/* <div
           className={clsx(
             'btn btn-icon btn-active-light-primary btn-custom',
             toolbarButtonHeightClass
@@ -62,7 +62,7 @@ const Topbar: FC = () => {
             path='/media/icons/duotune/general/gen022.svg'
             className={toolbarButtonIconSizeClass}
           />
-        </div>
+        </div> */}
         <HeaderNotificationsMenu />
         {/* end::Menu wrapper */}
       </div>
@@ -70,7 +70,7 @@ const Topbar: FC = () => {
       {/* CHAT */}
       <div className={clsx('d-flex align-items-center', toolbarButtonMarginClass)}>
         {/* begin::Menu wrapper */}
-        <div
+        {/* <div
           className={clsx(
             'btn btn-icon btn-active-light-primary btn-custom position-relative',
             toolbarButtonHeightClass
@@ -83,14 +83,14 @@ const Topbar: FC = () => {
           />
 
           <span className='bullet bullet-dot bg-success h-6px w-6px position-absolute translate-middle top-0 start-50 animation-blink'></span>
-        </div>
+        </div> */}
         {/* end::Menu wrapper */}
       </div>
 
       {/* Quick links */}
       <div className={clsx('d-flex align-items-center', toolbarButtonMarginClass)}>
         {/* begin::Menu wrapper */}
-        <div
+        {/* <div
           className={clsx(
             'btn btn-icon btn-active-light-primary btn-custom',
             toolbarButtonHeightClass
@@ -104,7 +104,7 @@ const Topbar: FC = () => {
             path='/media/icons/duotune/general/gen025.svg'
             className={toolbarButtonIconSizeClass}
           />
-        </div>
+        </div> */}
         <QuickLinks />
         {/* end::Menu wrapper */}
       </div>

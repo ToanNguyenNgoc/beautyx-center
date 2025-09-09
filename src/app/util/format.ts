@@ -1,10 +1,12 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable prefer-const */
 import moment from "moment";
 
 
-export const formatDate = (dateParams: string) => {
+export const formatDate = (dateParams: string, format?:'DD/MM/YYYY'|'DD/MM/YYYY HH:mm') => {
   let date = ''
   if (dateParams) {
-    const date = moment(dateParams).format('DD/MM/YYYY')
+    const date = moment(dateParams).format(format ?? 'DD/MM/YYYY')
     return date
   }
   return date

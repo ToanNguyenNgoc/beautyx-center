@@ -8,6 +8,7 @@ import { ResponseList } from "app/@types";
 import { IOrganization } from "app/interface";
 import { debounce } from "lodash";
 import { Avatar, Box, Chip, CircularProgress, MenuItem } from "@mui/material";
+import { useRootContext } from "app/hooks";
 
 interface SelectionOrgMultipleProps {
   label?: string,
@@ -18,6 +19,7 @@ interface SelectionOrgMultipleProps {
 export const SelectionOrgMultiple: FC<SelectionOrgMultipleProps> = (
   { label = 'Gắn doanh nghiệp', origins = [], onChangeOrigin }
 ) => {
+  const { isBeautyxSite } = useRootContext();
   const refOrgSearch = useRef<HTMLDivElement>(null)
   const onTriggerOrgSearch = (arg: 'hide' | 'show') => {
     if (refOrgSearch.current) {
@@ -25,9 +27,9 @@ export const SelectionOrgMultiple: FC<SelectionOrgMultipleProps> = (
       if (arg === 'show') { refOrgSearch.current.classList.add('org-search-show') }
     }
   }
-  window.addEventListener('click', () => onTriggerOrgSearch('hide'))
+  window.addEventListener('click', () => onTriggerOrgSearch('hide'));
   const { data, mutate, isLoading } = useMutation({
-    mutationFn: (keyword: string) => orgApi.getAll({ keyword, is_ecommerce: true })
+    mutationFn: (keyword: string) => orgApi.getAll(isBeautyxSite ? { keyword, is_ecommerce: true } : { keyword, is_gmup: true })
       .then<ResponseList<IOrganization[]>>(res => res.data.context)
   })
   const debounceOrgs = useCallback(
@@ -71,7 +73,7 @@ export const SelectionOrgMultiple: FC<SelectionOrgMultipleProps> = (
           <div className="org-list">
             <ul className="list">
               {
-                data?.data?.map((item:any) => (
+                data?.data?.map((item: any) => (
                   <MenuItem
                     selected={origins.map(i => i.id).includes(item.id)}
                     onClick={() => onSelectOrigin(item)} key={item.id} >

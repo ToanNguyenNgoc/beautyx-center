@@ -1,0 +1,304 @@
+{
+  "id": 9,
+  "organization_id": 1,
+  "title": "string 22 productable, discount",
+  "content": "string 22 productable, discount",
+  "status": true,
+  "created_at": "2025-05-16 14:19:09",
+  "updated_at": "2025-05-16 14:19:09",
+  "deleted_at": null,
+  "media_url": "http://127.0.0.1:8000/media/87/paypal.png?v=1747379949",
+  "media_thumbnail_url": "http://127.0.0.1:8000/media/88/IMG_3384.jpg?v=1747379949",
+  "priority":0,
+  "organization": {
+    "id": 1,
+    "name": "Demo ORG GMUP",
+    "subdomain": "myspa",
+    "domain": "myspa.vn",
+    "latitude": 10.7686321589,
+    "longitude": 106.69883262,
+    "telephone": [
+      "0976542222"
+    ],
+    "address": "KDC 25, Thôn Phước Điền , Đức Hòa, Mộ Đức, Quảng Ngãi",
+    "min_price": 10000,
+    "max_price": 1000000000,
+    "image": "20230609073108.jpg",
+    "is_momo_ecommerce_enable": true,
+    "is_gmup_enable": true,
+    "is_moba_register_requested": true,
+    "opening_status": true,
+    "opening_time": [
+      {
+        "from_time_opening": "08:30",
+        "to_time_opening": "20:30",
+        "time_opening": "on"
+      },
+      {
+        "from_time_opening": "08:30",
+        "to_time_opening": "20:30",
+        "time_opening": "on"
+      },
+      {
+        "from_time_opening": "08:30",
+        "to_time_opening": "20:30",
+        "time_opening": "on"
+      },
+      {
+        "from_time_opening": "08:30",
+        "to_time_opening": "20:30",
+        "time_opening": "on"
+      },
+      {
+        "from_time_opening": "08:30",
+        "to_time_opening": "20:30",
+        "time_opening": "on"
+      },
+      {
+        "from_time_opening": "08:00",
+        "to_time_opening": "12:00",
+        "time_opening": "on"
+      },
+      {
+        "from_time_opening": "09:00",
+        "to_time_opening": "19:00",
+        "time_opening": "on"
+      }
+    ],
+    "created_at": "2021-12-01 11:55:38",
+    "updated_at": "2025-02-19 16:30:45",
+    "province_code": null,
+    "district_code": null,
+    "ward_code": null,
+    "priority": 0,
+    "timezone": "Asia/Ho_Chi_Minh",
+    "is_demo": false,
+    "description": "dsffrertdsfdsdfdsdsfdfssdfsdfsdf oke Huỳnh Đại Long nha",
+    "mc_user_id": 39,
+    "content": "<p>dsffrertdsfdsdfdsdsfdfssdfsdfsdf oke Huỳnh Đại Long nha</p>\r\n",
+    "full_address": "KDC 25, Thôn Phước Điền , Đức Hòa, Mộ Đức, Quảng Ngãi",
+    "image_url": "https://myspa.myspa.vn/files/myspa/avatar/20230609073108.jpg",
+    "is_favorite": false,
+    "location": {
+      "lat": 10.7686321589,
+      "lon": 106.69883262
+    },
+    "favorites_count": 2,
+    "comments_count": 1
+  },
+  "productables": [
+    {
+      "id": 1233,
+      "name": "test dich vu abdc",
+      "type": 1,
+      "sku": null,
+      "status": true,
+      "on_ecommerce": true,
+      "on_moba": false,
+      "stock": null,
+      "organization_id": 1,
+      "origin_id": 101,
+      "price": "20000.00",
+      "discount_price": "1000.00",
+      "discount_moba_price": "0.00",
+      "discount_ecommerce_price": "1000.00",
+      "deleted_at": null,
+      "created_at": "2023-06-19 16:35:16",
+      "updated_at": "2025-03-18 16:03:52",
+      "pivot": {
+        "organization_trend_id": 9,
+        "productable_id": 1233
+      }
+    },
+    {
+      "id": 1247,
+      "name": "Tets dich vu",
+      "type": 1,
+      "sku": null,
+      "status": true,
+      "on_ecommerce": true,
+      "on_moba": false,
+      "stock": null,
+      "organization_id": 1,
+      "origin_id": 115,
+      "price": "200000.00",
+      "discount_price": "180000.00",
+      "discount_moba_price": "0.00",
+      "discount_ecommerce_price": "180000.00",
+      "deleted_at": null,
+      "created_at": "2023-07-14 13:55:55",
+      "updated_at": "2025-03-18 16:03:52",
+      "pivot": {
+        "organization_trend_id": 9,
+        "productable_id": 1247
+      }
+    }
+  ],
+  "discounts": [
+    {
+      "id": 615,
+      "uuid": "3631f772-32c6-4311-ae2b-09324a5a9672",
+      "title": "Tetst",
+      "description": "string",
+      "coupon_code": "ADK",
+      "discount_value": 20000,
+      "discount_unit": "PRICE",
+      "discount_type": "FINAL_PRICE",
+      "valid_from": "2023-07-06 23:01:59",
+      "valid_util": "2030-07-18 23:01:59",
+      "valid_time": null,
+      "minimum_order_value": null,
+      "maximum_discount_value": null,
+      "priority": 0,
+      "total": null,
+      "used": 0,
+      "limit": 0,
+      "is_campaign": false,
+      "platform": "MOMO",
+      "deleted_at": null,
+      "created_at": "2023-06-23 17:29:33",
+      "updated_at": "2023-06-23 17:29:33",
+      "pivot": {
+        "organization_trend_id": 9,
+        "discount_id": 615
+      },
+      "organizations": [
+        {
+          "id": 1,
+          "name": "Demo ORG GMUP",
+          "subdomain": "myspa",
+          "domain": "myspa.vn",
+          "latitude": 10.7686321589,
+          "longitude": 106.69883262,
+          "telephone": [
+            "0976542222"
+          ],
+          "address": "KDC 25, Thôn Phước Điền , Đức Hòa, Mộ Đức, Quảng Ngãi",
+          "min_price": 10000,
+          "max_price": 1000000000,
+          "image": "20230609073108.jpg",
+          "is_momo_ecommerce_enable": true,
+          "is_gmup_enable": true,
+          "is_moba_register_requested": true,
+          "opening_status": true,
+          "opening_time": [
+            {
+              "from_time_opening": "08:30",
+              "to_time_opening": "20:30",
+              "time_opening": "on"
+            },
+            {
+              "from_time_opening": "08:30",
+              "to_time_opening": "20:30",
+              "time_opening": "on"
+            },
+            {
+              "from_time_opening": "08:30",
+              "to_time_opening": "20:30",
+              "time_opening": "on"
+            },
+            {
+              "from_time_opening": "08:30",
+              "to_time_opening": "20:30",
+              "time_opening": "on"
+            },
+            {
+              "from_time_opening": "08:30",
+              "to_time_opening": "20:30",
+              "time_opening": "on"
+            },
+            {
+              "from_time_opening": "08:00",
+              "to_time_opening": "12:00",
+              "time_opening": "on"
+            },
+            {
+              "from_time_opening": "09:00",
+              "to_time_opening": "19:00",
+              "time_opening": "on"
+            }
+          ],
+          "created_at": "2021-12-01 11:55:38",
+          "updated_at": "2025-02-19 16:30:45",
+          "province_code": null,
+          "district_code": null,
+          "ward_code": null,
+          "priority": 0,
+          "timezone": "Asia/Ho_Chi_Minh",
+          "is_demo": false,
+          "description": "dsffrertdsfdsdfdsdsfdfssdfsdfsdf oke Huỳnh Đại Long nha",
+          "mc_user_id": 39,
+          "content": "<p>dsffrertdsfdsdfdsdsfdfssdfsdfsdf oke Huỳnh Đại Long nha</p>\r\n",
+          "full_address": "KDC 25, Thôn Phước Điền , Đức Hòa, Mộ Đức, Quảng Ngãi",
+          "image_url": "https://myspa.myspa.vn/files/myspa/avatar/20230609073108.jpg",
+          "is_favorite": false,
+          "location": {
+            "lat": 10.7686321589,
+            "lon": 106.69883262
+          },
+          "pivot": {
+            "discount_id": 615,
+            "organization_id": 1
+          }
+        }
+      ],
+      "items": [
+        {
+          "id": 1,
+          "productable_type": "App\\Models\\CI\\Service",
+          "productable_id": 6,
+          "discount_id": 615,
+          "organization_id": 1,
+          "created_at": "2023-06-23 17:29:33",
+          "updated_at": "2023-06-23 17:29:33"
+        }
+      ]
+    }
+  ],
+  "media": [
+    {
+      "id": 87,
+      "model_type": "App\\Models\\OrganizationTrend",
+      "model_id": 9,
+      "uuid": "9754c9d9-237c-4814-8721-10cdef149737",
+      "collection_name": "organization_trend",
+      "name": "paypal",
+      "file_name": "paypal.png",
+      "mime_type": "image/png",
+      "disk": "media",
+      "conversions_disk": "media",
+      "size": 14569,
+      "manipulations": [],
+      "custom_properties": [],
+      "generated_conversions": [],
+      "responsive_images": [],
+      "order_column": 87,
+      "created_at": "2025-05-16T07:19:09.000000Z",
+      "updated_at": "2025-05-16T07:19:09.000000Z",
+      "original_url": "http://127.0.0.1:8000/media/87/paypal.png?v=1747379949",
+      "preview_url": ""
+    },
+    {
+      "id": 88,
+      "model_type": "App\\Models\\OrganizationTrend",
+      "model_id": 9,
+      "uuid": "4a4dbec4-b590-4a77-b19e-d343fe0ef1b8",
+      "collection_name": "organization_trend_thumbnail",
+      "name": "IMG_3384",
+      "file_name": "IMG_3384.jpg",
+      "mime_type": "image/jpeg",
+      "disk": "media",
+      "conversions_disk": "media",
+      "size": 102021,
+      "manipulations": [],
+      "custom_properties": [],
+      "generated_conversions": [],
+      "responsive_images": [],
+      "order_column": 88,
+      "created_at": "2025-05-16T07:19:09.000000Z",
+      "updated_at": "2025-05-16T07:19:09.000000Z",
+      "original_url": "http://127.0.0.1:8000/media/88/IMG_3384.jpg?v=1747379949",
+      "preview_url": ""
+    }
+  ]
+}
