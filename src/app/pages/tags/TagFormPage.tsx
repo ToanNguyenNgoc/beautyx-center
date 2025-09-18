@@ -65,7 +65,7 @@ const TagFormPage: FC = () => {
         setFieldValue('status', context.status);
         setSubTags(context.children);
         if (context.media.length > 0) {
-          setFieldValue('media_id', context.media[0].model_id);
+          // setFieldValue('media_id', context.media[0].model_id);
           setFieldValue('original_url', context.media[0].original_url);
         }
       }

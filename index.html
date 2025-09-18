@@ -10,12 +10,27 @@
   <meta name="description"
     content="BeautyX - Nền tảng giúp bạn tìm kiếm Spa, Salon,.. phù hợp với nhu cầu làm đẹp. Đặt lịch dễ dàng, thanh toán nhanh chóng với hơn 5000 địa điểm làm đẹp trên toàn quốc." />
   <link rel="stylesheet" id="layout-styles-anchor" href="./public/splash-screen.css" />
+  <style>
+    .rotate {
+      animation: spin 2s linear infinite;
+    }
+
+    @keyframes spin {
+      from {
+        transform: rotate(0deg);
+      }
+
+      to {
+        transform: rotate(360deg);
+      }
+    }
+  </style>
 
 </head>
 
 <body>
   <div id="splash-screen" class="splash-screen">
-    <img src="./public/media/logos/default-small.png" alt="Metronic logo" />
+    <img class="rotate" src="./public/media/logos/loading.png" alt="Metronic logo" />
     <span>Loading ...</span>
   </div>
   <div id="root"></div>

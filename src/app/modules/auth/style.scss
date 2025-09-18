@@ -1,0 +1,15 @@
+.page-cnt {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 48px;
+  .site {
+    display: flex;
+    justify-content: center;
+
+    .site-cnt {
+      width: 220px;
+    }
+  }
+}

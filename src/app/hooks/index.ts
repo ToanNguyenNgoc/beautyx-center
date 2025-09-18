@@ -17,3 +17,5 @@ export * from './useGetRoles';
 export * from './useQueryParams';
 export * from './useGetAllTopics';
 export * from './useRootContext';
+export * from './useGetGmupTags';
+export * from './useTranslate';

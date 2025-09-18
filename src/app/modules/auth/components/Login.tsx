@@ -9,6 +9,7 @@ import clsx from "clsx"
 import { useAuth } from '../core/Auth'
 // import { verifyUser } from "middleware";
 import { request3rdApi } from "app/api/api-3rd-client";
+import { useRootContext } from "app/hooks";
 
 const loginSchema = Yup.object().shape({
     email: Yup.string()
@@ -40,8 +41,9 @@ const initialValues = {
 */
 export function Login() {
     const dispatch = useDispatch();
-    const [loading, setLoading] = useState(false)
-    const { saveAuth, setCurrentUser } = useAuth()
+    const {rootSite} = useRootContext();
+    const [loading, setLoading] = useState(false);
+    const { saveAuth, setCurrentUser } = useAuth();
 
     const formik = useFormik({
         initialValues,
@@ -90,7 +92,7 @@ export function Login() {
             >
                 {/* begin::Heading */}
                 <div className='text-center mb-10'>
-                    <h1 className='text-dark mb-3'>Sign In to BeautyX Console</h1>
+                    <h1 className='text-dark mb-3'>Sign In to {rootSite} Console</h1>
                 </div>
                 {/* begin::Heading */}
 
@@ -101,8 +103,6 @@ export function Login() {
                 ) : (
                     <div className='mb-10 bg-light-info p-8 rounded'>
                         <div className='text-info'>
-                            {/* Use account <strong>{initialValues.email}</strong> and password <strong>{initialValues.password}</strong> to
-                        continue. */}
                         </div>
                     </div>
                 )}

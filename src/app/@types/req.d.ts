@@ -71,4 +71,5 @@ export type ReqTrend = {
   productables?: number[];
   discounts?: number[];
   status?: boolean;
+  priority?:number;
 }

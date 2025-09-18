@@ -14,6 +14,9 @@
 
         .wrap-item {
             width: 49%;
+            .MuiFormControl-root{
+                margin: 0px !important;
+            }
         }
 
         .wrap-item-col-4 {

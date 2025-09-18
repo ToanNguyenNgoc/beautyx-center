@@ -1,0 +1,1 @@
+import{f as r,cH as t}from"./index-CzmKoHlB.js";function l(){const e=r(s=>s.ACCOUNT).userRole||[];let n=[];try{n=e.flatMap(s=>s.permissions)}catch{}return{roles:e,permissions:n,hasEnabled:s=>n.includes(s)||e.map(o=>o.name).includes(t)}}export{l as u};

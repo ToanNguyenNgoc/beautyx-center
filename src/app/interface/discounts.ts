@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { ResGmupTag } from './gmup-tag';
 import { IOrganization } from './organization';
 export interface IITEMS_DISCOUNT {
     id: number,
@@ -101,7 +103,9 @@ export interface IDiscountPar {
     items_count: number,
     organizations: IOrganization[],
     items: IITEMS_DISCOUNT[],
-    is_campaign: boolean
+    is_campaign: boolean,
+    gmup_tags?: ResGmupTag[];
+    gmup_tag_ids?:number[];
 }
 export interface ICouponCodeCampaign {
     coupon_code: string;

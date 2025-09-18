@@ -6,7 +6,7 @@ import { DISCOUNTS_TYPE, DiscountsTypeElement } from 'app/util/fileType';
 import FlatFormOrder from 'app/components/PlatForm';
 import { KTSVG } from '../../../_metronic/helpers';
 import { IDiscountPar } from 'app/interface';
-import { InitAlert, PageCircularProgress, PermissionLayout, XPagination } from 'app/components';
+import { InitAlert, PageCircularProgress, PermissionLayout, SiteLayout, XPagination } from 'app/components';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { QR_KEY } from 'app/common';
 import { discountsApi } from 'app/api';
@@ -18,12 +18,12 @@ import './style.scss'
 import { debounce, identity, pickBy } from 'lodash';
 import { ExportCode } from './module/discount-form'
 import { ChangeEvent, Fragment, useCallback, useEffect } from 'react';
-import { useRootContext } from 'app/hooks';
+import { useRootContext, useTranslate } from 'app/hooks';
 import { SITE } from 'app/context';
 import { AxiosInstance } from 'app/configs';
 
 function Discounts() {
-  const { rootSite, isBeautyxSite } = useRootContext();
+  const { rootSite, isBeautyxSite, isGmupSite } = useRootContext();
   // const { METHOD } = useVerifyRoute()
   const location = useLocation()
   const navigate = useNavigate()
@@ -37,7 +37,8 @@ function Discounts() {
       'filter[filter_all]': true,
       'filter[platform]': isBeautyxSite ? query['filter[platform]'] : PLAT_FORM.GMUP,
       'filter[discount_type]': query['filter[discount_type]'],
-      'sort': query.sort ?? '-created_at'
+      'sort': query.sort ?? '-created_at',
+      'include': isGmupSite ? 'gmup_tags' : undefined,
     })
   })
   const discounts: IDiscountPar[] = data?.data ?? []
@@ -57,15 +58,15 @@ function Discounts() {
     onSuccess: () => {
       queryClient.invalidateQueries([QR_KEY.DISCOUNT_PAGE, query])
     },
-    onError: () => InitAlert.open({ title: 'Có lỗi xảy ra', type: 'error' })
+    onError: () => InitAlert.open({ title: t('An error occurred Please try again!'), type: 'error' })
   })
 
 
-  const getTags = async () =>{
-    AxiosInstance({version:'v4'}).get('/tags');
+  const getTags = async () => {
+    AxiosInstance({ version: 'v4' }).get('/tags');
   }
-  useEffect(() => {getTags()},[])
-
+  useEffect(() => { getTags() }, []);
+  const {t} = useTranslate();
 
   return (
     <>
@@ -77,11 +78,11 @@ function Discounts() {
               className="btn btn-sm btn-primary"
               style={{ marginLeft: 12 }}
             >
-              {rootSite == SITE.BEAUTYX ? 'Tạo mới mã giảm giá' : 'Tạo mới'}
+              {t("Create new")}
             </Link>
           </PermissionLayout>
         }
-        title="Danh sách"
+        title={t("List")}
       />
       <div className={`card mb-5 mb-xl-8`}>
         <div className='card-header border-0 pt-5'>
@@ -99,17 +100,17 @@ function Discounts() {
                   <th className='min-w-150px'>Tiêu đề</th>
                   <th className='min-w-80px'>Ưu tiên</th>
                   <th className='min-w-150px'>{isBeautyxSite ? 'Giá giảm' : 'Giá bán'}</th>
+                  <SiteLayout site={SITE.GMUP} >
+                    <th className='min-w-100px'>Tag</th>
+                  </SiteLayout>
                   <th className='min-w-100px'>Từ ngày</th>
                   <th className='min-w-100px'>Đến ngày</th>
-                  {
-                    isBeautyxSite &&
-                    <Fragment>
-                      <th className='min-w-150px'>Hình thức giảm</th>
-                      <th className='min-w-100px text-end'>Nền tảng</th>
-                      <th className='min-w-100px text-end'>Số lượng mã</th>
-                      <th className='min-w-150px text-end'>Sử dụng/1 khách</th>
-                    </Fragment>
-                  }
+                  <SiteLayout site={SITE.BEAUTYX}>
+                    <th className='min-w-150px'>Hình thức giảm</th>
+                    <th className='min-w-100px text-end'>Nền tảng</th>
+                    <th className='min-w-100px text-end'>Số lượng mã</th>
+                    <th className='min-w-150px text-end'>Sử dụng/1 khách</th>
+                  </SiteLayout>
                   <th className='min-w-100px text-end'>Actions</th>
                 </tr>
               </thead>
@@ -143,6 +144,13 @@ function Discounts() {
                           {formatPrice(item.discount_value || 0)}{item.discount_type === "PERCENT" ? "%" : "đ"}
                         </div>
                       </td>
+                      <SiteLayout site={SITE.GMUP} >
+                        <td>
+                          <div className='d-flex flex-column w-100 me-2'>
+                            {item.gmup_tags?.map(i => i.name)?.join(', ')}
+                          </div>
+                        </td>
+                      </SiteLayout>
                       <td>
                         <span className='text-muted fw-semobold text-muted d-block fs-7'>
                           {formatDate(item.valid_from)}
@@ -153,33 +161,30 @@ function Discounts() {
                           {formatDate(item.valid_util)}
                         </span>
                       </td>
-                      {
-                        isBeautyxSite &&
-                        <Fragment>
-                          <td>
-                            <div className='d-flex flex-column w-100 me-2'>
-                              <DiscountsTypeElement
-                                TYPE={item.discount_type}
-                              />
-                            </div>
-                          </td>
-                          <td>
-                            <FlatFormOrder
-                              platForm={item.platform}
+                      <SiteLayout site={SITE.BEAUTYX} >
+                        <td>
+                          <div className='d-flex flex-column w-100 me-2'>
+                            <DiscountsTypeElement
+                              TYPE={item.discount_type}
                             />
-                          </td>
-                          <td>
-                            <span className='text-muted fw-semobold text-muted d-block fs-7'>
-                              {item.total ?? 'Không giới hạn'}
-                            </span>
-                          </td>
-                          <td>
-                            <span className='text-muted text-end fw-semobold text-muted d-block fs-7'>
-                              {item.limit ?? 'Không giới hạn'}
-                            </span>
-                          </td>
-                        </Fragment>
-                      }
+                          </div>
+                        </td>
+                        <td>
+                          <FlatFormOrder
+                            platForm={item.platform}
+                          />
+                        </td>
+                        <td>
+                          <span className='text-muted fw-semobold text-muted d-block fs-7'>
+                            {item.total ?? 'Không giới hạn'}
+                          </span>
+                        </td>
+                        <td>
+                          <span className='text-muted text-end fw-semobold text-muted d-block fs-7'>
+                            {item.limit ?? 'Không giới hạn'}
+                          </span>
+                        </td>
+                      </SiteLayout>
                       <td>
                         <div className='d-flex justify-content-end flex-shrink-0 tb-control'>
                           <PermissionLayout permissions={['v1.discounts.update']}>

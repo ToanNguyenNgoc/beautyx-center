@@ -14,11 +14,13 @@ export type QrDiscount = QrPage & {
   'filter[location]'?: string;
   'sort'?: string;
   'filter[filter_all]'?: boolean;
-  'append'?: "" | "user_available_purchase_count"
+  'append'?: "" | "user_available_purchase_count",
+  'include'?:string //gmup_tags
 }
 export type QrDiscountDetail = {
   id: string;
-  'filter[organization_id]'?: number | string
+  'filter[organization_id]'?: number | string,
+  'include'?:string //gmup_tags
 }
 export type QrDiscountCode = {
   'page'?: number | string;
@@ -88,7 +90,8 @@ export type QrBrandAppVersion = QrPage & {
 export type QrGmupTag = QrPage & {
   "filter[is_root]"?: boolean;
   "filter[status]"?: boolean;
-  "sort"?: boolean;
+  "sort"?: string;
+  "include"?: string;
 }
 
 export type QrTrend = QrPage & {

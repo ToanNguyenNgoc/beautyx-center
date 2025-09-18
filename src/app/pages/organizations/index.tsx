@@ -2,29 +2,31 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable react-hooks/exhaustive-deps */
 import TitlePage from 'app/components/TitlePage';
-import { IOrganization } from 'app/interface';
-import { AppSnack, Avatar, PageCircularProgress, PermissionLayout, XPagination, XSwitch } from 'app/components';
+import { IOrganization, ResGmupTag } from 'app/interface';
+import { AppSnack, Avatar, PageCircularProgress, PermissionLayout, SiteLayout, XPagination, XSwitch } from 'app/components';
 // import { StatusOrgE } from 'app/util/fileType'
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import directRoute from 'app/routing/DirectRoute';
-import { FC, useEffect, useState } from 'react';
+import { FC, useCallback, useEffect, useState } from 'react';
 import queryString from 'query-string'
-import { FormControl, InputLabel, MenuItem, Select, SelectChangeEvent } from '@mui/material';
+import { Box, Chip, FormControl, InputLabel, MenuItem, OutlinedInput, Select, SelectChangeEvent } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 import { useMutation, useQuery } from 'react-query';
 import { orgApi } from 'app/api';
 import { ResponseList } from 'app/@types';
-import { identity, pickBy } from 'lodash';
+import { debounce, identity, pickBy } from 'lodash';
 import * as FileSaver from "file-saver";
 import * as XLSX from "xlsx"
 import "./organization.scss"
 import moment from 'moment';
-import { useDebounce, useMessage } from 'app/hooks';
+import { useDebounce, useGetGmupTags, useMessage } from 'app/hooks';
 import { DIRECT_ORG } from 'app/util';
+import { SITE } from 'app/context';
 
 function Organizations() {
   const location = useLocation()
   const navigate = useNavigate()
+  const { gmupTags } = useGetGmupTags({ limit: 50, 'filter[is_root]': true, 'filter[status]': true });
   const qrPath = useDebounce(queryString.parse(location.search), 800) as any
   const { data, isLoading } = useQuery({
     queryKey: ['ORG', qrPath],
@@ -66,15 +68,18 @@ function Organizations() {
                 <tr className='fw-bold text-muted bg-light'>
                   <th className='ps-4 min-w-300px rounded-start'>Thông tin</th>
                   <th className='min-w-125px'>Liên lạc</th>
-                  <th className='min-w-125px'>Lượt thích</th>
-                  <th className='min-w-200px'>Trạng thái TMDT</th>
+                  <th className='min-w-100px'>Trạng thái TMDT</th>
+                  <th className='min-w-100px'>Trạng thái GMUP</th>
+                  <SiteLayout site={SITE.GMUP}>
+                    <th className='min-w-300px'>Tag GMUP</th>
+                  </SiteLayout>
                   <th className='min-w-150px text-end rounded-end'></th>
                 </tr>
               </thead>
               <tbody>
                 {
                   data?.data?.map((org: IOrganization, index: number) => (
-                    <ItemOrg key={index} org={org} />
+                    <ItemOrg key={index} org={org} gmupTags={gmupTags} />
                   ))
                 }
               </tbody>
@@ -92,23 +97,31 @@ function Organizations() {
   );
 }
 
-const ItemOrg: FC<{ org: IOrganization }> = ({ org }) => {
-  const [active, setActive] = useState(org.is_momo_ecommerce_enable)
+const ItemOrg: FC<{ org: IOrganization, gmupTags?: ResGmupTag[] }> = ({ org, gmupTags = [] }) => {
+  const initForm = {
+    is_momo_ecommerce_enable: org.is_momo_ecommerce_enable,
+    is_gmup_enable: org.is_gmup_enable,
+    gmup_tag_ids: org?.gmup_tags?.map(i => i.id),
+  };
+  const [form, setForm] = useState(initForm);
   const { resultLoad, noti, onCloseNoti } = useMessage()
-  const onActive = (e: boolean) => {
-    setActive(e)
-    orgApi.updateECommerce(org.id, {
-      is_momo_ecommerce_enable: e
-    })
-      .then(res => {
-        setActive(res.data.context.is_momo_ecommerce_enable)
-        resultLoad({ message: 'Cập nhật thành công', color: 'success' })
+  const onUpdate = (key: keyof typeof form, e: any) => {
+    setForm(prev => ({ ...prev, [key]: e }));
+    orgApi.updateECommerce(org.id, { [key]: e })
+      .then(() => {
+        resultLoad({ message: 'Cập nhật thành công', color: 'success' });
       })
       .catch(() => {
-        setActive(org.is_momo_ecommerce_enable);
-        resultLoad({ message: 'Có lỗi xảy ra', color: 'error' })
-      })
-  }
+        setForm(initForm);
+        resultLoad({ message: 'Có lỗi xảy ra', color: 'error' });
+      });
+  };
+  const handleChange = (values: any) => {
+    setForm(prev => ({ ...prev, gmup_tag_ids: values }));
+    handleUpdateGmupTags(values);
+  };
+  const handleUpdateGmupTags = useCallback(debounce((values: any) => onUpdate('gmup_tag_ids', values), 1000), []);
+
   return (
     <>
       <AppSnack
@@ -143,41 +156,38 @@ const ItemOrg: FC<{ org: IOrganization }> = ({ org }) => {
           </span>
         </td>
         <td>
-          <span className='text-dark fw-bold text-hover-primary d-block mb-1 fs-6'>
-            {org.favorites_count}
-          </span>
-        </td>
-        <td>
-          {/* <StatusOrgE status={org.is_momo_ecommerce_enable} /> */}
           <PermissionLayout permissions={['v1.organizations.updateECommerce']}>
-            <XSwitch label='' value={active} onChange={e => onActive(e.target.checked)} />
+            <XSwitch label='' value={form.is_momo_ecommerce_enable} onChange={e => onUpdate('is_momo_ecommerce_enable', e.target.checked)} />
           </PermissionLayout>
         </td>
-        {/* <td>
-        <div className='rating'>
-          <div className='rating-label me-2 checked'>
-            <i className='bi bi-star-fill fs-5'></i>
-          </div>
-          <div className='rating-label me-2 checked'>
-            <i className='bi bi-star-fill fs-5'></i>
-          </div>
-          <div className='rating-label me-2 checked'>
-            <i className='bi bi-star-fill fs-5'></i>
-          </div>
-          <div className='rating-label me-2 checked'>
-            <i className='bi bi-star-fill fs-5'></i>
-          </div>
-          <div className='rating-label me-2 checked'>
-            <i className='bi bi-star-fill fs-5'></i>
-          </div>
-        </div>
-        <span className='text-muted fw-semobold text-muted d-block fs-7 mt-1'>
-          Best Rated
-        </span>
-      </td> */}
+        <td>
+          <PermissionLayout permissions={['v1.organizations.updateECommerce']}>
+            <XSwitch label='' value={form.is_gmup_enable} onChange={e => onUpdate('is_gmup_enable', e.target.checked)} />
+          </PermissionLayout>
+        </td>
+        <SiteLayout site={SITE.GMUP}>
+          <td>
+            <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
+              <Select
+                multiple
+                value={form.gmup_tag_ids}
+                onChange={e => handleChange(e.target.value)}
+                input={<OutlinedInput id="select-multiple-chip" label="Chip" />}
+                renderValue={() => (
+                  <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
+                    {gmupTags.filter(item => form.gmup_tag_ids.includes(item.id)).map((value) => (
+                      <Chip key={value.id} label={value.name} />
+                    ))}
+                  </Box>
+                )}
+              >
+                {gmupTags.map(item => (<MenuItem key={item.id} value={item.id}>{item.name}</MenuItem>))}
+              </Select>
+            </FormControl>
+          </td>
+        </SiteLayout>
         <td className='text-end'>
           {
-            // METHOD?.includes("GET_BY_ID") &&
             <Link
               to={{ pathname: directRoute.ORGANIZATIONS_DETAIL(org.id) + '/services' }}
               className='btn btn-icon btn-bg-light btn-active-color-primary btn-sm'

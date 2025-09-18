@@ -8,8 +8,8 @@ interface AxiosInstanceOptions {
 }
 
 export const AxiosInstance = (options?: AxiosInstanceOptions) => {
-  // const baseURL = options?.baseURL || (import.meta.env.VITE_REACT_APP_API_URL ?? import.meta.env.VITE_REACT_APP_API_LIVE).replace('/v1', '');
-  const baseURL = options?.baseURL || ('http://localhost:8000/v1').replace('/v1', '');
+  const baseURL = options?.baseURL || (import.meta.env.VITE_REACT_APP_API_URL ?? import.meta.env.VITE_REACT_APP_API_LIVE).replace('/v1', '');
+  // const baseURL = options?.baseURL || ('http://localhost:8000/v1').replace('/v1', '');
   const version = options?.version || 'v1';
   const axiosClient = axios.create({
     baseURL: `${baseURL}/${version}`,

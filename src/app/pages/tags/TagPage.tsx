@@ -1,32 +1,25 @@
-import { QrGmupTag, ResponseDetail, ResponseList } from "app/@types";
+import { QrGmupTag, } from "app/@types";
 import { ConfirmAction, InitAlert, PermissionLayout, XSwitch } from "app/components";
 import TitlePage from "app/components/TitlePage";
 import { Link, useNavigate } from "react-router-dom";
 import queryString from 'query-string';
-import { useQuery } from "react-query";
-import { QR_KEY } from "app/common";
 import { AxiosInstance } from "app/configs";
 import { ResGmupTag } from "app/interface";
 import { formatDate } from "app/util";
 import { KTSVG } from '../../../_metronic/helpers';
 import { FC, useState } from "react";
+import { useGetGmupTags } from "app/hooks";
 
 const TagPage = () => {
   const query = queryString.parse(location.search) as QrGmupTag;
-  const { data, refetch } = useQuery({
-    queryKey: [QR_KEY.GmupTag, query],
-    queryFn: () => AxiosInstance({ version: 'v4' })
-      .get('/tags', {
-        params: {
-          page: query?.page ?? 1,
-          limit: 15,
-          'filter[is_root]': true,
-          'include': 'media',
-          'sort': query.sort ?? '-created_at'
-        }
-      })
-      .then<ResponseDetail<ResponseList<ResGmupTag[]>>>(res => res.data),
-  });
+
+  const { data, refetch } = useGetGmupTags({
+    page: query?.page ?? 1,
+    limit: 15,
+    'filter[is_root]': true,
+    'include': 'media',
+    'sort': query.sort ? query.sort : '-created_at'
+  })
 
   const onDeleteTag = (id: number) => {
     return ConfirmAction.open({

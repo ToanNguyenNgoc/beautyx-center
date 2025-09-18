@@ -1,7 +1,8 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { QrTrend } from "app/@types";
 import { ConfirmAction, InitAlert, PageCircularProgress, PermissionLayout, XPagination, XSwitch } from "app/components";
 import TitlePage from "app/components/TitlePage";
-import { FC, useState } from "react";
+import { FC, useCallback, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useQuery } from "react-query";
 import { QR_KEY } from "app/common";
@@ -10,6 +11,7 @@ import { ResTrend } from "app/interface/trend";
 import { KTSVG } from '../../../_metronic/helpers';
 import { formatDate } from "app/util";
 import { useQueryParams } from "app/hooks";
+import { debounce } from 'lodash';
 
 const MediaPage: FC = () => {
   const { query, handleQueryString } = useQueryParams<QrTrend>()
@@ -90,20 +92,26 @@ const MediaPage: FC = () => {
 const Row: FC<{ trend: ResTrend, onDelete?: () => void }> = ({ trend, onDelete }) => {
   const navigate = useNavigate();
   const [status, setStatus] = useState(trend.status);
+  const [priority, setPriority] = useState(trend.priority);
+  const onChange = useCallback((debounce((text: number) => TrendApi.update(trend.id, { priority: text }), 1000)), []);
   const onChangeStatus = (e: boolean) => {
     setStatus(e);
     TrendApi.update(trend.id, { status: e })
       .then(() => InitAlert.open({ title: 'Lưu thành công', type: 'success' }))
-      .catch(() => { InitAlert.open({ title: 'Có lỗi xảy ra. Vui lòng thử lại', type: 'error' }); setStatus(trend.status) })
-  }
+      .catch(() => { InitAlert.open({ title: 'Có lỗi xảy ra. Vui lòng thử lại', type: 'error' }); setStatus(trend.status) });
+  };
   return (
     <tr>
       <td>
-        <div className='d-flex align-items-center'>
+        <div className='d-flex align-items-center justify-content-center'>
           <div className='d-flex justify-content-start flex-column'>
-            <span className='text-dark fw-bold text-hover-primary fs-6'>
-              {trend.priority}
-            </span>
+            <input
+              onChange={(e) => { onChange(Number(e.target.value)); setPriority(Number(e.target.value)) }}
+              value={priority}
+              type='number'
+              className='form-control'
+              name='priority'
+            />
           </div>
         </div>
       </td>

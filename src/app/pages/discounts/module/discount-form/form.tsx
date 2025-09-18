@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Box, MenuItem, Select } from '@mui/material';
+import { Box, FormControl, MenuItem, Select } from '@mui/material';
 import { useState } from 'react';
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { AppSnack, FlatFormOrder, SelectionOrgMultiple, XDateRangePicker, XSwitch } from 'app/components'
+import { AppSnack, FlatFormOrder, SelectionOrgMultiple, SiteLayout, XDateRangePicker, XSwitch } from 'app/components'
 import moment from 'moment';
 import { useMutation } from 'react-query';
 import { ReqDiscountBody } from 'app/@types';
@@ -20,7 +20,7 @@ import {
   PLAT_FORM_ARR,
   formatPrice
 } from 'app/util';
-import { useMessage, useRootContext } from 'app/hooks';
+import { useGetGmupTags, useMessage, useRootContext } from 'app/hooks';
 import { useNavigate } from 'react-router-dom';
 import { SelectService } from './select-service';
 import { ExportCode } from './export-code'
@@ -35,6 +35,7 @@ interface IProps {
 
 function Form(props: IProps) {
   const { rootSite, isBeautyxSite } = useRootContext();
+  const { gmupTags } = useGetGmupTags({ limit: 100, 'filter[is_root]': false, 'filter[status]': true });
   const generateCode = moment().format('MMDDss')
   const { discount, isForm } = props;
   const { resultLoad, onCloseNoti, noti } = useMessage()
@@ -71,21 +72,22 @@ function Form(props: IProps) {
       coupon_code: isBeautyxSite ? (isForm === "EDIT" ? discount?.coupon_code : "") : `GMUP-${new Date().getTime()}`,
       title: isForm === "EDIT" ? discount?.title : "",
       description: isForm === "EDIT" ? discount?.description : "",
-      platform: isBeautyxSite ? ((isForm === "EDIT" && discount?.platform) ? discount?.platform?.split("|")?.filter(Boolean):[]): [PLAT_FORM.GMUP],
-      discount_type: isForm === "EDIT" ? discount?.discount_type : "",
-      discount_unit: isForm === "EDIT" ? discount?.discount_unit : "",
+      platform: isBeautyxSite ? ((isForm === "EDIT" && discount?.platform) ? discount?.platform?.split("|")?.filter(Boolean) : []) : [PLAT_FORM.GMUP],
+      discount_type: isBeautyxSite ? (isForm === "EDIT" ? discount?.discount_type : "") : DISCOUNT_TYPE.FINAL_PRICE,
+      discount_unit: isBeautyxSite ? (isForm === "EDIT" ? discount?.discount_unit : "") : DISCOUNT_UNIT.PRICE,
       discount_value: isForm === "EDIT" ? discount?.discount_value : "",
       organizations: isForm === "EDIT" ? discount?.organizations : [],
-      total: (isForm === "EDIT" && discount?.total) ? discount?.total : "",
+      total: isBeautyxSite ? ((isForm === "EDIT" && discount?.total) ? discount?.total : "") : 3000,
       valid_from: (isForm === "EDIT" && discount?.valid_from) ? discount?.valid_from : moment().format('YYYY-MM-DD HH:mm:ss'),
       valid_util: (isForm === "EDIT" && discount?.valid_util) ? discount?.valid_util : moment().format('YYYY-MM-DD HH:mm:ss'),
-      minimum_order_value: (isForm === "EDIT" && discount?.maximum_discount_value) ? discount?.maximum_discount_value : "",
-      limit: (isForm === "EDIT" && discount?.limit) ? discount?.limit : ""
+      minimum_order_value: isBeautyxSite ? ((isForm === "EDIT" && discount?.maximum_discount_value) ? discount?.maximum_discount_value : "") : 0,
+      limit: isBeautyxSite ? ((isForm === "EDIT" && discount?.limit) ? discount?.limit : "") : undefined,
+      gmup_tag_ids: isForm === "EDIT" ? discount?.gmup_tags?.map(i => Number(i.id)).filter(Boolean) : [] as any,
     },
     validationSchema: Yup.object({
       coupon_code: Yup.string().required("Vui lòng nhập Mã giảm giá"),
-      title: Yup.string().required("Vui lòng nhập tên chương trình khuyến mại"),
-      description: Yup.string().required("Vui lòng nhập mô tả chương trình khuyến mại"),
+      title: Yup.string().required("Vui lòng nhập tên"),
+      description: Yup.string().required("Vui lòng nhập mô tả"),
       discount_type: Yup.string().required("Vui lòng chọn hình thức giảm giá"),
       discount_unit: Yup.string().required("Vui lòng chọn loại giảm giá "),
       discount_value: Yup.string().required("Vui lòng nhập giá trị giảm"),
@@ -166,7 +168,6 @@ function Form(props: IProps) {
     }
   }
 
-
   return (
     <>
       <AppSnack
@@ -204,6 +205,24 @@ function Form(props: IProps) {
               placeholder="Độ ưu tiên"
             />
           </div>
+          <div className="wrap-item d-flex flex-column">
+            <label className="form-label">Tag dịch vụ</label>
+            <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
+              <Select
+                value={formik.values.gmup_tag_ids.length > 0 ? formik.values.gmup_tag_ids[0]: undefined}
+                onChange={e => formik.setFieldValue('gmup_tag_ids', [e.target.value])}
+                renderValue={() => (
+                  <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
+                    {gmupTags.filter(item => formik.values.gmup_tag_ids?.includes(item.id || 0)).map((value) => (
+                      <span key={value.id}>{value.name}</span>
+                    ))}
+                  </Box>
+                )}
+              >
+                {gmupTags.map(item => (<MenuItem key={item.id} value={item.id}>{item.name}</MenuItem>))}
+              </Select>
+            </FormControl>
+          </div>
         </div>
         <div className="flex-row-sp input-wrap">
           <div className="wrap-item">
@@ -235,7 +254,7 @@ function Form(props: IProps) {
               name="title"
               type="text"
               className="form-control form-control-solid"
-              placeholder="Chương trình khuyến mại"
+              placeholder="Tên"
             />
             {formik.errors.title && formik.touched.title && (
               <span className='text-danger'>
@@ -252,7 +271,7 @@ function Form(props: IProps) {
             name="description"
             type="text"
             className="form-control form-control-solid"
-            placeholder="Mô tả chương trình khuyến mại"
+            placeholder="Mô tả "
           />
           {formik.errors.description && formik.touched.description && (
             <span className='text-danger'>
@@ -326,51 +345,55 @@ function Form(props: IProps) {
         </div>
         {/* end orgs select */}
         <div className="flex-row-sp input-wrap">
-          <div className="flex-col wrap-item wrap-item-col-4">
-            <label className="required form-label">Hình thức giảm giá </label>
-            <Select
-              labelId="demo-simple-select-label"
-              id="demo-simple-select"
-              value={formik.values.discount_type}
-              onChange={formik.handleChange}
-              name="discount_type"
-            >
-              {
-                DISCOUNTS_TYPE.map(item => (
-                  <MenuItem key={item.id} value={item.TYPE}>{item.title}</MenuItem>
-                ))
-              }
-            </Select>
-            {formik.errors.discount_type && formik.touched.discount_type && (
-              <span className='text-danger'>
-                {formik.errors.discount_type}
-              </span>
-            )}
-          </div>
-          <div className="flex-col wrap-item wrap-item-col-4">
-            <label className="required form-label">Giảm giá theo</label>
-            <Select
-              labelId="demo-simple-select-label"
-              id="demo-simple-select"
-              value={formik.values.discount_unit}
-              onChange={(e) => {
-                formik.setFieldValue("discount_value", "")
-                formik.setFieldValue("discount_unit", e.target.value)
-              }}
-              name="discount_unit"
-            >
-              {
-                DISCOUNT_UNIT_ARR.map(item => (
-                  <MenuItem key={item.id} value={item.TYPE}>{item.title}</MenuItem>
-                ))
-              }
-            </Select>
-            {formik.errors.discount_unit && formik.touched.discount_unit && (
-              <span className='text-danger'>
-                {formik.errors.discount_unit}
-              </span>
-            )}
-          </div>
+          <SiteLayout site={SITE.BEAUTYX}>
+            <div className="flex-col wrap-item wrap-item-col-4">
+              <label className="required form-label">Hình thức giảm giá </label>
+              <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                value={formik.values.discount_type}
+                onChange={formik.handleChange}
+                name="discount_type"
+              >
+                {
+                  DISCOUNTS_TYPE.map(item => (
+                    <MenuItem key={item.id} value={item.TYPE}>{item.title}</MenuItem>
+                  ))
+                }
+              </Select>
+              {formik.errors.discount_type && formik.touched.discount_type && (
+                <span className='text-danger'>
+                  {formik.errors.discount_type}
+                </span>
+              )}
+            </div>
+          </SiteLayout>
+          <SiteLayout site={SITE.BEAUTYX}>
+            <div className="flex-col wrap-item wrap-item-col-4">
+              <label className="required form-label">Giảm giá theo</label>
+              <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                value={formik.values.discount_unit}
+                onChange={(e) => {
+                  formik.setFieldValue("discount_value", "")
+                  formik.setFieldValue("discount_unit", e.target.value)
+                }}
+                name="discount_unit"
+              >
+                {
+                  DISCOUNT_UNIT_ARR.map(item => (
+                    <MenuItem key={item.id} value={item.TYPE}>{item.title}</MenuItem>
+                  ))
+                }
+              </Select>
+              {formik.errors.discount_unit && formik.touched.discount_unit && (
+                <span className='text-danger'>
+                  {formik.errors.discount_unit}
+                </span>
+              )}
+            </div>
+          </SiteLayout>
           <div className="wrap-item wrap-item-col-4">
             <label className="required form-label">
               {
@@ -406,49 +429,55 @@ function Form(props: IProps) {
           </div>
         </div>
         <div className='flex-row-sp input-wrap'>
-          <div className="wrap-item wrap-item-col-4">
-            <label className="form-label">
-              Giá trị đơn hàng tối thiểu
-            </label>
-            <input
-              onChange={onChangeMinimumOrderValue}
-              value={formik.values.minimum_order_value}
-              name="minimum_order_value"
-              disabled={formik.values.discount_type === DISCOUNT_TYPE.PRODUCTS ? true : false}
-              type="text"
-              className="form-control form-control-solid"
-              placeholder="Giá áp dụng"
-            />
-          </div>
+          <SiteLayout site={SITE.BEAUTYX}>
+            <div className="wrap-item wrap-item-col-4">
+              <label className="form-label">
+                Giá trị đơn hàng tối thiểu
+              </label>
+              <input
+                onChange={onChangeMinimumOrderValue}
+                value={formik.values.minimum_order_value}
+                name="minimum_order_value"
+                disabled={formik.values.discount_type === DISCOUNT_TYPE.PRODUCTS ? true : false}
+                type="text"
+                className="form-control form-control-solid"
+                placeholder="Giá áp dụng"
+              />
+            </div>
+          </SiteLayout>
         </div>
         <div className="flex-row-sp input-wrap">
-          <div className="wrap-item wrap-item-col-4">
-            <label className={`${isCampaign ? 'required' : ''} form-label`}>Số lượng</label>
-            <input
-              value={formik.values.total}
-              onChange={onChangeInputTotal}
-              name="total"
-              type="text"
-              className="form-control form-control-solid"
-              placeholder=""
-            />
-            {formik.errors.total && formik.touched.total && (
-              <span className='text-danger'>
-                {formik.errors.total}
-              </span>
-            )}
-          </div>
-          <div className="wrap-item wrap-item-col-4">
-            <label className="form-label">Lượt sử dụng mỗi khách hàng </label>
-            <input
-              value={formik.values.limit}
-              onChange={onChangeInputLimit}
-              name="limit"
-              type="number"
-              className="form-control form-control-solid"
-              placeholder=""
-            />
-          </div>
+          <SiteLayout site={SITE.BEAUTYX}>
+            <div className="wrap-item wrap-item-col-4">
+              <label className={`${isCampaign ? 'required' : ''} form-label`}>Số lượng</label>
+              <input
+                value={formik.values.total}
+                onChange={onChangeInputTotal}
+                name="total"
+                type="text"
+                className="form-control form-control-solid"
+                placeholder=""
+              />
+              {formik.errors.total && formik.touched.total && (
+                <span className='text-danger'>
+                  {formik.errors.total}
+                </span>
+              )}
+            </div>
+          </SiteLayout>
+          <SiteLayout site={SITE.BEAUTYX}>
+            <div className="wrap-item wrap-item-col-4">
+              <label className="form-label">Lượt sử dụng mỗi khách hàng </label>
+              <input
+                value={formik.values.limit}
+                onChange={onChangeInputLimit}
+                name="limit"
+                type="number"
+                className="form-control form-control-solid"
+                placeholder=""
+              />
+            </div>
+          </SiteLayout>
           <div className="wrap-item wrap-item-col-4">
             <XDateRangePicker
               minDate={new Date()}

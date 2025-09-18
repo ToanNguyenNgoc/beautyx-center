@@ -112,12 +112,12 @@ export function AsideMenuMain() {
         title={rootSite == SITE.BEAUTYX ? 'Giảm giá' : 'Dịch vụ GMUP'}
       />
       <PermissionLayout permissions={['v1.trends.index']}>
-          <AsideMenuItem
-            to='pages/medias'
-            icon='/media/icons/duotune/social/soc007.svg'
-            title='Media'
-          />
-        </PermissionLayout>
+        <AsideMenuItem
+          to='pages/medias'
+          icon='/media/icons/duotune/social/soc007.svg'
+          title='Media'
+        />
+      </PermissionLayout>
       <SiteLayout site={SITE.BEAUTYX}>
         <AsideMenuItem to='pages/tips' icon='/media/icons/duotune/coding/cod004.svg' title='Tip' />
         <AsideMenuItem
@@ -141,20 +141,22 @@ export function AsideMenuMain() {
         icon='/media/icons/duotune/communication/com013.svg'
         title='Khách hàng'
       />
-      <PermissionLayout permissions={['v1.admin.users.index']}>
-        <AsideMenuItem
-          to='pages/accounts'
-          icon='/media/icons/duotune/communication/com013.svg'
-          title='Đội ngũ'
-        />
-      </PermissionLayout>
-      <PermissionLayout permissions={['v1.roles.index', 'v1.permissions.index']}>
-        <AsideMenuItem
-          to='pages/roles'
-          icon='/media/icons/duotune/general/gen051.svg'
-          title='Phân quyền'
-        />
-      </PermissionLayout>
+      <SiteLayout site={SITE.BEAUTYX} >
+        <PermissionLayout permissions={['v1.admin.users.index']}>
+          <AsideMenuItem
+            to='pages/accounts'
+            icon='/media/icons/duotune/communication/com013.svg'
+            title='Đội ngũ'
+          />
+        </PermissionLayout>
+        <PermissionLayout permissions={['v1.roles.index', 'v1.permissions.index']}>
+          <AsideMenuItem
+            to='pages/roles'
+            icon='/media/icons/duotune/general/gen051.svg'
+            title='Phân quyền'
+          />
+        </PermissionLayout>
+      </SiteLayout>
       <PermissionLayout permissions={['v1.admin.orders.index']}>
         <AsideMenuItem
           to='pages/orders'
@@ -162,18 +164,15 @@ export function AsideMenuMain() {
           title='Danh sách đơn hàng'
         />
       </PermissionLayout>
-      <PermissionLayout permissions={['v1.brand_apps.index']}>
-        <AsideMenuItem
-          to='pages/brand-apps'
-          icon='/media/icons/duotune/finance/fin008.svg'
-          title='Danh sách App thương hiệu'
-        />
-      </PermissionLayout>
-      {/* <AsideMenuItem
-        to='pages/trends'
-        icon='/media/icons/duotune/files/fil004.svg'
-        title='Trends'
-      /> */}
+      <SiteLayout site={SITE.BEAUTYX}>
+        <PermissionLayout permissions={['v1.brand_apps.index']}>
+          <AsideMenuItem
+            to='pages/brand-apps'
+            icon='/media/icons/duotune/finance/fin008.svg'
+            title='Danh sách App thương hiệu'
+          />
+        </PermissionLayout>
+      </SiteLayout>
 
       {AsideMenuInitList.map((item, index: number) =>
         generateRoute?.includes(item.to) ? (

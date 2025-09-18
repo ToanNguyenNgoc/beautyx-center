@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
+import { ResGmupTag } from "./gmup-tag";
 
 export interface IBranch {
     address: string;
@@ -31,6 +34,7 @@ export interface IOrganization {
     max_price: number;
     image: string;
     is_momo_ecommerce_enable: boolean;
+    is_gmup_enable: boolean;
     created_at: string;
     updated_at: string;
     province_code: number;
@@ -45,7 +49,9 @@ export interface IOrganization {
     favorites: any[];
     distance?: number;
     tags: any[];
+    gmup_tags: ResGmupTag[];
     telephone?: string[];
+    gmup_tag_ids?:number[];
 }
 export const initOrg = {
     id: 0,

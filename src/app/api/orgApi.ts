@@ -32,7 +32,7 @@ class Organization {
             "filter[province_code]": values.province_code,
             "filter[district_code]": values.district_code,
             "sort": values.sort !== "distance" ? values.sort : null,
-            "include": "province|district|ward"
+            "include": "province|district|ward|gmup_tags"
         }
         const params = pickBy(paramsOb, identity);
         return axiosClient.get(url, AUTH_HEADER_PARAM_GET(params))
@@ -55,7 +55,7 @@ class Organization {
             return axiosClient.get(url, { params })
         }
     }
-    updateECommerce = (org_id:number, params:{is_momo_ecommerce_enable:boolean})=>{
+    updateECommerce = (org_id:number, params:{is_momo_ecommerce_enable?:boolean, is_gmup_enable?:boolean})=>{
         return axiosClient.patch(`/organizations/${org_id}/update-ecommerce`,params)
     }
 }

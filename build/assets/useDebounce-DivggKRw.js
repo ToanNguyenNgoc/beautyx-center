@@ -1,0 +1,1 @@
+import{a as r}from"./index-CzmKoHlB.js";const a=(e,s=800)=>{const[u,o]=r.useState(JSON.stringify(e));return r.useEffect(()=>{let t;return t=setTimeout(()=>{o(JSON.stringify(e))},s),()=>clearTimeout(t)}),JSON.parse(u)};export{a as u};

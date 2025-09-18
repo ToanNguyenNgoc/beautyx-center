@@ -1,3 +1,6 @@
+/* eslint-disable no-var */
+/* eslint-disable prefer-const */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { ChangeEvent, useState } from "react";
 import { request3rdApi } from "app/api/api-3rd-client";
 import { mediaApi } from "app/api";
@@ -10,10 +13,12 @@ type PostType = {
   version?: 'myspa' | 'api.beautyx' | 'api.beautyx/cloud'
 }
 
+
 export function usePostMedia() {
   const [medias, setMedias] = useState<Media[]>([])
   const [isLoading, setIsLoading] = useState(false)
   const handlePostMedia = async ({ e, callBack, version = 'myspa', resetOriginalResult }: PostType) => {
+    console.log(resetOriginalResult);
     if (e.target.files) {
       setIsLoading(true)
       let tempImages: Media[] = []
@@ -54,7 +59,7 @@ export function usePostMedia() {
               ...resMedia,
               id: res.id,
               model_id: res.model_id,
-              original_url: resetOriginalResult ? res.original_url : resMedia.original_url
+              // original_url: resetOriginalResult ? convertToCdnUrl(res.original_url) : resMedia.original_url
             }
           }
           mediaList.push(resMedia)
@@ -65,7 +70,7 @@ export function usePostMedia() {
           callBack(mediaList)
         }
       } catch (error) {
-
+        console.log(error)
       }
     }
   }

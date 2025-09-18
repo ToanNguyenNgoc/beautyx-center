@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { ReqTrend, ResponseDetail } from "app/@types";
 import { TrendApi } from "app/api/trendApi";
@@ -12,7 +11,7 @@ import { useFormik } from "formik";
 import { FC } from "react";
 import { useMutation, useQuery, UseQueryOptions } from "react-query";
 import { useParams } from "react-router-dom";
-import * as Yup from 'yup'
+import * as Yup from 'yup';
 
 interface RequestBody extends ReqTrend {
   media_url?: string;
@@ -47,6 +46,7 @@ const MediaFormPage: FC = () => {
         setFieldValue('organization', context.organization);
         setFieldValue('discounts', context.discounts);
         setFieldValue('status', context.status);
+        setFieldValue('priority', context.priority);
       }
     }
   });
@@ -68,12 +68,13 @@ const MediaFormPage: FC = () => {
       organization: null,
       discounts: [],
       status: true,
+      priority: 0,
     },
     validationSchema: Yup.object({
       title: Yup.string().trim().required('Vui lòng nhập nội dung'),
     }),
     onSubmit: (values) => {
-      mutateSave.mutate({...values, discounts: values.discounts.map(i => i.id)})
+      mutateSave.mutate({ ...values, discounts: values.discounts.map(i => i.id) })
     }
   });
 
@@ -94,6 +95,16 @@ const MediaFormPage: FC = () => {
             <div className="wrap-item col-6 d-flex flex-column">
               <label className='form-label'>Trạng thái</label>
               <XSwitch label="" value={values.status} onChange={e => setFieldValue('status', e.target.checked)} />
+            </div>
+            <div className="wrap-item col-6 d-flex flex-column">
+              <label className='form-label'>Độ ưu tiên</label>
+              <input
+                onChange={handleChange}
+                value={values.priority}
+                type='number'
+                className='form-control'
+                name='priority'
+              />
             </div>
           </div>
           <div className="col-12 d-flex gap-4 mt-6">
@@ -166,8 +177,8 @@ const MediaFormPage: FC = () => {
             />
           </div>
           <div className='d-flex flex-end gap-4 mt-10'>
-            <button className='btn btn-success' type="submit" disabled={false}>
-              Lưu
+            <button className='btn btn-success' type="submit" disabled={mutateSave.isLoading}>
+              {mutateSave.isLoading ? 'Đang lưu...' : 'Lưu'}
             </button>
           </div>
         </form>

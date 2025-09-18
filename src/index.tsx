@@ -30,6 +30,7 @@ import { axiosClient } from 'app/configs';
 //@ts-ignore
 import '../public/font/style.css'
 import { RootProvider } from 'app/context';
+import './i18n'
 
 setupAxios(axios)
 Chart.register(...registerables)
