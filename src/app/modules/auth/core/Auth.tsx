@@ -1,3 +1,4 @@
+/* eslint-disable react-refresh/only-export-components */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable react-hooks/exhaustive-deps */
 import {
@@ -12,13 +13,10 @@ import {
 import { useDispatch } from 'react-redux';
 import { fetchAsyncUser } from '../../../redux/account/accountSlice';
 import { LayoutSplashScreen } from '../../../../_metronic/layout/core'
-import { AuthModel, USERROLE } from './_models'
+import { AuthModel } from './_models'
 import * as authHelper from './AuthHelpers'
 import { WithChildren } from '../../../../_metronic/helpers'
 import { PAYLOAD_STATUS } from '../../../redux/status';
-import { useSwr } from 'app/hooks';
-import { API_ROUTE } from 'app/api/api-route';
-import { IPermission } from 'app/interface/permissions'
 import { verifyUser } from 'app/middleware';
 
 type AuthContextProps = {
@@ -27,7 +25,6 @@ type AuthContextProps = {
   currentUser: any | undefined | null
   setCurrentUser: Dispatch<SetStateAction<any | undefined | null>>
   logout: () => void,
-  permissionsUser: IPermission[]
 }
 
 const initAuthContextPropsState = {
@@ -62,8 +59,6 @@ const AuthProvider: FC<WithChildren> = ({ children }) => {
     setCurrentUser(undefined)
   }
   //handle get permissions user
-  const USER: USERROLE = currentUser
-  const permissionsUser = useSwr(USER, API_ROUTE.ROLES_ID_PERMISSIONS(USER?.ROLE?.id)).response
 
   const value = {
     auth,
@@ -71,7 +66,6 @@ const AuthProvider: FC<WithChildren> = ({ children }) => {
     currentUser,
     setCurrentUser,
     logout,
-    permissionsUser
   }
 
   return (

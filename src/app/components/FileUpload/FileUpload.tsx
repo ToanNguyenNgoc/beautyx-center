@@ -18,7 +18,7 @@ interface FileUploadProps extends DetailedHTMLProps<HTMLAttributes<HTMLDivElemen
 
 export const FileUpload: FC<FileUploadProps> = (props) => {
   const { types, value, onUpdated, mediaType = 'IMAGE', className = "" } = props;
-  const isEmptyValue = !value || value == "";
+  const isEmptyValue = !value || value == ""
   const { isLoading, handlePostMedia } = usePostMedia()
   const handleChangeMedia = (file: File) => {
     const eF: any = {
@@ -46,7 +46,7 @@ export const FileUpload: FC<FileUploadProps> = (props) => {
             controls
             className="video-value"
           >
-            <source type="video/mp4" src={`${value}#t=0.001`} />
+            <source type="video/mp4" src={value} />
           </video>
         </div>
       )

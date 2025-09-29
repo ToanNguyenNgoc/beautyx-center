@@ -1,5 +1,4 @@
 import { IPermission } from "app/interface"
-import { useAuth } from "app/modules/auth"
 import { checkMethod, unique } from "app/util"
 import { useEffect } from "react"
 import { useLocation, useNavigate, useParams } from "react-router-dom"
@@ -9,11 +8,11 @@ export function useVerifyRoute() {
     const param = useParams()
     const navigate = useNavigate()
     //generate route by permission
-    const permissions: IPermission[] = useAuth().permissionsUser
+    const permissions: IPermission[] = []
     const generateRoute = permissions?.map((i: IPermission, index: number) => {
         const route = i.name.split('.')[1]
         const method = checkMethod(i.name.split('.')[i.name.split('.').length - 1])
-        let path = `/pages/${route}`
+        const path = `/pages/${route}`
         return {
             ...i,
             route_id: index + 1,

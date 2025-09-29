@@ -23,3 +23,4 @@ export * from './ViewPdf/ViewPdf'
 export * from './ButtonUpload/ButtonUpload';
 export * from './SiteLayout/SiteLayout';
 export * from './FileUpload/FileUpload';
+export * from './MediaUpload/MediaUpload';

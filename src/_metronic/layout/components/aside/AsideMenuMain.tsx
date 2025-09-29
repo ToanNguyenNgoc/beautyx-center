@@ -3,7 +3,6 @@
 import { useIntl } from 'react-intl'
 import { AsideMenuItem } from './AsideMenuItem'
 import { IOrganization, IPermission } from 'app/interface'
-import { useAuth } from 'app/modules/auth'
 import { useLocation, useParams } from 'react-router-dom'
 import { useRootContext, useSwr } from 'app/hooks'
 import { API_ROUTE } from 'app/api/api-route'
@@ -33,8 +32,8 @@ export function AsideMenuMain() {
   const intl = useIntl()
   const params: any = useParams()
   const location = useLocation()
-  const permissions: IPermission[] = useAuth().permissionsUser
-  const generateRoute = permissions?.map((i: IPermission) => {
+  // const permissions: IPermission[] = useAuth().permissionsUser
+  const generateRoute = []?.map((i: IPermission) => {
     const route = i.name.split('.')[1]
     // const method = checkMethod(i.name.split('.')[i.name.split('.').length - 1])
     let path = `pages/${route}`
@@ -162,6 +161,13 @@ export function AsideMenuMain() {
           to='pages/orders'
           icon='/media/icons/duotune/finance/fin008.svg'
           title='Danh sách đơn hàng'
+        />
+      </PermissionLayout>
+      <PermissionLayout permissions={['v1.admin.comments.index']}>
+        <AsideMenuItem
+          to='pages/comments'
+          icon='/media/icons/duotune/finance/fin008.svg'
+          title='Danh sách phản hồi'
         />
       </PermissionLayout>
       <SiteLayout site={SITE.BEAUTYX}>

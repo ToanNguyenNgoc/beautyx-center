@@ -400,5 +400,8 @@
   "v1.trends.store": "v1.trends.store",
   "v1.trends.update": "v1.trends.update",
   "v4.tags.show": "v4.tags.show",
-  "v1.trends.destroy": "v1.trends.destroy"
+  "v1.trends.destroy": "v1.trends.destroy",
+  "v1.auth.login.zns-otp": "v1.auth.login.zns-otp",
+  "v1.admin.comments.update": "v1.admin.comments.update",
+  "v1.admin.appointments.index": "v1.admin.appointments.index"
 }

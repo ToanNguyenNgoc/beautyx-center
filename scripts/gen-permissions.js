@@ -8,7 +8,7 @@ async function fetchData() {
     try {
         const response = await axios.get(`${baseURL}/permissions`, {
             headers: {
-                'Authorization': `Bearer 68bf8a9bf7cbc3e1d401fc74|NQMlX9zq3I54Y0r068bh`
+                'Authorization': `Bearer 68d5fba532f768cd3d0887d3|l3t2DI6lmUrQQEFlh2qy`
             }
         });
 

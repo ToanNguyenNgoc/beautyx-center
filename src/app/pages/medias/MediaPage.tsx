@@ -118,7 +118,7 @@ const Row: FC<{ trend: ResTrend, onDelete?: () => void }> = ({ trend, onDelete }
       <td>
         <div className='d-flex align-items-center'>
           <div className='symbol symbol-100px me-5'>
-            <img src={trend.media_thumbnail_url} alt='' />
+            <img src={trend.media_thumbnail_url} style={{objectFit:'contain'}} alt='' />
           </div>
           <div className='d-flex justify-content-start flex-column'>
             <span className='text-dark fw-bold text-hover-primary fs-6'>

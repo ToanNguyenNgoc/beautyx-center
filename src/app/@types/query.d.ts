@@ -15,12 +15,12 @@ export type QrDiscount = QrPage & {
   'sort'?: string;
   'filter[filter_all]'?: boolean;
   'append'?: "" | "user_available_purchase_count",
-  'include'?:string //gmup_tags
+  'include'?: string //gmup_tags
 }
 export type QrDiscountDetail = {
   id: string;
   'filter[organization_id]'?: number | string,
-  'include'?:string //gmup_tags
+  'include'?: string //gmup_tags
 }
 export type QrDiscountCode = {
   'page'?: number | string;
@@ -100,4 +100,28 @@ export type QrTrend = QrPage & {
   "append"?: string; //media_url|media_thumbnail_url
   "include"?: string; //organization|productables|discounts
   "sort"?: string; //id|-created_at
+}
+
+export type QrComment = QrPage & {
+  "filter[commentable_type]"?: "ORGANIZATION" | "SERVICE" | "PRODUCT" | "ORDER",
+  /**
+  * Supported search user fullname
+  */
+  "filter[user]"?: string;
+  /**
+  * Supported search body comment
+  */
+  "filter[body]"?: string;
+  /**
+  * Example: organization|rate|children|children.media
+  */
+  "include"?: string;
+  /**
+  * Example: media_url|productable
+  */
+  "append"?: string;
+  /**
+  * Example: -id|-created_at
+  */
+  "sort"?: string;
 }

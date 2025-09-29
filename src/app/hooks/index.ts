@@ -19,3 +19,4 @@ export * from './useGetAllTopics';
 export * from './useRootContext';
 export * from './useGetGmupTags';
 export * from './useTranslate';
+export * from './useGetComments';

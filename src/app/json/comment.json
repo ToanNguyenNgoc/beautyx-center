@@ -1,0 +1,148 @@
+{
+  "id": 48,
+  "body": "string",
+  "user_id": 202,
+  "organization_id": 1,
+  "rate_id": 306,
+  "commentable_type": "App\\Models\\CI\\Service",
+  "commentable_id": 6,
+  "created_at": "2024-06-11 18:41:32",
+  "updated_at": "2024-06-11 18:41:32",
+  "deleted_at": null,
+  "is_order": 1,
+  "user": {
+    "id": 202,
+    "fullname": "Long test",
+    "avatar": null,
+    "current_platform": null
+  },
+  "media_url": [],
+  "status": true,
+  "has_media":true,
+  "productable": {
+    "id": 6,
+    "service_code": "00006",
+    "service_backup_code": "",
+    "service_name": "Peel thâm mụn + Điện",
+    "duration": 100,
+    "price": "1600000.00",
+    "special_price": "-1.00",
+    "special_price_momo": "0.00",
+    "description": "",
+    "service_group_id": 4,
+    "service_order": false,
+    "commission_percen": 0,
+    "commission_money": "0.00",
+    "reward_percent": 0,
+    "reward_money": "0.00",
+    "commission_plan": 2,
+    "image": null,
+    "status": false,
+    "deleted": false,
+    "created_date": "2021-05-29 20:08:14",
+    "modified_date": "2023-05-06 05:01:26",
+    "created_by_id": 1,
+    "branch_id": 0,
+    "booking_online": 1,
+    "service_cost_type": 1,
+    "is_featured": false,
+    "is_momo_ecommerce_enable": false,
+    "is_moba_ecommerce_enable": false,
+    "video": null,
+    "is_displayed_home": 0,
+    "tags": null,
+    "limit_room": 1,
+    "hide_service_customer": 0,
+    "other_branch_ids": null,
+    "image_url": null,
+    "video_url": null,
+    "rating": 4
+  },
+  "organization": {
+    "id": 1,
+    "name": "Demo ORG GMUP",
+    "subdomain": "myspa",
+    "domain": "myspa.vn",
+    "latitude": 10.7686321589,
+    "longitude": 106.69883262,
+    "telephone": [
+      "0976542222"
+    ],
+    "address": "KDC 25, Thôn Phước Điền , Đức Hòa, Mộ Đức, Quảng Ngãi",
+    "min_price": 10000,
+    "max_price": 1000000000,
+    "image": "20230609073108.jpg",
+    "is_momo_ecommerce_enable": true,
+    "is_gmup_enable": true,
+    "is_moba_register_requested": true,
+    "opening_status": true,
+    "opening_time": [
+      {
+        "from_time_opening": "08:30",
+        "to_time_opening": "20:30",
+        "time_opening": "on"
+      },
+      {
+        "from_time_opening": "08:30",
+        "to_time_opening": "20:30",
+        "time_opening": "on"
+      },
+      {
+        "from_time_opening": "08:30",
+        "to_time_opening": "20:30",
+        "time_opening": "on"
+      },
+      {
+        "from_time_opening": "08:30",
+        "to_time_opening": "20:30",
+        "time_opening": "on"
+      },
+      {
+        "from_time_opening": "08:30",
+        "to_time_opening": "20:30",
+        "time_opening": "on"
+      },
+      {
+        "from_time_opening": "08:00",
+        "to_time_opening": "12:00",
+        "time_opening": "on"
+      },
+      {
+        "from_time_opening": "09:00",
+        "to_time_opening": "19:00",
+        "time_opening": "on"
+      }
+    ],
+    "created_at": "2021-12-01 11:55:38",
+    "updated_at": "2025-09-10 11:19:50",
+    "province_code": null,
+    "district_code": null,
+    "ward_code": null,
+    "priority": 0,
+    "timezone": "Asia/Ho_Chi_Minh",
+    "is_demo": false,
+    "description": "dsffrertdsfdsdfdsdsfdfssdfsdfsdf oke Huỳnh Đại Long nha",
+    "mc_user_id": 39,
+    "content": "<p>dsffrertdsfdsdfdsdsfdfssdfsdfsdf oke Huỳnh Đại Long nha</p>\r\n",
+    "full_address": "KDC 25, Thôn Phước Điền , Đức Hòa, Mộ Đức, Quảng Ngãi",
+    "image_url": "https://myspa.myspa.vn/files/myspa/avatar/20230609073108.jpg",
+    "is_favorite": true,
+    "location": {
+      "lat": 10.7686321589,
+      "lon": 106.69883262
+    }
+  },
+  "rate": {
+    "id": 306,
+    "point": 0,
+    "user_id": 202,
+    "organization_id": 1,
+    "rateable_type": "App\\Models\\CI\\Service",
+    "rateable_id": 6,
+    "created_at": "2024-06-11 18:41:32",
+    "updated_at": "2024-06-11 18:41:32",
+    "deleted_at": null
+  },
+  "children": [],
+  "media": []
+}

@@ -2,7 +2,7 @@
 import { ReqTrend, ResponseDetail } from "app/@types";
 import { TrendApi } from "app/api/trendApi";
 import { QR_KEY } from "app/common";
-import { FileUpload, InitAlert, PermissionLayout, SelectionDiscounts, SelectionOrg, XSwitch } from "app/components";
+import { InitAlert, MediaUpload, PermissionLayout, SelectionDiscounts, SelectionOrg, XSwitch } from "app/components";
 import TitlePage from "app/components/TitlePage";
 import { useRootContext } from "app/hooks";
 import { ResTrend } from "app/interface/trend";
@@ -34,7 +34,7 @@ const MediaFormPage: FC = () => {
   const id = useParams().id;
   const { isBeautyxSite } = useRootContext();
   const type = id ? 'EDIT' : 'CREATE';
-  useGetTrendDetail(id, {
+  const { isLoading: isLoadingDetail } = useGetTrendDetail(id, {
     onSuccess: (data) => {
       const context = data.context;
       if (context) {
@@ -110,28 +110,36 @@ const MediaFormPage: FC = () => {
           <div className="col-12 d-flex gap-4 mt-6">
             <div className="wrap-item col-6 d-flex flex-column">
               <label className='form-label'>Thumbnail</label>
-              <FileUpload
-                style={{ width: 200, aspectRatio: 9 / 16, height: 'unset' }}
-                types={FILE_IMG_TYPE}
-                value={values.media_thumbnail_url}
-                onUpdated={media => {
-                  setFieldValue('media_thumbnail_id', media.model_id);
-                  setFieldValue('media_thumbnail_url', media.original_url);
-                }}
-              />
+              <div style={{ width: 200, aspectRatio: 9 / 16 }}>
+                <MediaUpload
+                  id="image"
+                  mediaType='IMAGE'
+                  types={FILE_IMG_TYPE}
+                  value={values.media_thumbnail_url}
+                  onUpdated={media => {
+                    setFieldValue('media_thumbnail_id', media.model_id);
+                    setFieldValue('media_thumbnail_url', media.original_url);
+                  }}
+                />
+              </div>
             </div>
             <div className="wrap-item col-6 d-flex flex-column">
               <label className='form-label'>Video</label>
-              <FileUpload
-                style={{ width: 200, aspectRatio: 9 / 16, height: 'unset' }}
-                mediaType="VIDEO"
-                types={FILE_VIDEO_TYPE}
-                value={values.media_url}
-                onUpdated={media => {
-                  setFieldValue('media_id', media.model_id);
-                  setFieldValue('media_url', media.original_url);
-                }}
-              />
+              <div style={{ width: 200, aspectRatio: 9 / 16 }}>
+                {
+                  (type === 'CREATE' || (!isLoadingDetail && type === 'EDIT')) &&
+                  <MediaUpload
+                    id="video"
+                    mediaType="VIDEO"
+                    types={FILE_VIDEO_TYPE}
+                    value={values.media_url}
+                    onUpdated={media => {
+                      setFieldValue('media_id', media.model_id);
+                      setFieldValue('media_url', media.original_url);
+                    }}
+                  />
+                }
+              </div>
             </div>
           </div>
           <div className="col-12 d-flex gap-4 mt-6">

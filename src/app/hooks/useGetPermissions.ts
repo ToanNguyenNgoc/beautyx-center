@@ -81,7 +81,7 @@ export function useGetPermissions() {
       name: 'brand_app_versions',
       desc: 'Danh sách phiên bản Bundle app thương hiệu',
       permissions: permissions.filter(i => i.name.includes('brand_app_versions'))
-    }
+    },
   ]
   return {
     permissions,

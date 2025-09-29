@@ -1,9 +1,10 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable prefer-const */
 import moment from "moment";
 
 
-export const formatDate = (dateParams: string, format?:'DD/MM/YYYY'|'DD/MM/YYYY HH:mm') => {
+export const formatDate = (dateParams: string, format?: 'DD/MM/YYYY' | 'DD/MM/YYYY HH:mm') => {
   let date = ''
   if (dateParams) {
     const date = moment(dateParams).format(format ?? 'DD/MM/YYYY')
@@ -70,4 +71,14 @@ export const getRangeOfDates = (startDate: Date, endDate: Date) => {
   }
 
   return dates;
+}
+export const getVideoUrlFormServer = (url?: string) => {
+  if (!url) return '';
+  try {
+    const u = new URL(url);
+    u.search = '';
+    return u.toString();
+  } catch (_e) {
+    return '';
+  }
 }

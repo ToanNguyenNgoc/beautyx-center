@@ -19,5 +19,6 @@ export const QR_KEY = {
   GmupTagId:'GmupTagId',
   Trend:'Trend',
   TrendId:'TrendId',
+  Comments:'Comments',
 }
 export const QR_CACHE = 15 * (60 * 1000)

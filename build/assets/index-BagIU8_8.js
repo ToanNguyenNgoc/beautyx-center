@@ -1,1 +1,0 @@
-import{j as t,at as i,a8 as s,L as n}from"./index-CzmKoHlB.js";function o(){return t.jsx(i,{permissions:["v1.beautyx.notification.sendNotification"],showEmpty:!0,children:t.jsx(s,{element:t.jsx(n,{to:{pathname:"/pages/push-notifications-form"},className:"btn btn-sm btn-primary",children:"Tạo mới thông báo"}),title:"Danh sách thông báo"})})}export{o as default};

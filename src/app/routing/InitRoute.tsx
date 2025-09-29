@@ -51,6 +51,8 @@ const BrandAppPage = lazy(() => import('../pages/brand-apps/BrandAppPage'))
 const BrandAppVersionPage = lazy(() => import('../pages/brand-apps/BrandAppVersionPage'))
 const BrandAppVersionFromPage = lazy(() => import('../pages/brand-apps/BrandAppVersionFromPage'))
 
+const CommentPage = lazy(() => import('../pages/comments/CommentPage'));
+
 //-------------
 // const OrgMobaGalleriesPage = lazy(() => import('../pages-organization/moba-galleries'))
 const ChatPage = lazy(()=>import('../pages/chat/ChatPage'));
@@ -191,6 +193,12 @@ const InitRoute: any[] = [
         path: "pages/accounts-form",
         element: <AccountFormPage />
     },
+    //Comment
+    {
+        path:"pages/comments",
+        element: <CommentPage/>
+    },
+
     //-------------------------------
     //page dependencies [ORGANIZATION-DETAIL]
     {
