@@ -1,1 +1,0 @@
-import{cf as n,Q as t}from"./index-CJshWYnI.js";import{r as i}from"./roleAndPermissionApi-DER11dQh.js";function u(){var s;const{hasEnabled:r}=n(),e=t({queryKey:["roleAndPermissionApi.roles"],queryFn:()=>i.roles().then(o=>o.data),enabled:r("v1.roles.index")});return Object.assign(e,{roles:((s=e.data)==null?void 0:s.context)||[]})}export{u};

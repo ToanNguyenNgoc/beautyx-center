@@ -1,1 +1,0 @@
-import{Q as u,aE as o}from"./index-CJshWYnI.js";import{A as r}from"./axios.instance-CXY5zMAg.js";function i(t){var a;const e=u({queryKey:[o.GmupTag,t],queryFn:()=>r({version:"v4"}).get("/tags",{params:t}).then(n=>n.data)}),s=((a=e.data)==null?void 0:a.context.data)||[];return Object.assign(e,{gmupTags:s})}export{i as u};

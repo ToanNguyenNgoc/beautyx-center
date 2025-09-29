@@ -48,6 +48,11 @@ export function useGetPermissions() {
       permissions: permissions.filter(i => i.name.includes('beautyx.tips'))
     },
     {
+      name: 'trends',
+      desc: 'BeautyX Video',
+      permissions: permissions.filter(i => i.name.includes('trends'))
+    },
+    {
       name: 'beautyx.notification',
       desc: 'Push thông báo BeautyX',
       permissions: permissions.filter(i => i.name.includes('beautyx.notification'))
