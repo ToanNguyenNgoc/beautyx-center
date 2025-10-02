@@ -129,7 +129,7 @@ function Form(props: IProps) {
       }
     } else if (formik.values.discount_unit === DISCOUNT_UNIT.PRICE) {
       if (formik.values.discount_type === DISCOUNT_TYPE.PRODUCTS) {
-        if (parseInt(e.target.value) < minPriceItem || e.target.value === "") {
+        if (parseInt(e.target.value) <= minPriceItem || e.target.value === "") {
           formik.setFieldValue("discount_value", e.target.value)
         }
       } if (formik.values.discount_type === DISCOUNT_TYPE.SUB_TOTAL) {
@@ -137,7 +137,7 @@ function Form(props: IProps) {
           formik.setFieldValue("discount_value", e.target.value)
         }
       } if (formik.values.discount_type === DISCOUNT_TYPE.FINAL_PRICE) {
-        if (parseInt(e.target.value) < minPriceItem || e.target.value === "") {
+        if (parseInt(e.target.value) <= minPriceItem || e.target.value === "") {
           formik.setFieldValue("discount_value", e.target.value)
         }
       }

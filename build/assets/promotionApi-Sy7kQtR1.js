@@ -1,0 +1,1 @@
+import{ag as e}from"./index-CwORS_Xz.js";const n={getAll:t=>e.get("/promotions",{params:{...t,"filter[all]":!0,sort:"-created_at"}}).then(o=>o.data.context),getDetail:t=>e.get(`/promotions/${t}`).then(o=>o.data),post:t=>e.post("/promotions",t).then(o=>o.data),put:(t,o)=>e.put(`/promotions/${t}`,o).then(a=>a.data),delete:t=>e.delete(`/promotions/${t}`)};export{n as p};

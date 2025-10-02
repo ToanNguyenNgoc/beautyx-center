@@ -1,0 +1,1 @@
+var o=Object.defineProperty;var r=(t,a,i)=>a in t?o(t,a,{enumerable:!0,configurable:!0,writable:!0,value:i}):t[a]=i;var s=(t,a,i)=>r(t,typeof a!="symbol"?a+"":a,i);import{ag as e,ai as m}from"./index-CwORS_Xz.js";class p{constructor(){s(this,"postMedia",a=>e.post("media",a,m("multipart/form-data")))}}const n=new p;export{n as m};

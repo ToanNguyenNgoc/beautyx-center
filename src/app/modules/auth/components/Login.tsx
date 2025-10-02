@@ -1,4 +1,4 @@
-import  { useState } from "react"
+import { useState } from "react"
 import { useDispatch } from 'react-redux';
 import { Link } from "react-router-dom"
 import { useFormik } from "formik"
@@ -11,27 +11,32 @@ import { useAuth } from '../core/Auth'
 import { request3rdApi } from "app/api/api-3rd-client";
 import { useRootContext } from "app/hooks";
 
+import Pusher from "pusher-js";
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+//@ts-ignore
+window.Pusher = Pusher;
+
 const loginSchema = Yup.object().shape({
-    email: Yup.string()
-        // .email('Wrong email format')
-        .min(3, 'Minimum 3 symbols')
-        .max(50, 'Maximum 50 symbols')
-        // .matches(/^[a-zA-Z0-9_.+-]+@(?:(?:[a-zA-Z0-9-]+\.)?[a-zA-Z]+\.)?(myspa|clinic)\.vn$/,
-        // 'Please using mail with @myspa to sign in')
-        .required('Email is required'),
-    password: Yup.string()
-        .min(3, 'Minimum 3 symbols')
-        .max(50, 'Maximum 50 symbols')
-        .required('Password is required'),
+  email: Yup.string()
+    // .email('Wrong email format')
+    .min(3, 'Minimum 3 symbols')
+    .max(50, 'Maximum 50 symbols')
+    // .matches(/^[a-zA-Z0-9_.+-]+@(?:(?:[a-zA-Z0-9-]+\.)?[a-zA-Z]+\.)?(myspa|clinic)\.vn$/,
+    // 'Please using mail with @myspa to sign in')
+    .required('Email is required'),
+  password: Yup.string()
+    .min(3, 'Minimum 3 symbols')
+    .max(50, 'Maximum 50 symbols')
+    .required('Password is required'),
 })
 
 const initialValues = {
-    // email: 'nguyenthihoai@gmail.com',
-    // password: 'Admin123456',
-    // email: 'toan@myspa.vn',
-    // password: '06011998',
-    email: '',
-    password: '',
+  // email: 'nguyenthihoai@gmail.com',
+  // password: 'Admin123456',
+  // email: 'toan@myspa.vn',
+  // password: '06011998',
+  email: '',
+  password: '',
 }
 
 /*
@@ -40,159 +45,259 @@ const initialValues = {
   https://medium.com/@maurice.de.beijer/yup-validation-and-typescript-and-formik-6c342578a20e
 */
 export function Login() {
-    const dispatch = useDispatch();
-    const {rootSite} = useRootContext();
-    const [loading, setLoading] = useState(false);
-    const { saveAuth, setCurrentUser } = useAuth();
+  const dispatch = useDispatch();
+  const { rootSite } = useRootContext();
+  const [loading, setLoading] = useState(false);
+  const { saveAuth, setCurrentUser } = useAuth();
 
-    const formik = useFormik({
-        initialValues,
-        validationSchema: loginSchema,
-        onSubmit: async (values, { setStatus, setSubmitting }) => {
-            setLoading(true)
-            try {
-                const res = await dispatch(loginAsync({ email: values.email, password: values.password }))
-                onLogin3rd(values.email, values.password)
-                if (res.meta.requestStatus === "fulfilled" && res.payload) {
-                    saveAuth(res.payload)
-                    setCurrentUser(res.payload)
-                    dispatch(fetchAsyncUser(res.payload));
-                }
-                else {
-                    console.error(res)
-                    saveAuth(undefined)
-                    setStatus('The login detail is incorrect')
-                    setSubmitting(false)
-                    setLoading(false)
-                }
-            } catch (error) {
-                console.error(error)
-                saveAuth(undefined)
-                setStatus('The login detail is incorrect')
-                setSubmitting(false)
-                setLoading(false)
-            }
-        },
-    })
-    const onLogin3rd = async (email: string, password: string) => {
-        try {
-            const res = await request3rdApi.login({ email, password })
-            localStorage.setItem('3rd-auth', res.data.context.token)
-        } catch (error) { console.log(error);
+  const formik = useFormik({
+    initialValues,
+    validationSchema: loginSchema,
+    onSubmit: async (values, { setStatus, setSubmitting }) => {
+      setLoading(true)
+      try {
+        const res = await dispatch(loginAsync({ email: values.email, password: values.password }))
+        onLogin3rd(values.email, values.password)
+        if (res.meta.requestStatus === "fulfilled" && res.payload) {
+          saveAuth(res.payload)
+          setCurrentUser(res.payload)
+          dispatch(fetchAsyncUser(res.payload));
         }
+        else {
+          console.error(res)
+          saveAuth(undefined)
+          setStatus('The login detail is incorrect')
+          setSubmitting(false)
+          setLoading(false)
+        }
+      } catch (error) {
+        console.error(error)
+        saveAuth(undefined)
+        setStatus('The login detail is incorrect')
+        setSubmitting(false)
+        setLoading(false)
+      }
+    },
+  })
+  const onLogin3rd = async (email: string, password: string) => {
+    try {
+      const res = await request3rdApi.login({ email, password })
+      localStorage.setItem('3rd-auth', res.data.context.token)
+    } catch (error) {
+      console.log(error);
     }
+  }
 
-    return (
-        <>
-            <form
-                className='form w-100'
-                onSubmit={formik.handleSubmit}
-                noValidate
-                id='kt_login_signin_form'
-            >
-                {/* begin::Heading */}
-                <div className='text-center mb-10'>
-                    <h1 className='text-dark mb-3'>Sign In to {rootSite} Console</h1>
-                </div>
-                {/* begin::Heading */}
+  return (
+    <>
+      <form
+        className='form w-100'
+        onSubmit={formik.handleSubmit}
+        noValidate
+        id='kt_login_signin_form'
+      >
+        {/* begin::Heading */}
+        <div className='text-center mb-10'>
+          <h1 className='text-dark mb-3'>Sign In to {rootSite} Console</h1>
+        </div>
+        {/* begin::Heading */}
 
-                {formik.status ? (
-                    <div className='mb-lg-15 alert alert-danger'>
-                        <div className='alert-text font-weight-bold'>{formik.status}</div>
-                    </div>
-                ) : (
-                    <div className='mb-10 bg-light-info p-8 rounded'>
-                        <div className='text-info'>
-                        </div>
-                    </div>
-                )}
+        {formik.status ? (
+          <div className='mb-lg-15 alert alert-danger'>
+            <div className='alert-text font-weight-bold'>{formik.status}</div>
+          </div>
+        ) : (
+          <div className='mb-10 bg-light-info p-8 rounded'>
+            <div className='text-info'>
+            </div>
+          </div>
+        )}
 
-                {/* begin::Form group */}
-                <div className='fv-row mb-10'>
-                    <label className='form-label fs-6 fw-bolder text-dark'>Email</label>
-                    <input
-                        placeholder='example@myspa.vn'
-                        {...formik.getFieldProps('email')}
-                        className={clsx(
-                            'form-control form-control-lg form-control-solid',
-                            { 'is-invalid': formik.touched.email && formik.errors.email },
-                            {
-                                'is-valid': formik.touched.email && !formik.errors.email,
-                            }
-                        )}
-                        type='email'
-                        name='email'
-                        autoComplete='off'
-                    />
-                    {formik.touched.email && formik.errors.email && (
-                        <div className='fv-plugins-message-container'>
-                            <span role='alert'>{formik.errors.email}</span>
-                        </div>
-                    )}
-                </div>
-                {/* end::Form group */}
+        {/* begin::Form group */}
+        <div className='fv-row mb-10'>
+          <label className='form-label fs-6 fw-bolder text-dark'>Email</label>
+          <input
+            placeholder='example@myspa.vn'
+            {...formik.getFieldProps('email')}
+            className={clsx(
+              'form-control form-control-lg form-control-solid',
+              { 'is-invalid': formik.touched.email && formik.errors.email },
+              {
+                'is-valid': formik.touched.email && !formik.errors.email,
+              }
+            )}
+            type='email'
+            name='email'
+            autoComplete='off'
+          />
+          {formik.touched.email && formik.errors.email && (
+            <div className='fv-plugins-message-container'>
+              <span role='alert'>{formik.errors.email}</span>
+            </div>
+          )}
+        </div>
+        {/* end::Form group */}
 
-                {/* begin::Form group */}
-                <div className='fv-row mb-10'>
-                    <div className='d-flex justify-content-between mt-n5'>
-                        <div className='d-flex flex-stack mb-2'>
-                            {/* begin::Label */}
-                            <label className='form-label fw-bolder text-dark fs-6 mb-0'>Password</label>
-                            {/* end::Label */}
-                            {/* begin::Link */}
-                            <Link
-                                to='/auth/forgot-password'
-                                className='link-primary fs-6 fw-bolder'
-                                style={{ marginLeft: '5px' }}
-                            >
-                                Forgot Password ?
-                            </Link>
-                            {/* end::Link */}
-                        </div>
-                    </div>
-                    <input
-                        type='password'
-                        autoComplete='off'
-                        {...formik.getFieldProps('password')}
-                        className={clsx(
-                            'form-control form-control-lg form-control-solid',
-                            {
-                                'is-invalid': formik.touched.password && formik.errors.password,
-                            },
-                            {
-                                'is-valid': formik.touched.password && !formik.errors.password,
-                            }
-                        )}
-                    />
-                    {formik.touched.password && formik.errors.password && (
-                        <div className='fv-plugins-message-container'>
-                            <div className='fv-help-block'>
-                                <span role='alert'>{formik.errors.password}</span>
-                            </div>
-                        </div>
-                    )}
-                </div>
-                {/* end::Form group */}
+        {/* begin::Form group */}
+        <div className='fv-row mb-10'>
+          <div className='d-flex justify-content-between mt-n5'>
+            <div className='d-flex flex-stack mb-2'>
+              {/* begin::Label */}
+              <label className='form-label fw-bolder text-dark fs-6 mb-0'>Password</label>
+              {/* end::Label */}
+              {/* begin::Link */}
+              <Link
+                to='/auth/forgot-password'
+                className='link-primary fs-6 fw-bolder'
+                style={{ marginLeft: '5px' }}
+              >
+                Forgot Password ?
+              </Link>
+              {/* end::Link */}
+            </div>
+          </div>
+          <input
+            type='password'
+            autoComplete='off'
+            {...formik.getFieldProps('password')}
+            className={clsx(
+              'form-control form-control-lg form-control-solid',
+              {
+                'is-invalid': formik.touched.password && formik.errors.password,
+              },
+              {
+                'is-valid': formik.touched.password && !formik.errors.password,
+              }
+            )}
+          />
+          {formik.touched.password && formik.errors.password && (
+            <div className='fv-plugins-message-container'>
+              <div className='fv-help-block'>
+                <span role='alert'>{formik.errors.password}</span>
+              </div>
+            </div>
+          )}
+        </div>
+        {/* end::Form group */}
 
-                {/* begin::Action */}
-                <div className='text-center'>
-                    <button
-                        type='submit'
-                        id='kt_sign_in_submit'
-                        className='btn btn-lg btn-primary w-100 mb-5'
-                        disabled={formik.isSubmitting || !formik.isValid}
-                    >
-                        {!loading && <span className='indicator-label'>Continue</span>}
-                        {loading && (
-                            <span className='indicator-progress' style={{ display: 'block' }}>
-                                Please wait...
-                                <span className='spinner-border spinner-border-sm align-middle ms-2'></span>
-                            </span>
-                        )}
-                    </button>
-                </div>
-                {/* end::Action */}
-            </form>
-        </>
-    )
-}
+        {/* begin::Action */}
+        <div className='text-center'>
+          <button
+            type='submit'
+            id='kt_sign_in_submit'
+            className='btn btn-lg btn-primary w-100 mb-5'
+            disabled={formik.isSubmitting || !formik.isValid}
+          >
+            {!loading && <span className='indicator-label'>Continue</span>}
+            {loading && (
+              <span className='indicator-progress' style={{ display: 'block' }}>
+                Please wait...
+                <span className='spinner-border spinner-border-sm align-middle ms-2'></span>
+              </span>
+            )}
+          </button>
+        </div>
+        {/* end::Action */}
+      </form>
+      {/* <Socket /> */}
+      {/* <SocketLive/> */}
+    </>
+  )
+};
+
+
+// export class PusherService {
+//   private static instance: PusherService;
+//   private pusher: Pusher;
+
+//   private constructor() {
+//     Pusher.logToConsole = true;
+
+//     this.pusher = new Pusher('aa9e457587354df11bb8', {
+//       cluster: "ap1",
+//       authEndpoint: `http://127.0.0.1:8000/broadcasting/auth`,
+//       auth: {
+//         headers: {
+//           Authorization: `Bearer 68dc8e13398b9cfdbd0863b5|AtpoxtWV4GCYGViT9GiB`,
+//           Accept: "application/json",
+//         },
+//       },
+//     });
+//   }
+
+//   public static getInstance(): PusherService {
+//     if (!PusherService.instance) {
+//       PusherService.instance = new PusherService();
+//     }
+//     return PusherService.instance;
+//   }
+
+//   public getPusher(): Pusher {
+//     return this.pusher;
+//   }
+// };
+
+// const deviceId = '0987654321';
+// const Socket: FC = () => {
+//   useEffect(() => {
+//     const pusher = PusherService.getInstance().getPusher();
+//     pusher
+//       .subscribe(`private-subscribe.fetch.data.mobile.device.${deviceId}`)
+//       .bind('StreamUserEvent', (data: any) => {
+//         console.log(247, data);
+//       });
+//   }, []);
+//   return (
+//     <div>
+
+//     </div>
+//   )
+// }
+// //
+
+// export class PusherServiceLive {
+//   private static instance: PusherServiceLive;
+//   private pusher: Pusher;
+
+//   private constructor() {
+//     Pusher.logToConsole = true;
+
+//     this.pusher = new Pusher('aa9e457587354df11bb8', {
+//       cluster: "ap1",
+//       authEndpoint: `https://api.myspa.vn/broadcasting/auth`,
+//       auth: {
+//         headers: {
+//           Authorization: `Bearer 68dc9e2cad4afe3dca0cc15d|aIXXyUTqBxb5ic2oAAwd`,
+//           Accept: "application/json",
+//         },
+//       },
+//     });
+//   }
+
+//   public static getInstance(): PusherServiceLive {
+//     if (!PusherServiceLive.instance) {
+//       PusherServiceLive.instance = new PusherServiceLive();
+//     }
+//     return PusherServiceLive.instance;
+//   }
+
+//   public getPusher(): Pusher {
+//     return this.pusher;
+//   }
+// };
+
+// const SocketLive: FC = () => {
+//   useEffect(() => {
+//     const pusher = PusherServiceLive.getInstance().getPusher();
+//     pusher
+//       .subscribe(`private-subscribe.user.checkin.event.thefacebeauty`)
+//       .bind('StreamUserCheckinEvent', (data: any) => {
+//         console.log(296, data);
+//       })
+//   }, [])
+//   return (
+//     <div>
+
+//     </div>
+//   )
+// }

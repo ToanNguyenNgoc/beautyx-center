@@ -1,0 +1,1 @@
+import{cf as n,Q as t}from"./index-CwORS_Xz.js";import{r as i}from"./roleAndPermissionApi-sRqS1s9b.js";function u(){var s;const{hasEnabled:r}=n(),e=t({queryKey:["roleAndPermissionApi.roles"],queryFn:()=>i.roles().then(o=>o.data),enabled:r("v1.roles.index")});return Object.assign(e,{roles:((s=e.data)==null?void 0:s.context)||[]})}export{u};

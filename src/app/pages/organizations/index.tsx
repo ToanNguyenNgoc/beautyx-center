@@ -26,7 +26,11 @@ import { SITE } from 'app/context';
 function Organizations() {
   const location = useLocation()
   const navigate = useNavigate()
-  const { gmupTags } = useGetGmupTags({ limit: 50, 'filter[is_root]': true, 'filter[status]': true });
+  const { gmupTags } = useGetGmupTags({
+    limit: 50,
+    // 'filter[is_root]': true,
+    'filter[status]': true
+  });
   const qrPath = useDebounce(queryString.parse(location.search), 800) as any
   const { data, isLoading } = useQuery({
     queryKey: ['ORG', qrPath],
