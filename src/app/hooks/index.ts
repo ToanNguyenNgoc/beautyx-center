@@ -20,3 +20,4 @@ export * from './useRootContext';
 export * from './useGetGmupTags';
 export * from './useTranslate';
 export * from './useGetComments';
+export * from './useGetAppointments';

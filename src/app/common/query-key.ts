@@ -20,5 +20,6 @@ export const QR_KEY = {
   Trend:'Trend',
   TrendId:'TrendId',
   Comments:'Comments',
+  Appointments:'Appointments',
 }
 export const QR_CACHE = 15 * (60 * 1000)

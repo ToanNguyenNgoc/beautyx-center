@@ -1,0 +1,174 @@
+{
+  "id": 3996066,
+  "time_start": "2025-10-15 09:30:00",
+  "time_end": "2025-10-15 10:20:00",
+  "note": null,
+  "status": null,
+  "origin_id": 106,
+  "organization_id": 5947,
+  "user_id": 2474060,
+  "order_id": 14669,
+  "branch_id": null,
+  "created_at": "2025-10-15 09:30:24",
+  "updated_at": "2025-10-15 09:30:24",
+  "deleted_at": null,
+  "platform": "GMUP",
+  "type": null,
+  "services": [
+    {
+      "id": 2,
+      "service_code": "00002",
+      "service_backup_code": "",
+      "service_name": "Gội đầu chuyên sâu",
+      "duration": 50,
+      "price": "1001.00",
+      "special_price": "-1.00",
+      "special_price_momo": "0.00",
+      "description": "",
+      "service_group_id": 1,
+      "service_order": false,
+      "commission_percen": 0,
+      "commission_money": "0.00",
+      "reward_percent": 20,
+      "reward_money": "0.00",
+      "commission_plan": 1,
+      "image": "20251013165740.jpg",
+      "status": false,
+      "deleted": false,
+      "created_date": "2025-01-08 09:17:18",
+      "modified_date": "2025-10-13 16:58:48",
+      "created_by_id": 1,
+      "branch_id": 0,
+      "booking_online": 1,
+      "service_cost_type": 1,
+      "is_featured": false,
+      "is_momo_ecommerce_enable": true,
+      "is_moba_ecommerce_enable": false,
+      "video": "",
+      "is_displayed_home": 0,
+      "tags": null,
+      "limit_room": 1,
+      "service_class": null,
+      "hide_service_customer": 0,
+      "other_branch_ids": null,
+      "image_url": "https://demozns.myspa.vn/files/demozns/service/20251013165740.jpg",
+      "video_url": null,
+      "rating": 3.9,
+      "pivot": {
+        "appointment_id": 106,
+        "service_id": 2
+      }
+    }
+  ],
+  "organization": {
+    "id": 5947,
+    "name": "Công ty cổ phần Myspa",
+    "subdomain": "demozns",
+    "domain": "myspa.vn",
+    "latitude": 10.7968297,
+    "longitude": 106.703214,
+    "telephone": [
+      ""
+    ],
+    "address": "Toà Nhà VNO ,Số 129, Điện Biên Phủ",
+    "min_price": 0,
+    "max_price": 0,
+    "image": "20250918094959.jpg",
+    "is_momo_ecommerce_enable": false,
+    "is_gmup_enable": true,
+    "is_moba_register_requested": false,
+    "opening_status": true,
+    "opening_time": [
+      {
+        "from_time_opening": "08:30",
+        "to_time_opening": "20:00",
+        "time_opening": "on"
+      },
+      {
+        "from_time_opening": "08:30",
+        "to_time_opening": "20:00",
+        "time_opening": "on"
+      },
+      {
+        "from_time_opening": "08:30",
+        "to_time_opening": "20:00",
+        "time_opening": "on"
+      },
+      {
+        "from_time_opening": "08:30",
+        "to_time_opening": "20:00",
+        "time_opening": "on"
+      },
+      {
+        "from_time_opening": "08:30",
+        "to_time_opening": "20:00",
+        "time_opening": "on"
+      },
+      {
+        "from_time_opening": "08:30",
+        "to_time_opening": "20:00",
+        "time_opening": "on"
+      },
+      {
+        "from_time_opening": "08:30",
+        "to_time_opening": "20:00",
+        "time_opening": "on"
+      }
+    ],
+    "created_at": "2025-01-02 16:33:24",
+    "updated_at": "2025-10-02 14:05:43",
+    "province_code": 79,
+    "district_code": 765,
+    "ward_code": 26947,
+    "priority": 0,
+    "timezone": "Asia/Ho_Chi_Minh",
+    "is_demo": false,
+    "description": "",
+    "mc_user_id": null,
+    "content": null,
+    "full_address": "Toà Nhà VNO ,Số 129, Điện Biên Phủ, Phường 03, Quận Bình Thạnh, Thành phố Hồ Chí Minh",
+    "image_url": "https://demozns.myspa.vn/files/demozns/avatar/20250918094959.jpg",
+    "is_favorite": false,
+    "location": {
+      "lat": 10.7968297,
+      "lon": 106.703214
+    }
+  },
+  "user": {
+    "id": 2474060,
+    "fullname": "Domination",
+    "email": null,
+    "telephone": "0392645745",
+    "fcm_token": null,
+    "created_at": "2025-02-20 15:42:36",
+    "platform": "ZALO",
+    "is_taptap": 0,
+    "user_organization_id": null,
+    "is_active": 1,
+    "avatar": "https://api.myspa.vn/media/1851309/523D0F47-9637-4201-9A31-769A00078E78.JPG?v=1749055993",
+    "current_platform": null
+  },
+  "order": {
+    "id": 14669,
+    "status": "PAID",
+    "amount": 1001,
+    "description": null,
+    "payment_method_id": 20,
+    "organization_id": 5947,
+    "user_id": 2474060,
+    "origin_id": 51,
+    "branch_id": null,
+    "created_at": "2025-10-15 09:30:23",
+    "updated_at": "2025-10-15 09:30:24",
+    "deleted_at": null,
+    "platform": "GMUP",
+    "discount_value": 1,
+    "user_address_id": null,
+    "myspa_fee": 132,
+    "amount_second": null,
+    "payment_method_second_id": null,
+    "is_review": 0,
+    "payment_gateway": null
+  },
+  "branch": null
+}

@@ -163,6 +163,11 @@ export function AsideMenuMain() {
           title='Danh sách đơn hàng'
         />
       </PermissionLayout>
+      <AsideMenuItem
+        to='pages/appointments'
+        icon='/media/icons/duotune/finance/fin008.svg'
+        title='Danh sách lịch hẹn'
+      />
       <PermissionLayout permissions={['v1.admin.comments.index']}>
         <AsideMenuItem
           to='pages/comments'

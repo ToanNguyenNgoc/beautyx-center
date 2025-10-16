@@ -1,1 +1,0 @@
-import{A as d}from"./axios.instance-4ExcG6zI.js";import"./index-CwORS_Xz.js";const r={get:t=>d().get("/trends",{params:t}).then(e=>e.data),getById:(t,e)=>d().get(`/trends/${t}`,{params:e}).then(a=>a.data),post:t=>d().post("/trends",t).then(e=>e.data),update:(t,e)=>d().put(`/trends/${t}`,e).then(a=>a.data),delete:t=>d().delete(`/trends/${t}`).then(e=>e.data)};export{r as T};

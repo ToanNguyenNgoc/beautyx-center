@@ -1,0 +1,1 @@
+import{ag as s,ah as e}from"./index-B7MYsrm1.js";const p={getAll:t=>s.get("/post",{params:t}).then(a=>a.data.context),getDetail:t=>s.get(`/post/${t}`,{params:{append:"media_url"}}).then(a=>a.data),post:t=>s.post("/posts",e.pickBy(t,e.identity)).then(a=>a.data)};export{p as c};

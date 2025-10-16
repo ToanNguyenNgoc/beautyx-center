@@ -124,4 +124,41 @@ export type QrComment = QrPage & {
   * Example: -id|-created_at
   */
   "sort"?: string;
+};
+
+export type QrAppointment = QrPage & {
+  /**
+  * Search by fullname, email, telephone
+  */
+  "filter[keyword]"?: string;
+  /**
+  * Example: 2025-11
+  */
+  "filter[time_start]"?: string;
+  /**
+  * Example: 2025-11-01
+  */
+  "filter[created_at]"?: string;
+  /**
+  * Example: 2025-11-01
+  */
+  "filter[updated_at]"?: string;
+  "filter[organization_id]"?: number;
+  /**
+  * Supported: MOMO|MOBA|BEAUTYX|BEAUTYX-MOBILE|TIKI|MYSPA CHECKIN|GMUP
+  */
+  "filter[platform]"?: string;
+  /**
+  * organization|user|order|branch
+  */
+  "include"?: string;
+  /**
+  * services
+  */
+  "append"?: string;
+  "hidden_qr_link"?: boolean;
+  /**
+  * id, time_start, created_at, updated_at, status
+  */
+  "sort"?: string;
 }

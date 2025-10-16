@@ -68,6 +68,11 @@ export function useGetPermissions() {
       permissions: permissions.filter(i => i.name.includes('admin.orders'))
     },
     {
+      name: 'admin.appointments',
+      desc: 'Danh sách lịch hẹn',
+      permissions: permissions.filter(i => i.name.includes('admin.appointments'))
+    },
+    {
       name: 'admin.comments',
       desc: 'Danh sách bình luận',
       permissions: permissions.filter(i => i.name.includes('admin.comments'))
