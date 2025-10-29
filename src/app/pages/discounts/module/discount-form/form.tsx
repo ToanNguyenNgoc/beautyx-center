@@ -7,10 +7,10 @@ import * as Yup from "yup";
 import { AppSnack, FlatFormOrder, SelectionOrgMultiple, SiteLayout, XDateRangePicker, XSwitch } from 'app/components'
 import moment from 'moment';
 import { useMutation } from 'react-query';
-import { ReqDiscountBody } from 'app/@types';
-import { discountsApi } from 'app/api';
+// import { ReqDiscountBody } from 'app/@types';
+// import { discountsApi } from 'app/api';
 import { LoadingButton } from '@mui/lab';
-import { IDiscountPar, IITEMS_DISCOUNT } from 'app/interface';
+// import { IDiscountPar, IITEMS_DISCOUNT } from 'app/interface';
 import {
   DISCOUNTS_TYPE,
   DISCOUNT_TYPE,
@@ -25,10 +25,13 @@ import { useNavigate } from 'react-router-dom';
 import { SelectService } from './select-service';
 import { ExportCode } from './export-code'
 import { SITE } from 'app/context';
+import { ResDiscountPar, ResItemDiscount } from 'app/interface';
+import { ReqPostDiscount } from 'app/@types';
+import { Api } from 'app/api';
 
 
 interface IProps {
-  discount: IDiscountPar | undefined,
+  discount: ResDiscountPar | undefined,
   isForm: string,
   onRestoreFormEdit?: () => void
 }
@@ -43,12 +46,12 @@ function Form(props: IProps) {
   const [isCampaign, setIsCampaign] = useState(discount?.is_campaign ?? false)
   const [services, setServices] = useState<any>(
     isForm === "EDIT" ?
-      discount?.items.map((item: IITEMS_DISCOUNT) => item.productable) : []
+      discount?.items.map((item: ResItemDiscount) => item.productable) : []
   )
   //handle submit form
   //[HANDLE POST]
   const { mutate, isLoading } = useMutation({
-    mutationFn: (body: ReqDiscountBody) => discount ? discountsApi.putDiscount(discount.id, body) : discountsApi.postDiscount(body),
+    mutationFn: (body: ReqPostDiscount) => discount ? Api.Discount.put(discount.id, body) : Api.Discount.post(body),
     onSuccess: () => {
       resultLoad({
         message: discount ? 'Cập nhật thành công' : 'Tạo thành công',
@@ -82,7 +85,7 @@ function Form(props: IProps) {
       valid_util: (isForm === "EDIT" && discount?.valid_util) ? discount?.valid_util : moment().format('YYYY-MM-DD HH:mm:ss'),
       minimum_order_value: isBeautyxSite ? ((isForm === "EDIT" && discount?.maximum_discount_value) ? discount?.maximum_discount_value : "") : 0,
       limit: isBeautyxSite ? ((isForm === "EDIT" && discount?.limit) ? discount?.limit : "") : undefined,
-      gmup_tag_ids: isForm === "EDIT" ? discount?.gmup_tags?.map(i => Number(i.id)).filter(Boolean) : [] as any,
+      gmup_tag_ids: isForm === "EDIT" ? discount?.gmup_tags?.map((i: any) => Number(i.id)).filter(Boolean) : [] as any,
     },
     validationSchema: Yup.object({
       coupon_code: Yup.string().required("Vui lòng nhập Mã giảm giá"),
@@ -103,7 +106,7 @@ function Form(props: IProps) {
       const newValue = values as any
       const body = {
         ...newValue,
-        organizations: values.organizations?.map(i => i.id)[0],
+        organizations: values.organizations?.map((i: any) => i.id)[0],
         items: services.map((i: any) => i.id),
         platform: isBeautyxSite ? (newValue.platform[0] ?? 'MOMO') : PLAT_FORM.GMUP,
         is_campaign: isCampaign ? 1 : 0,

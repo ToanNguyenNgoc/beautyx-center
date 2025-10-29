@@ -5,11 +5,10 @@ import { formatDate, formatPrice } from 'app/util/format';
 import { DISCOUNTS_TYPE, DiscountsTypeElement } from 'app/util/fileType';
 import FlatFormOrder from 'app/components/PlatForm';
 import { KTSVG } from '../../../_metronic/helpers';
-import { IDiscountPar } from 'app/interface';
 import { InitAlert, PageCircularProgress, PermissionLayout, SiteLayout, XPagination } from 'app/components';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { QR_KEY } from 'app/common';
-import { discountsApi } from 'app/api';
+import { Api } from 'app/api';
 import queryString from 'query-string';
 import { QrDiscount } from 'app/@types';
 import { FormControl, MenuItem, Select, SelectChangeEvent } from '@mui/material';
@@ -21,6 +20,7 @@ import { ChangeEvent, Fragment, useCallback, useEffect } from 'react';
 import { useRootContext, useTranslate } from 'app/hooks';
 import { SITE } from 'app/context';
 import { AxiosInstance } from 'app/configs';
+import { ResDiscountPar } from 'app/interface';
 
 function Discounts() {
   const { rootSite, isBeautyxSite, isGmupSite } = useRootContext();
@@ -30,7 +30,7 @@ function Discounts() {
   const query = queryString.parse(location.search) as QrDiscount
   const { data, isLoading } = useQuery({
     queryKey: [QR_KEY.DISCOUNT_PAGE, query],
-    queryFn: () => discountsApi.getAll({
+    queryFn: () => Api.Discount.get({
       page: query?.page ?? 1,
       limit: 15,
       'filter[keyword]': query['filter[keyword]'],
@@ -41,7 +41,7 @@ function Discounts() {
       'include': isGmupSite ? 'gmup_tags' : undefined,
     })
   })
-  const discounts: IDiscountPar[] = data?.data ?? []
+  const discounts: ResDiscountPar[] = data?.context?.data ?? [];
   const onChangePage = (p: number) => {
     const newQuery = {
       ...query,
@@ -54,7 +54,7 @@ function Discounts() {
   }
   const queryClient = useQueryClient()
   const { mutate } = useMutation({
-    mutationFn: (id: number | string) => discountsApi.deleteById(id),
+    mutationFn: (id: number | string) => Api.Discount.delete(id),
     onSuccess: () => {
       queryClient.invalidateQueries([QR_KEY.DISCOUNT_PAGE, query])
     },
@@ -88,7 +88,7 @@ function Discounts() {
         <div className='card-header border-0 pt-5'>
           <h3 className='card-title align-items-start flex-column'>
             <span className='card-label fw-bold fs-3 mb-1'>{rootSite == SITE.BEAUTYX ? 'Mã giảm giá' : 'Dịch vụ GMUP'}</span>
-            <span className='text-muted mt-1 fw-semobold fs-7'>Số lượng : {data?.total ?? 1}</span>
+            <span className='text-muted mt-1 fw-semobold fs-7'>Số lượng : {data?.context?.total ?? 1}</span>
           </h3>
         </div>
         <Filter query={query} />
@@ -116,7 +116,7 @@ function Discounts() {
               </thead>
               <tbody>
                 {
-                  discounts.map((item: IDiscountPar, index: number) => (
+                  discounts.map((item: ResDiscountPar, index: number) => (
                     <tr key={index} >
                       <td>
                         <div className='d-flex align-items-center'>
@@ -250,7 +250,7 @@ function Discounts() {
             </table>
             <PageCircularProgress loading={isLoading} />
             <XPagination
-              totalPage={data?.last_page ?? 1}
+              totalPage={data?.context?.last_page ?? 1}
               onChangePage={onChangePage}
               defaultPage={query?.page ?? 1}
             />

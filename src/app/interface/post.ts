@@ -1,9 +1,10 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { IOrganization } from "app/interface/organization";
 import { IService } from "app/interface/service";
 import { Tag } from "app/interface/tag";
 import { User } from "app/interface/user";
 
-export interface Post {
+export interface ResPost {
   id: number,
   content: string,
   status: number,

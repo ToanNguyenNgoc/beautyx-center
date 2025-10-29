@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 
-import { IBanner } from '../../interface/banner'
-import bannerApi from '../../api/bannerApi'
+import { Api } from 'app/api';
+import { ResBanner } from 'app/interface';
 import { STATUS } from '../status';
 
 const initBanner = {
@@ -28,7 +28,7 @@ const initBanner = {
 
 export const fetchAsyncBanner: any = createAsyncThunk('BANNER/fetchAsyncBanner', async () => {
   try {
-    const res = await bannerApi.getAll()
+    const res = await Api.Banner.get() as any;
     const payload = res.data.context
     return payload
   } catch (error) {
@@ -40,14 +40,14 @@ export const postAsyncBanner: any = createAsyncThunk(
   "BANNER/postAsyncBanner",
   async (values: any) => {
     console.log(values)
-    const res = await bannerApi.postBanner(values);
+    const res = await Api.Banner.post(values);
     console.log(res)
   }
 )
 export const fetchAsyncBannerDetail: any = createAsyncThunk(
   "BANNER/fetchAsyncBannerDetail",
   async (id: number) => {
-    const res = await bannerApi.getDetailById(id);
+    const res = await Api.Banner.getDetail(id);
     return {
       ...initBanner,
       ...res.context
@@ -58,11 +58,11 @@ export const fetchAsyncBannerDetail: any = createAsyncThunk(
 
 interface res {
   page: number,
-  data: IBanner[]
+  data: ResBanner[]
   totalItem: number
 }
 interface IBannerDetail {
-  banner: IBanner,
+  banner: ResBanner,
   status: string
 }
 export interface IBannerState {

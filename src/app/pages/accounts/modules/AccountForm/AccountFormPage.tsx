@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { MenuItem, OutlinedInput, Select, SelectChangeEvent, Theme, useTheme } from "@mui/material";
 import { ReqAdminUser, ResponseDetail } from "app/@types";
-import { adminApi } from "app/api";
+import { Api } from "app/api";
 import { useGetRoles, useGetRolesAndPermissions } from "app/hooks";
 import { AdminAccount } from "app/interface";
 import { InitAlert, PermissionLayout, XButton } from "app/components";
@@ -33,7 +33,7 @@ const AccountFormPage: FC = () => {
   const navigate = useNavigate()
   const params = useParams() as { id?: number }
   const { mutate, isLoading } = useMutation<any, any, ReqAdminUser>({
-    mutationFn: (body) => params?.id ? adminApi.adminUserUpdate(Number(params.id), body) : adminApi.adminUserCreate(body),
+    mutationFn: (body) => params?.id ? Api.Admin.adminUserUpdate(Number(params.id), body) : Api.Admin.adminUserCreate(body),
     onSuccess: () => {
       InitAlert.open({ title: 'Cập nhật thành công !', type: 'success' })
       setTimeout(() => navigate(-1), 800)
@@ -59,7 +59,7 @@ const AccountFormPage: FC = () => {
   })
   const { refetch, isRefetching, data } = useQuery<ResponseDetail<AdminAccount>>({
     queryKey: [],
-    queryFn: () => adminApi.adminUser(Number(params.id)).then(res => res.data),
+    queryFn: () => Api.Admin.adminUser(Number(params.id)).then(res => res.data),
     enabled: !!(params.id && hasEnabled('v1.admin.users.index')),
     onSuccess: (response) => {
       formik.setFieldValue('fullname', response.context.fullname || "");

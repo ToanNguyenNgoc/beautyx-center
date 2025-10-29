@@ -1,6 +1,6 @@
 import { QrAppointment, ResponseDetail, ResponseList } from "app/@types"
+import { Api } from "app/api";
 import { QR_KEY } from "app/common";
-import { AxiosInstance } from "app/configs";
 import { ResAppointment } from "app/interface/appointment"
 import { useQuery, UseQueryOptions } from "react-query";
 
@@ -10,7 +10,7 @@ export function useGetAppointments(params?: QrAppointment, options?: UseQueryOpt
 
   const query = useQuery({
     queryKey: [QR_KEY.Comments, params],
-    queryFn: () => AxiosInstance().get('/admin/appointments', { params }).then<ResponseQuery>(res => res.data),
+    queryFn: () => Api.Appointment.get(params),
     retry: false,
     ...options,
   });

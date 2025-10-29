@@ -1,16 +1,16 @@
-/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
-import { IDiscountPar } from 'app/interface/discounts';
 import TitlePage from 'app/components/TitlePage';
 import FlatFormOrder from 'app/components/PlatForm';
 import { useQuery } from 'react-query';
 import { QR_KEY } from 'app/common';
-import { discountsApi } from 'app/api';
 import moment from 'moment';
 import { PageCircularProgress, XPagination } from 'app/components';
 import { ExportCode } from 'app/pages/discounts/module/discount-form';
 import queryString from 'query-string'
 import "./style.scss";
+import { ResDiscountPar } from 'app/interface';
+import { Api } from 'app/api';
 
 function DiscountDetail() {
     // const { METHOD } = useVerifyRoute()
@@ -18,17 +18,17 @@ function DiscountDetail() {
     const params: any = useParams()
     const location = useLocation()
     const query: any = queryString.parse(location.search)
-    const state = location.state as IDiscountPar | null
+    const state = location.state as ResDiscountPar | null
     const { data } = useQuery({
         queryKey: [QR_KEY.DISCOUNT, params.id],
-        queryFn: () => discountsApi.getDiscountDetail({ id: params.id }),
+        queryFn: () => Api.Discount.detDetail({ id: params.id }),
         enabled: !state ? true : false,
         onError: () => navigate("/error/404")
     })
     const discount = state ?? data?.context
     const { data: dataCode } = useQuery({
         queryKey: [QR_KEY.DISCOUNT_CODE, params.id, query],
-        queryFn: () => discountsApi.getCodeIsCampaign({
+        queryFn: () => Api.Discount.getCodeCampaign({
             uuid: params.id,
             limit: 50,
             page: query?.page ?? 1
@@ -99,7 +99,7 @@ function DiscountDetail() {
                             </thead>
                             <tbody>
                                 {
-                                    dataCode?.data?.map((item, index) => (
+                                    dataCode?.context?.data.map((item, index) => (
                                         <tr key={index} className={item.status === "1" ? "" : "table-active"}>
                                             <td>{index + 1}</td>
                                             <td>{item.coupon_code}</td>
@@ -112,7 +112,7 @@ function DiscountDetail() {
                             </tbody>
                         </table>
                         <XPagination
-                            totalPage={dataCode?.total ? Math.ceil(dataCode.total / 50) : 1}
+                            totalPage={dataCode?.context?.total ? Math.ceil(dataCode?.context?.total / 50) : 1}
                             defaultPage={query?.page ?? 1}
                             onChangePage={onChangePage}
                         />

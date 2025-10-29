@@ -161,4 +161,12 @@ export type QrAppointment = QrPage & {
   * id, time_start, created_at, updated_at, status
   */
   "sort"?: string;
+};
+
+export type QrMood = QrPage & {
+  "filter[status]": ?boolean;
+  /**
+   * -id, -created_at, -priority
+   */
+  "sort"?: string
 }

@@ -1,15 +1,15 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import authApi from 'app/api/authApi';
-import { IPUT_PROFILE } from 'app/api/interface';
 import { AUTH_LOCAL_TOKEN, UserRole, USERROLE } from 'app/modules/auth';
 import { STATUS } from '../status';
+import { Api } from 'app/api';
+import { ReqPutProfile } from 'app/@types';
 
 export const getRoles = async (token?: string) => {
     let roles: UserRole[] = []
     if (token || sessionStorage.getItem(AUTH_LOCAL_TOKEN)) {
         try {
-            const response = await authApi.getRoles()
+            const response = await Api.Auth.getRoles()
             roles = typeof response.data.context.roles === 'string' ? [] : response.data.context.roles
         } catch (error) { console.log(error)}
     }
@@ -20,7 +20,7 @@ export const fetchAsyncUser: any = createAsyncThunk(
     "USER/fetchAsyncUser",
     async (ROLE: any) => {
         try {
-            const res: any = await authApi.getUserProfile();
+            const res: any = await Api.Auth.getProfile();
             const roles = await getRoles()
             const user = { ...res.data.context, ROLE }
             return Object.assign(user, { roles })
@@ -32,8 +32,8 @@ export const fetchAsyncUser: any = createAsyncThunk(
 )
 export const updateAsyncUser: any = createAsyncThunk(
     "USER/updateAsyncUser",
-    async (params: IPUT_PROFILE) => {
-        const res = await authApi.putUserProfile(params);
+    async (params: ReqPutProfile) => {
+        const res = await Api.Auth.putProfile(params);
         const payload = res.data.context
         return payload
     }

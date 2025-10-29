@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { ResGmupTag } from './gmup-tag';
 import { IOrganization } from './organization';
-export interface IITEMS_DISCOUNT {
+export interface ResItemDiscount {
     id: number,
     productable_type: string,
     productable_id: number,
@@ -42,7 +42,7 @@ export interface IITEMS_DISCOUNT {
         is_moba_ecommerce_enable: boolean,
         image_url: string
     },
-    discount: IDiscountChild,
+    discount: ResDiscountChild,
     organization: IOrganization
 }
 interface IItems {
@@ -54,7 +54,7 @@ interface IItems {
     created_at: string,
     updated_at: string
 }
-export interface IDiscountChild {
+export interface ResDiscountChild {
     id: number,
     title: string,
     description: string,
@@ -78,7 +78,7 @@ export interface IDiscountChild {
     organizations: IOrganization[],
     items: IItems[]
 }
-export interface IDiscountPar {
+export interface ResDiscountPar {
     id: number,
     uuid: string,
     title: string,
@@ -102,12 +102,12 @@ export interface IDiscountPar {
     updated_at: string,
     items_count: number,
     organizations: IOrganization[],
-    items: IITEMS_DISCOUNT[],
+    items: ResItemDiscount[],
     is_campaign: boolean,
     gmup_tags?: ResGmupTag[];
     gmup_tag_ids?:number[];
 }
-export interface ICouponCodeCampaign {
+export interface ResCouponCodeCampaign {
     coupon_code: string;
     status: string
 }

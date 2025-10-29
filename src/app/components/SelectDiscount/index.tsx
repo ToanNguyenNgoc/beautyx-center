@@ -1,17 +1,17 @@
 import { ChangeEvent, FC, useCallback, useRef } from "react";
 import "./style.scss"
-import { IDiscountPar } from "app/interface";
+import { ResDiscountPar } from "app/interface";
 import { useMutation } from "react-query";
 import { debounce } from "lodash";
 import { Avatar, Box, Chip, CircularProgress, MenuItem } from "@mui/material";
-import { discountsApi } from "app/api";
+import { Api } from "app/api";
 import FlatFormOrder from "../PlatForm";
 
 interface SelectionDiscountsProps {
   label?: string,
   required?: boolean,
-  discounts?: IDiscountPar[],
-  onChangeDiscounts?: (productable: IDiscountPar[]) => void,
+  discounts?: ResDiscountPar[],
+  onChangeDiscounts?: (productable: ResDiscountPar[]) => void,
   filterAll?: boolean,
   platform?: string,
   organization_id?: number,
@@ -36,7 +36,7 @@ export const SelectionDiscounts: FC<SelectionDiscountsProps> = ({
   }
   window.addEventListener('click', () => onTriggerOrgSearch('hide'))
   const { mutate, isLoading, data } = useMutation({
-    mutationFn: (keyword: string) => discountsApi.getAll({
+    mutationFn: (keyword: string) => Api.Discount.get({
       'filter[keyword]': keyword,
       'sort': '-created_at',
       'filter[filter_all]': filterAll,
@@ -50,7 +50,7 @@ export const SelectionDiscounts: FC<SelectionDiscountsProps> = ({
     []
   );
   const onChangeOrgSearch = (e: ChangeEvent<HTMLInputElement>) => debounceOrgs(e.target.value)
-  const onSelectProductable = (item: IDiscountPar) => {
+  const onSelectProductable = (item: ResDiscountPar) => {
     if (onChangeDiscounts) {
       const iIndex = discounts.findIndex(i => i.id === item.id)
       if (iIndex < 0) {
@@ -92,7 +92,7 @@ export const SelectionDiscounts: FC<SelectionDiscountsProps> = ({
           <div className="org-list">
             <ul className="list">
               {
-                data?.data?.map((item, index) => {
+                data?.context?.data?.map((item, index) => {
                   let image_url = item.title
                   if (item.items.length > 0) { image_url = item.items[0].productable?.image_url }
                   else if (item.organizations.length > 0) { image_url = item.organizations[0].image_url }

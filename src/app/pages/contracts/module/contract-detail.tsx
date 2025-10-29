@@ -12,7 +12,7 @@ import { ApproveTypeElement, ApproveStatusElement } from 'app/util/fileType'
 import { SnackAlert, ViewPdf, XButton } from 'app/components'
 import style from './contract-detail.module.scss'
 import dayjs from 'dayjs';
-import { approveApi } from 'app/api';
+import { Api } from 'app/api';
 import { Dialog } from '@mui/material';
 
 const paramsDetail = {
@@ -40,7 +40,7 @@ function ContractDetail() {
   const handlePutApprove = async () => {
     firstLoad()
     try {
-      await approveApi.putApprove(contract.approve.id, {
+      await Api.Approve.put(contract.approve.id, {
         log: "",
         status: "APPROVED"
       })

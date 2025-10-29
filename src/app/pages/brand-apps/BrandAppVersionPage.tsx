@@ -1,5 +1,5 @@
 import { QrBrandAppVersion, ResponseList } from "app/@types";
-import { adminApi } from "app/api";
+import { Api } from "app/api";
 import { QR_KEY } from "app/common";
 import { useQueryParams } from "app/hooks";
 import { IBrandAppVersion } from "app/interface";
@@ -20,7 +20,7 @@ const BrandAppVersionPage: FC = () => {
   const { query, handleQueryString } = useQueryParams<QrBrandAppVersion>()
   const { data, isLoading } = useQuery<{ context: ResponseList<IBrandAppVersion[]> }>({
     queryKey: [QR_KEY.BrandAppVersions, os_platform, bundle_id, query],
-    queryFn: () => adminApi.getBrandAppVersion(String(bundle_id), { ...query, 'append': 'media_url', 'sort': '-created_at', 'filter[os_platform]': os_platform }),
+    queryFn: () => Api.Admin.getBrandAppVersion(String(bundle_id), { ...query, 'append': 'media_url', 'sort': '-created_at', 'filter[os_platform]': os_platform }),
     enabled: !!bundle_id
   })
   return (

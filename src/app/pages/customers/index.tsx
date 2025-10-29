@@ -3,7 +3,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { Avatar, FormControl, MenuItem, Select, SelectChangeEvent } from "@mui/material";
 import { KTSVG } from "../../../_metronic/helpers";
-import { adminApi, statisticApi } from "app/api";
+import { Api, statisticApi } from "app/api";
 import { PLAT_FORM_ARR, formatDate, getRangeOfDates } from "app/util";
 import {  QR_KEY } from "app/common";
 import { AppSnack, FlatFormOrder, InitAlert, PageCircularProgress, PermissionLayout, XDateRangePicker, XPagination, XSwitch } from "app/components";
@@ -107,7 +107,7 @@ const Item: FC<{ item: Customer }> = ({ item }) => {
   const [active, setActive] = useState(item.is_active === 1 ? true : false)
   const onActive = (e: boolean) => {
     setActive(e);
-    adminApi.adminUserUpdate(item.id, {
+    Api.Admin.adminUserUpdate(item.id, {
       is_active: e
     }).then(() => {
       InitAlert.open({ title: 'Cập nhật thành công', type: 'success' })

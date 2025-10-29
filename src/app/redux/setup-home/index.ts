@@ -1,11 +1,12 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
-import bannerApi from 'app/api/bannerApi'
-import { IBanner } from 'app/interface/banner'
+import { Api } from 'app/api'
+import { ResBanner } from 'app/interface'
 
 export interface ISetupHome {
     sections: any[],
     sectionFocus: any,
-    banners: IBanner[]
+    banners: ResBanner[]
 }
 const initialState: ISetupHome = {
     sections: [],
@@ -15,8 +16,8 @@ const initialState: ISetupHome = {
 export const fetchAsyncBanners:any = createAsyncThunk(
     "HOME_SETUP/fetchAsyncBanners",
     async () => {
-        const res = await bannerApi.getAll()
-        return res.data
+        const res = await Api.Banner.get()
+        return res.context.data
     }
 )
 const setupHomeSlice = createSlice({

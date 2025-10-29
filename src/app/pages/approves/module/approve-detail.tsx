@@ -3,7 +3,7 @@
 import React, { useRef, useState } from 'react'
 import { Dialog } from '@mui/material'
 import { IApprove } from 'app/interface'
-import { approveApi } from 'app/api'
+import { Api } from 'app/api'
 import style from './style.module.scss'
 import { useSwr, useNoti, useGetParamUrl } from 'app/hooks'
 import { API_ROUTE } from 'app/api/api-route'
@@ -39,7 +39,7 @@ function ApproveDetail(props: ApproveDetailProps) {
     const handlePutApprove = async () => {
         firstLoad()
         try {
-            await approveApi.putApprove(approve.id, body)
+            await Api.Approve.put(approve.id, body)
             setRefetch(true)
             resultLoad("Đã lưu thay đổi")
         } catch (_error) {

@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { IBanner } from 'app/interface/banner';
+import { ResBanner } from 'app/interface/banner';
 import { IRoot } from 'app/redux/interface';
 import { onSortTableBanners } from 'app/redux/setup-home';
 import { arrayMoveImmutable } from 'array-move';
@@ -36,7 +36,7 @@ export function RightBanner() {
                     onSortEnd={onSortEnd}
                 >
                     {
-                        banners.map((item: IBanner, index: number) => (
+                        banners.map((item: ResBanner, index: number) => (
                             <SortableItem
                                 key={`item-${index}`}
                                 index={index} className="item"

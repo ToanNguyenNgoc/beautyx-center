@@ -18,7 +18,7 @@ import { useMutation, useQuery } from "react-query";
 import { QR_KEY } from "app/common";
 import { promotionApi } from "app/api";
 import { ReqPromotionBody } from "app/@types";
-import { IDiscountPar, Productable } from "app/interface";
+import { Productable, ResDiscountPar } from "app/interface";
 import { AxiosError } from "axios";
 import * as Yup from "yup"
 import '../style.scss'
@@ -92,7 +92,7 @@ function PromotionForm() {
       const body = pickBy({
         ...values,
         productables: values.productables.map((i: Productable) => i.id),
-        discounts: values.discounts.map((i: IDiscountPar) => i.id),
+        discounts: values.discounts.map((i: ResDiscountPar) => i.id),
         content: values.priority < 0 ? JSON.stringify({ url, token, platform, color }) : removeFroalaFooter(values.content),
       }, identity)
       const res = await mutateAsync({ ...body, is_popup: values.is_popup ? 1 : 0, })

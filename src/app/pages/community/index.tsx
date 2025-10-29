@@ -1,7 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Avatar } from "@mui/material";
-import { communityApi } from "app/api";
-import { Post } from "app/interface";
 import { QR_KEY } from "app/common";
 import TitlePage from "app/components/TitlePage";
 import { FC } from "react";
@@ -13,11 +11,13 @@ import moment from "moment";
 import { useSelector } from "react-redux";
 import { IRoot } from "app/redux/interface";
 import { KTSVG } from "../../../_metronic/helpers";
+import { Api } from "app/api";
+import { ResPost } from "app/interface";
 
 function Community() {
   const { data, isLoading } = useQuery({
     queryKey: [QR_KEY.COMMUNITY],
-    queryFn: () => communityApi.getAll({
+    queryFn: () => Api.Post.get({
       'limit': 15,
       'append': 'media_url',
       'sort': '-created_at'
@@ -39,7 +39,7 @@ function Community() {
         <div className='card-header border-0 pt-5'>
           <h3 className='card-title align-items-start flex-column'>
             <span className='card-label fw-bold fs-3 mb-1'>Bài viết</span>
-            <span className='text-muted mt-1 fw-semobold fs-7'>{data?.total || 0} bài viết</span>
+            <span className='text-muted mt-1 fw-semobold fs-7'>{data?.context?.total || 0} bài viết</span>
           </h3>
         </div>
         <div className='card-body py-3'>
@@ -62,7 +62,7 @@ function Community() {
               </thead>
               <tbody>
                 {
-                  data?.data?.map((i:any) => (
+                  data?.context?.data?.map((i:any) => (
                     <PostItem key={i.id} post={i} />
                   ))
                 }
@@ -78,7 +78,7 @@ function Community() {
 
 export default Community;
 
-const PostItem: FC<{ post: Post }> = ({ post }) => {
+const PostItem: FC<{ post: ResPost }> = ({ post }) => {
   const navigate = useNavigate()
   const { USER } = useSelector((state: IRoot) => state.ACCOUNT)
   return (

@@ -7,17 +7,17 @@ import { useFormik } from "formik";
 import * as Yup from 'yup'
 import { LoadingButton } from "@mui/lab";
 import moment from "moment";
-import { discountsApi } from "app/api";
 import { useMutation } from "react-query";
-import { ReqDiscountBody } from "app/@types";
 import { useMessage } from "app/hooks";
 import { useNavigate } from "react-router-dom";
+import { ReqPostDiscount } from "app/@types";
+import { Api } from "app/api";
 
 const VoucherFormPage: FC = () => {
   const navigate = useNavigate()
   const { resultLoad, onCloseNoti, noti } = useMessage()
-  const { mutate, isLoading } = useMutation<any, any, ReqDiscountBody>({
-    mutationFn: body => discountsApi.postDiscount(body),
+  const { mutate, isLoading } = useMutation<any, any, ReqPostDiscount>({
+    mutationFn: body => Api.Discount.post(body),
     onSuccess: () => {
       resultLoad({
         message: 'Tạo thành công',

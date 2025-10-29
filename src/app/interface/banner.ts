@@ -1,4 +1,4 @@
-export interface IBanner {
+export interface ResBanner {
   id: number;
   name: string;
   type: string | null;

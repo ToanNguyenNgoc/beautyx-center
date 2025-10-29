@@ -1,17 +1,17 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { LoadingButton } from "@mui/lab";
 import { QrDiscountCode } from "app/@types";
-import { discountsApi } from "app/api";
-import { ICouponCodeCampaign, IDiscountPar } from "app/interface";
+import { Api } from "app/api";
 import { FC, useEffect, useState } from "react";
 import { useMutation } from "react-query";
 import * as FileSaver from "file-saver";
 import * as XLSX from "xlsx"
 import moment from "moment";
 import { slugify } from "app/util";
+import { ResCouponCodeCampaign, ResDiscountPar } from "app/interface";
 
 interface Props {
-  discount: IDiscountPar,
+  discount: ResDiscountPar,
   title?: string,
   size?: "small" | "medium" | "large"
 }
@@ -19,20 +19,20 @@ interface Props {
 export const ExportCode: FC<Props> = ({ discount, title = ' Xuất mã giảm giá', size = 'medium' }) => {
   const [totalPage, setTotalPage] = useState(1)
   const limit = 30
-  const [codes, setCodes] = useState<ICouponCodeCampaign[]>([])
+  const [codes, setCodes] = useState<ResCouponCodeCampaign[]>([])
   const { mutate, data, isLoading } = useMutation({
     mutationKey: ['GET_CODE', discount.uuid],
-    mutationFn: (qr: QrDiscountCode) => discountsApi.getCodeIsCampaign({
+    mutationFn: (qr: QrDiscountCode) =>Api.Discount.getCodeCampaign({
       uuid: discount.uuid,
       page: qr.page,
       limit: limit
     }),
     onSuccess(data) {
-      const codesPerPage = data.data
+      const codesPerPage = data.context?.data
       setCodes(prev => {
         return prev = [...prev, ...codesPerPage]
       })
-      setTotalPage(Math.ceil(data.total / limit))
+      setTotalPage(Math.ceil(data.context.total / limit))
     },
   })
 
@@ -47,14 +47,14 @@ export const ExportCode: FC<Props> = ({ discount, title = ' Xuất mã giảm gi
     }
   }, [totalPage])
   useEffect(() => {
-    if (codes.length === data?.total) {
+    if (codes.length === data?.context.total) {
       // console.log(codes)
       onExportFile({
         file_name: slugify(discount.title),
         codes: codes
       })
     }
-  }, [codes, data?.total])
+  }, [codes, data?.context.total])
   return (
     <>
       <LoadingButton
@@ -71,7 +71,7 @@ export const ExportCode: FC<Props> = ({ discount, title = ' Xuất mã giảm gi
     </>
   )
 }
-const onExportFile = ({ file_name, codes }: { file_name: string, codes: ICouponCodeCampaign[] }) => {
+const onExportFile = ({ file_name, codes }: { file_name: string, codes: ResCouponCodeCampaign[] }) => {
   const fileType =
     "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8";
   const fileExtension = ".xlsx";

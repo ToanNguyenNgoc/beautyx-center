@@ -16,13 +16,13 @@ import { useMessage } from "app/hooks";
 import { AxiosError } from "axios";
 import { AppSnack, PermissionLayout, SelectPromotion, SelectionDiscounts, SelectionOrg } from "app/components";
 import { useState } from "react";
-import { IDiscountPar, IOrganization } from "app/interface";
+import { ResDiscountPar, IOrganization } from "app/interface";
 import { request3rdApi } from "app/api/api-3rd-client";
 
 function PushNotificationForm() {
   const { resultLoad, noti, onCloseNoti } = useMessage()
   const [org, setOrg] = useState<IOrganization>()
-  const [discount, setDiscount] = useState<IDiscountPar>()
+  const [discount, setDiscount] = useState<ResDiscountPar>()
   const { mutate, isLoading } = useMutation({
     mutationFn: (body: ReqPostNotification) => getEnvParam() === dev ?
       request3rdApi.postNotification(body)

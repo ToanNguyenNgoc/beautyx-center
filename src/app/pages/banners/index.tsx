@@ -12,23 +12,23 @@ import { Link, useNavigate } from "react-router-dom";
 import { arrayMoveImmutable } from "array-move";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { QR_KEY } from "app/common";
-import bannerApi from "app/api/bannerApi";
-import { IBanner } from "app/interface";
+import { Api } from "app/api";
 import TitlePage from "app/components/TitlePage";
 import { KTSVG, toAbsoluteUrl } from "../../../_metronic/helpers";
 import { BannerTypeElement, formatDate } from "app/util";
 import moment from "moment";
 import { Button, CircularProgress } from "@mui/material";
 import { PageCircularProgress, PermissionLayout } from "app/components";
+import { ResBanner } from "app/interface";
 
 function BannerWidget() {
   const navigate = useNavigate()
-  const [banners, setBanners] = useState<IBanner[]>([])
+  const [banners, setBanners] = useState<ResBanner[]>([])
   useQuery({
     queryKey: [QR_KEY.BANNER],
-    queryFn: () => bannerApi.banners(),
+    queryFn: () => Api.Banner.get(),
     onSuccess(data) {
-      setBanners(data.data)
+      setBanners(data.context.data)
     },
   })
   const onSortEnd = (oldIndex: number, newIndex: number) => {
@@ -96,7 +96,7 @@ function BannerWidget() {
 export default BannerWidget;
 
 interface SortableComponentProps {
-  banners: IBanner[]
+  banners: ResBanner[]
   onSortEnd: (oldIndex: number, newIndex: number) => void
 }
 
@@ -136,7 +136,7 @@ const SortableComponent: FC<SortableComponentProps> = ({ banners, onSortEnd }) =
   // const { METHOD } = useVerifyRoute()
   const qrClient = useQueryClient()
   const { mutate, isLoading } = useMutation({
-    mutationFn: (id: number) => bannerApi.deleteBanner(id),
+    mutationFn: (id: number) => Api.Banner.delete(id),
     onSuccess: () => {
       qrClient.invalidateQueries({ queryKey: [QR_KEY.BANNER] })
     },
@@ -151,7 +151,7 @@ const SortableComponent: FC<SortableComponentProps> = ({ banners, onSortEnd }) =
 
     // >
     <>
-      {banners.map((item: IBanner, index: number) => (
+      {banners.map((item: ResBanner, index: number) => (
         // <SortableItem
         //   key={`item-${index}`}
         //   index={index} className="item"

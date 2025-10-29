@@ -11,8 +11,8 @@ import { Chip, CircularProgress, Tooltip } from "@mui/material";
 import { SelectService } from "app/pages/discounts/module/discount-form/select-service";
 import "../style.scss"
 import { useMutation } from "react-query";
-import { communityApi } from "app/api";
-import { ReqPostBody } from "app/@types";
+import { ReqPostPost } from "app/@types";
+import { Api } from "app/api";
 
 interface InitialValues {
   content: string;
@@ -25,7 +25,7 @@ const CommunityForm: FC = () => {
   const { handlePostMedia } = usePostMedia()
   const { resultLoad, noti, onCloseNoti } = useMessage()
   const { mutate, isLoading, } = useMutation({
-    mutationFn: (body: ReqPostBody) => communityApi.post(body),
+    mutationFn: (body: ReqPostPost) => Api.Post.post(body),
     onSuccess: () => {
       resultLoad({ message: 'Đăng bài thành công', color: 'success' })
     },

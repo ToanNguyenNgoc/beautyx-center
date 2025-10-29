@@ -4,9 +4,9 @@ import Form from './form';
 import { useParams } from 'react-router-dom';
 import { useQuery } from 'react-query';
 import { QR_KEY } from 'app/common';
-import { discountsApi } from 'app/api';
 import TitlePage from 'app/components/TitlePage';
 import { PageCircularProgress, PermissionLayout } from 'app/components';
+import { Api } from 'app/api';
 
 function DiscountForm() {
   const params: any = useParams()
@@ -16,7 +16,7 @@ function DiscountForm() {
   }
   const { data, refetch, isLoading } = useQuery({
     queryKey: [[QR_KEY.DISCOUNT, params.id]],
-    queryFn: () => discountsApi.getDiscountDetail({
+    queryFn: () => Api.Discount.detDetail({
       id: params.id,
       include:'gmup_tags'
     }),

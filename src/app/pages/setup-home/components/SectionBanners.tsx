@@ -4,7 +4,6 @@
 import  { useEffect, useRef } from 'react';
 import { IDataLayout } from '../data';
 import style from './cpn-style.module.scss';
-import { IBanner } from 'app/interface/banner';
 import { settingsSlick } from 'app/util';
 import Slider from "react-slick";
 //@ts-ignore
@@ -14,6 +13,7 @@ import "slick-carousel/slick/slick-theme.css";
 import { useDispatch, useSelector } from 'react-redux';
 import { IRoot } from 'app/redux/interface';
 import { fetchAsyncBanners } from 'app/redux/setup-home';
+import { ResBanner } from 'app/interface';
 
 interface SectionBannersProps {
     sectionBanner: IDataLayout
@@ -42,7 +42,7 @@ export function SectionBanners(props: SectionBannersProps) {
         >
             <Slider {...settings} >
                 {
-                    banners.map((item: IBanner, index: number) => (
+                    banners.map((item: ResBanner, index: number) => (
                         <div key={index} className={style.banner_item}>
                             <img
                                 style={{ height: clientHeight }}

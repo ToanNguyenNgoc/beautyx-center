@@ -4,7 +4,7 @@ import TitlePage from 'app/components/TitlePage';
 import { useLocation, useParams } from 'react-router-dom';
 import { useMutation, useQuery } from 'react-query';
 import { QR_KEY } from 'app/common';
-import { bannerApi } from 'app/api';
+import { Api } from 'app/api';
 import { useFormik } from 'formik';
 import { FileUploader } from 'react-drag-drop-files';
 import { BANNERS_TYPE, BANNER_TYPE, FILE_IMG_TYPE, testLinkYoutube } from 'app/util';
@@ -16,7 +16,7 @@ import { PLAT_FORM_ARR } from 'app/util';
 import { DesktopDatePicker } from '@mui/x-date-pickers';
 import moment from 'moment';
 import { ChangeEvent, Dispatch, FC, SetStateAction, useState } from 'react';
-import { IBanner, IOrganization } from 'app/interface';
+import { ResBanner, IOrganization } from 'app/interface';
 import { LoadingButton } from '@mui/lab';
 import * as Yup from "yup"
 import { AxiosError } from 'axios';
@@ -37,7 +37,7 @@ function BannerAdd() {
   const [origin, setOrigin] = useState<IOrganization>()
   const { isLoading, handlePostMedia } = usePostMedia()
   const { mutate, isLoading: isPosting } = useMutation({
-    mutationFn: (body: any) => params.id ? bannerApi.putBanner(params.id, body) : bannerApi.postBanner(body),
+    mutationFn: (body: any) => params.id ? Api.Banner.put(params.id, body) : Api.Banner.post(body),
     onSuccess: () => {
       resultLoad({
         message: `${params.id ? 'Cập nhật' : 'Tạo mới'} banner thành công`,
@@ -79,7 +79,7 @@ function BannerAdd() {
   })
   const { data, refetch, isFetching } = useQuery({
     queryKey: [QR_KEY.BANNER, params.id],
-    queryFn: () => bannerApi.getDetailById(params.id),
+    queryFn: () => Api.Banner.getDetail(params.id),
     enabled: params.id ? true : false,
     onSuccess: (data) => {
       const banner = data.context
@@ -276,7 +276,7 @@ interface RenderElementProps {
   formik: any,
   origin: IOrganization | undefined
   setOrigin: Dispatch<SetStateAction<IOrganization | undefined>>
-  banner: IBanner | undefined
+  banner: ResBanner | undefined
 }
 const RenderElement: FC<RenderElementProps> = ({ formik, origin, setOrigin, banner }) => {
   const type = formik.values.type

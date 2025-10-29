@@ -1,4 +1,4 @@
-import { IDiscountPar } from "app/interface/discounts";
+import { ResDiscountPar } from "app/interface/discounts";
 import { Media, Productable } from "app/interface/productable";
 
 export interface Promotion {
@@ -13,7 +13,7 @@ export interface Promotion {
   valid_util: string,
   created_at: string,
   updated_at: string,
-  discounts: IDiscountPar[],
+  discounts: ResDiscountPar[],
   productables: Productable[],
   priority:number
 }

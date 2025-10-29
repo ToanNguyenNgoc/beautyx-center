@@ -11,7 +11,7 @@ import { ReqBrandAppVersion } from "app/@types";
 import { LoadingButton } from "@mui/lab";
 import * as Yup from "yup"
 import { useMutation } from "react-query";
-import { adminApi } from "app/api";
+import { Api } from "app/api";
 
 const BrandAppVersionFromPage: FC = () => {
   const params = useParams();
@@ -19,7 +19,7 @@ const BrandAppVersionFromPage: FC = () => {
   const bundle_id = params?.bundle;
   const { isLoading: isLoadingMedia, handlePostMedia } = usePostMedia();
   const { mutate, isLoading } = useMutation({
-    mutationFn: (body: ReqBrandAppVersion) => adminApi.postBrandAppVersion(String(bundle_id), body),
+    mutationFn: (body: ReqBrandAppVersion) => Api.Admin.postBrandAppVersion(String(bundle_id), body),
     onSuccess: () => InitAlert.open({ title: 'Tạo mới thành công', type: 'success' }),
     onError: () => InitAlert.open({ title: 'Có lỗi xảy ra', type: 'error' })
   })

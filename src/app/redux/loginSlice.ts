@@ -2,16 +2,16 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
 import {AuthModel} from '../interface/account_models';
-import authApi from '../api/authApi';
-import {ILOGIN} from '../api/interface';
+import { Api } from 'app/api';
 
 import { STATUS } from './status'
+import { ReqPostLogin } from 'app/@types';
 
 export const loginAsync: any = createAsyncThunk(
     "LOGIN/loginAsync",
-    async (params: ILOGIN) => {
+    async (params: ReqPostLogin) => {
         try {
-            const res = await authApi.login(params);
+            const res = await Api.Auth.login(params);
             const payload = res.data.context;
             return payload;
         } catch (error) {

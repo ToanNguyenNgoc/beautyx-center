@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Avatar, Button, Chip, FormControl, MenuItem, Select, SelectChangeEvent } from "@mui/material";
 import { KTSVG } from "../../../_metronic/helpers";
-import { adminApi } from "app/api";
 import { formatDate } from "app/util";
 import { ConfirmAction, InitAlert, PageCircularProgress, PermissionLayout, XPagination, XSwitch } from "app/components";
 import TitlePage from "app/components/TitlePage";
@@ -14,6 +13,7 @@ import { AdminAccount } from "app/interface";
 import { useGetRolesAndPermissions } from "app/hooks";
 import { FC, useState } from "react";
 import { identity, pickBy } from "lodash";
+import { Api } from "app/api";
 
 function Accounts() {
   const location = useLocation()
@@ -22,7 +22,7 @@ function Accounts() {
   const query = queryString.parse(location.search) as QrAdminAccount
   const { data, isLoading, refetch } = useQuery<{ context: ResponseList<AdminAccount[]> }>({
     queryKey: [query],
-    queryFn: () => adminApi.adminUsers({
+    queryFn: () => Api.Admin.adminUsers({
       'page': query['page'],
       'limit': 15,
       'filter[keyword]': query['filter[keyword]'],
@@ -44,7 +44,7 @@ function Accounts() {
     })
   }
   const { mutate: mutateDelete } = useMutation({
-    mutationFn: (id: number) => adminApi.adminUserDelete(id),
+    mutationFn: (id: number) => Api.Admin.adminUserDelete(id),
     onSuccess: () => {
       InitAlert.open({ title: 'Xóa thành công', type: 'success' });
       refetch()
@@ -129,7 +129,7 @@ const Item: FC<{ item: AdminAccount, onDeleteAccount: (id: number) => void }> = 
   const [active, setActive] = useState(item.is_active === 1 ? true : false)
   const onActive = (e: boolean) => {
     setActive(e);
-    adminApi.adminUserUpdate(item.id, {
+    Api.Admin.adminUserUpdate(item.id, {
       is_active: e
     }).then(() => {
       InitAlert.open({ title: 'Cập nhật thành công', type: 'success' })

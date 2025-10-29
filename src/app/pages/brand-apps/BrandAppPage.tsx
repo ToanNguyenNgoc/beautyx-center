@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Avatar, Button, Dialog } from "@mui/material";
 import { QrBrandApp, ReqBrandApp, ResponseList } from "app/@types";
-import { adminApi } from "app/api";
 import { QR_KEY } from "app/common";
 import { ButtonUpload, ConfirmAction, InitAlert, PageCircularProgress, PermissionLayout, XPagination, XSwitch } from "app/components";
 import TitlePage from "app/components/TitlePage";
@@ -15,20 +14,21 @@ import { KTSVG } from "../../../_metronic/helpers";
 import { useFormik } from "formik";
 import { LoadingButton } from "@mui/lab";
 import * as Yup from "yup"
+import { Api } from "app/api";
 
 const BrandAppPage: FC = () => {
   const { hasEnabled } = useGetRolesAndPermissions()
   const { query, handleQueryString } = useQueryParams<QrBrandApp>()
   const { data, isLoading, refetch } = useQuery<{ context: ResponseList<IBrandApp[]> }>({
     queryKey: [QR_KEY.BrandApps, query],
-    queryFn: () => adminApi.getBrandApps(Object.assign(query, { sort: '-created_at', append: 'media_url' })),
+    queryFn: () => Api.Admin.getBrandApps(Object.assign(query, { sort: '-created_at', append: 'media_url' })),
     enabled: hasEnabled('v1.brand_apps.index')
   })
   const brandApps = data?.context.data || []
   const [brandAppId, setBrandAppId] = useState<number>()
 
   const { mutate: mutateDelete } = useMutation({
-    mutationFn: (id: number) => adminApi.deleteBrandApp(id),
+    mutationFn: (id: number) => Api.Admin.deleteBrandApp(id),
     onSuccess: () => {
       InitAlert.open({ title: 'Xóa thành công', type: 'success' });
       refetch()
@@ -108,7 +108,7 @@ const Item: FC<ItemProps> = ({ item, onDelete = () => null, onClickEdit = () => 
   const navigate = useNavigate();
   const [active, setActive] = useState(item.status);
   const { mutate } = useMutation({
-    mutationFn: (status: boolean) => adminApi.putBrandApp(item.id, { status }),
+    mutationFn: (status: boolean) => Api.Admin.putBrandApp(item.id, { status }),
     onSuccess: () => InitAlert.open({ title: 'Lưu thành công', type: 'success' }),
     onError: () => {
       InitAlert.open({ title: 'Có lỗi xảy ra', type: 'error' });
@@ -186,7 +186,7 @@ const BrandAppForm: FC<{ brandAppId?: number, onClose?: () => void, refetch?: ()
 }) => {
   const type = (brandAppId && brandAppId !== 0) ? 'put' : 'post';
   const { mutate, isLoading } = useMutation({
-    mutationFn: (body: ReqBrandApp) => type === 'post' ? adminApi.postBrandApp(body) : adminApi.putBrandApp((Number(brandAppId)), body),
+    mutationFn: (body: ReqBrandApp) => type === 'post' ? Api.Admin.postBrandApp(body) : Api.Admin.putBrandApp((Number(brandAppId)), body),
     onSuccess: () => {
       InitAlert.open({ title: 'Lưu thành công', type: 'success' });
       refetch();
@@ -222,7 +222,7 @@ const BrandAppForm: FC<{ brandAppId?: number, onClose?: () => void, refetch?: ()
   })
   const { data: dataDetail } = useQuery<{ context: IBrandApp }>({
     queryKey: [QR_KEY.BrandApps, brandAppId],
-    queryFn: () => adminApi.getBrandApp(Number(brandAppId)),
+    queryFn: () => Api.Admin.getBrandApp(Number(brandAppId)),
     enabled: type === 'put',
     onSuccess: (data) => {
       if (data.context) {

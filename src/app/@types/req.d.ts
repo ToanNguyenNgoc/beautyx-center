@@ -1,4 +1,35 @@
-export type ReqDiscountBody = {
+export type ReqPostForgot = {
+  telephone: string
+  new_password: string
+  code: string
+  verification_id: string
+}
+export type ReqPostRegister = {
+  fullname: string
+  email: string
+  telephone: string
+  password: string
+  platform: string
+  code: string
+  verification_id: string
+}
+export type ReqPostLogin = {
+  email: string
+  password: string
+  platform: string
+}
+export type ReqPutProfile = {
+  fullname?: string
+  media?: number
+}
+
+
+export type ReqPutApprove = {
+  status: "PENDING" | "REJECT" | "APPROVED" | "REVIEW",
+  log?: string
+}
+
+export type ReqPostDiscount = {
   title: string,
   coupon_code: string,
   description: string,
@@ -26,7 +57,7 @@ export type ReqPromotionBody = {
   valid_from?: string;
   valid_util?: string
 }
-export type ReqPostBody = {
+export type ReqPostPost = {
   content: string;
   organization_id?: number;
   media_ids?: number[];
@@ -71,5 +102,12 @@ export type ReqTrend = {
   productables?: number[];
   discounts?: number[];
   status?: boolean;
-  priority?:number;
+  priority?: number;
+}
+
+export type ReqPostMood = {
+  name?: string;
+  priority?: number;
+  media_id?: number;
+  status?: boolean;
 }

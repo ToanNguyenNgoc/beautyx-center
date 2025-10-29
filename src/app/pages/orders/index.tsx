@@ -13,7 +13,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom'
 import queryString from "query-string"
 import './order.scss'
 import { QrAdminOrder, ResponseDetail, ResponseList } from 'app/@types'
-import { adminApi, orgApi } from 'app/api'
+import { Api, orgApi } from 'app/api'
 
 const Orders = () => {
   const location = useLocation()
@@ -31,7 +31,7 @@ const Orders = () => {
   const { hasEnabled } = useGetRolesAndPermissions()
   const { data, isLoading } = useQuery<ResponseDetail<ResponseList<IOrderOrg[]>>>({
     queryKey: ['adminApi.adminOrders', params],
-    queryFn: () => adminApi.adminOrders(params).then(res => res.data),
+    queryFn: () => Api.Admin.adminOrders(params).then(res => res.data),
     enabled: hasEnabled('v1.admin.orders.index'),
     staleTime: 0
   })
