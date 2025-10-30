@@ -25,8 +25,9 @@ import { useNavigate } from 'react-router-dom';
 import { SelectService } from './select-service';
 import { ExportCode } from './export-code'
 import { SITE } from 'app/context';
+import { ScheduleBuilder } from 'app/pages/discounts/module/discount-form/schedule-builder';
 
-
+type DaySchedState = { [day: number]: { [slot: string]: number } };
 interface IProps {
   discount: IDiscountPar | undefined,
   isForm: string,
@@ -45,6 +46,18 @@ function Form(props: IProps) {
     isForm === "EDIT" ?
       discount?.items.map((item: IITEMS_DISCOUNT) => item.productable) : []
   )
+
+  
+
+function buildSchedulesPayload(state: DaySchedState, orgId: string | number) {
+  const weekday = Object.entries(state).map(([dayStr, slotMap]) => ({
+    day: Number(dayStr),
+    time_slots: Object.entries(slotMap).map(([time, quantity]) => ({ time, quantity }))
+  })).filter(d => d.time_slots.length > 0);
+
+  return [{ [String(orgId)]: { weekday } }];
+}
+
   //handle submit form
   //[HANDLE POST]
   const { mutate, isLoading } = useMutation({
@@ -83,6 +96,8 @@ function Form(props: IProps) {
       minimum_order_value: isBeautyxSite ? ((isForm === "EDIT" && discount?.maximum_discount_value) ? discount?.maximum_discount_value : "") : 0,
       limit: isBeautyxSite ? ((isForm === "EDIT" && discount?.limit) ? discount?.limit : "") : undefined,
       gmup_tag_ids: isForm === "EDIT" ? discount?.gmup_tags?.map(i => Number(i.id)).filter(Boolean) : [] as any,
+      ai_description: isForm === "EDIT" ? (discount as any)?.ai_description ?? "" : "",
+      schedules_state: {} as DaySchedState,
     },
     validationSchema: Yup.object({
       coupon_code: Yup.string().required("Vui lòng nhập Mã giảm giá"),
@@ -97,17 +112,24 @@ function Form(props: IProps) {
         .max(4000, 'Số lượng mã tối đa 4000 mã')
         .required('Vui lòng nhập số lượng mã')
         :
-        Yup.string()
+        Yup.string(),
+      ai_description: Yup.string().nullable(),
+
+      
     }),
     onSubmit: (values) => {
       const newValue = values as any
+      const selectedOrgId = values.organizations?.map(i => i.id)[0] as number | string;
+      const schedules = buildSchedulesPayload(values.schedules_state, selectedOrgId);
       const body = {
         ...newValue,
-        organizations: values.organizations?.map(i => i.id)[0],
+        organizations: selectedOrgId,
         items: services.map((i: any) => i.id),
         platform: isBeautyxSite ? (newValue.platform[0] ?? 'MOMO') : PLAT_FORM.GMUP,
         is_campaign: isCampaign ? 1 : 0,
-        limit: Number(values.limit)
+        limit: Number(values.limit),
+        ai_description: values.ai_description,
+        schedules
       }
       if (services.length > 0) {
         mutate(body)
@@ -490,6 +512,27 @@ function Form(props: IProps) {
             />
           </div>
         </div>
+        <SiteLayout site={SITE.GMUP}>
+          <div className="input-wrap">
+            <label className="form-label">Mô tả AI</label>
+            <textarea
+              onChange={formik.handleChange}
+              value={formik.values.ai_description}
+              name="ai_description"
+              rows={3}
+              className="form-control form-control-solid"
+              placeholder="Mô tả cho AI (ngữ cảnh, tone, mục tiêu...)"
+            />
+          </div>
+          <div className="flex-col input-wrap">
+            <label className="form-label">Lịch khung giờ</label>
+              <ScheduleBuilder
+                value={formik.values.schedules_state}
+                onChange={(v) => formik.setFieldValue('schedules_state', v)}
+              />
+          </div>
+        </SiteLayout>
+
         <div className="input-form__bot">
           {/* {
             isForm === "EDIT" &&
