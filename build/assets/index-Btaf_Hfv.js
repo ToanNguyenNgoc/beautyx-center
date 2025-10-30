@@ -1,1 +1,0 @@
-import{ae as r,Y as n,j as s,a9 as t,_ as i}from"./index-Cy0ECsl2.js";function u(){const a=r().id,{response:e}=n(!0,i.ROLES_ID_PERMISSIONS(a));return console.log(e),s.jsxs(s.Fragment,{children:[s.jsx(t,{title:"Phân quyền"}),s.jsx("div",{children:JSON.stringify(e)})]})}export{u as default};

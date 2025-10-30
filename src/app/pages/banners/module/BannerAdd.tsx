@@ -56,6 +56,7 @@ function BannerAdd() {
     initialValues: {
       // priority: "",
       imageURL: "",
+      imageURLPreview:"",
       name: "",
       platform: "",
       expires_at: "",
@@ -73,7 +74,8 @@ function BannerAdd() {
       mutate({
         ...values,
         origin_id: origin?.id,
-        priority: params.id ? undefined : prevPriority + 1
+        priority: params.id ? undefined : prevPriority + 1,
+        imageURL: values.imageURLPreview,
       })
     }
   })
@@ -103,8 +105,9 @@ function BannerAdd() {
     handlePostMedia({
       e: eF,
       callBack(data) {
-        console.log(data)
         formik.setFieldValue('imageURL', data[0]?.original_url ?? '')
+        formik.setFieldValue('imageURLPreview', data[0]?.preview_url ?? '')
+        // console.log(data[0]);
       },
       version: 'myspa',
       resetOriginalResult: true

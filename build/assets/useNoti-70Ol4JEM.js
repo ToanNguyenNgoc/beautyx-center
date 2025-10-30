@@ -1,1 +1,0 @@
-import{a as s}from"./index-Cy0ECsl2.js";function i(){const[o,e]=s.useState({load:!1,message:"",openAlert:!1});return{noti:o,firstLoad:()=>e({...o,load:!0}),resultLoad:t=>{e({load:!1,message:t,openAlert:!0})},onCloseNoti:()=>e({...o,openAlert:!1})}}export{i as u};

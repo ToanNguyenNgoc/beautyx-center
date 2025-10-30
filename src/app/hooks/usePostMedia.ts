@@ -60,6 +60,7 @@ export function usePostMedia() {
               id: res.id,
               model_id: res.model_id,
               // original_url: resetOriginalResult ? convertToCdnUrl(res.original_url) : resMedia.original_url
+              preview_url: res.original_url,
             }
           }
           mediaList.push(resMedia)

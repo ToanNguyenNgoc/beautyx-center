@@ -1,1 +1,0 @@
-import{c3 as e}from"./index-Cy0ECsl2.js";const n={getAll:t=>e.get("/promotions",{params:{...t,"filter[all]":!0,sort:"-created_at"}}).then(o=>o.data.context),getDetail:t=>e.get(`/promotions/${t}`).then(o=>o.data),post:t=>e.post("/promotions",t).then(o=>o.data),put:(t,o)=>e.put(`/promotions/${t}`,o).then(r=>r.data),delete:t=>e.delete(`/promotions/${t}`)};export{n as p};

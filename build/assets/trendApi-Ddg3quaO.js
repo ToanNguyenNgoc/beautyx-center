@@ -1,0 +1,1 @@
+import{aw as a}from"./index-CPKrhu4T.js";const s={get:t=>a().get("/trends",{params:t}).then(e=>e.data),getById:(t,e)=>a().get(`/trends/${t}`,{params:e}).then(d=>d.data),post:t=>a().post("/trends",t).then(e=>e.data),update:(t,e)=>a().put(`/trends/${t}`,e).then(d=>d.data),delete:t=>a().delete(`/trends/${t}`).then(e=>e.data)};export{s as T};

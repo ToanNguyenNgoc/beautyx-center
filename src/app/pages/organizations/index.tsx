@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 /* eslint-disable no-var */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable react-hooks/exhaustive-deps */
@@ -9,7 +10,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import directRoute from 'app/routing/DirectRoute';
 import { FC, useCallback, useEffect, useState } from 'react';
 import queryString from 'query-string'
-import { Box, Chip, FormControl, InputLabel, MenuItem, OutlinedInput, Select, SelectChangeEvent } from '@mui/material';
+import { Box, Chip, FormControl, InputLabel, MenuItem, OutlinedInput, Select, SelectChangeEvent, Tooltip } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 import { useMutation, useQuery } from 'react-query';
 import { orgApi } from 'app/api';
@@ -22,6 +23,10 @@ import moment from 'moment';
 import { useDebounce, useGetGmupTags, useMessage } from 'app/hooks';
 import { DIRECT_ORG } from 'app/util';
 import { SITE } from 'app/context';
+//@ts-ignore
+import { ICONS } from '../../../_metronic/assets/icons/icons';
+import AIGenerateDialog from 'app/pages/organizations/module/AIGenerateDialog';
+
 
 function Organizations() {
   const location = useLocation()
@@ -107,6 +112,7 @@ const ItemOrg: FC<{ org: IOrganization, gmupTags?: ResGmupTag[] }> = ({ org, gmu
     is_gmup_enable: org.is_gmup_enable,
     gmup_tag_ids: org?.gmup_tags?.map(i => i.id),
   };
+  console.log(org)
   const [form, setForm] = useState(initForm);
   const { resultLoad, noti, onCloseNoti } = useMessage()
   const onUpdate = (key: keyof typeof form, e: any) => {
@@ -125,6 +131,17 @@ const ItemOrg: FC<{ org: IOrganization, gmupTags?: ResGmupTag[] }> = ({ org, gmu
     handleUpdateGmupTags(values);
   };
   const handleUpdateGmupTags = useCallback(debounce((values: any) => onUpdate('gmup_tag_ids', values), 1000), []);
+
+  const [openGen, setOpenGen] = useState(false);
+  const [prompt, setPrompt] = useState('');
+
+const handleOpenGen = () => setOpenGen(true);
+// const handleCloseGen = () => {
+//   setOpenGen(false);
+//   setPrompt('');
+// };
+
+
 
   return (
     <>
@@ -191,14 +208,38 @@ const ItemOrg: FC<{ org: IOrganization, gmupTags?: ResGmupTag[] }> = ({ org, gmu
           </td>
         </SiteLayout>
         <td className='text-end'>
-          {
+            {form.is_gmup_enable && (
+              <Tooltip title="AI Generator">
+                <button
+                  className="icon_ai btn btn-icon btn-bg-light btn-active-color-primary btn-sm"
+                  onClick={handleOpenGen}
+                >
+                  <img src={ICONS.bling} alt="" />
+                </button>
+              </Tooltip>
+            )}
+        
             <Link
               to={{ pathname: directRoute.ORGANIZATIONS_DETAIL(org.id) + '/services' }}
               className='btn btn-icon btn-bg-light btn-active-color-primary btn-sm'
             >
               <i className="bi bi-eye fs-4"></i>
-            </Link>
-          }
+          </Link>
+          
+          <AIGenerateDialog
+            open={openGen}
+            prompt={prompt}
+            onChange={setPrompt}
+            onClose={() => {
+              setOpenGen(false);
+              setPrompt('');
+            }}
+            onSubmit={() => {
+              console.log('Prompt:', prompt);
+              setOpenGen(false);
+            }}
+          />
+
         </td>
       </tr>
     </>

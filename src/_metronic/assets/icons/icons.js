@@ -5,6 +5,7 @@ import headMobile from './headMobile.svg';
 import headPc from './headPc.png';
 import bannersArray from './bannersArray.png';
 import layoutGrid from './layoutGrid.svg'
+import bling from './Bling_Bling.svg'
 
 export const ICONS = {
     caretDownBlack,
@@ -13,5 +14,6 @@ export const ICONS = {
     headMobile,
     headPc,
     bannersArray,
-    layoutGrid
+    layoutGrid,
+    bling
 }
