@@ -20,10 +20,11 @@ import {
   QrDiscount,
   QrDiscountDetail,
   ReqPostDiscount,
-  QrDiscountCode
+  QrDiscountCode,
+  ReqLoginGovBtx
 } from "app/@types";
 import { AxiosInstance } from "app/configs";
-import { ResBanner, ResCouponCodeCampaign, ResDiscountPar, ResPost } from "app/interface";
+import { ResBanner, ResCouponCodeCampaign, ResDiscountPar, ResGovBtxMobile, ResPost } from "app/interface";
 import { ResAppointment } from "app/interface/appointment";
 
 type ResPaginate<T> = ResponseDetail<ResponseList<T>>;
@@ -76,14 +77,17 @@ export const Api = {
   Post: {
     get: (params?: QrCommunity) => AxiosInstance().get('/posts', { params }).then<ResPaginate<ResPost[]>>(res => res.data),
     getDetail: (id: number) => AxiosInstance().get(`/posts/${id}`, { params: { 'append': 'media_url' } }).then<ResponseDetail<ResPost>>(res => res.data),
-    post:(body: ReqPostPost) => AxiosInstance().post(`/posts`, body).then<ResponseDetail<ResPost>>(res => res.data),
+    post: (body: ReqPostPost) => AxiosInstance().post(`/posts`, body).then<ResponseDetail<ResPost>>(res => res.data),
   },
-  Discount:{
-    get:(params?:QrDiscount) => AxiosInstance().get('/discounts',{params}).then<ResPaginate<ResDiscountPar[]>>(res => res.data),
-    detDetail:(params:QrDiscountDetail) => AxiosInstance().get(`/discounts/${params.id}`,{params}).then<ResponseDetail<ResDiscountPar>>(res => res.data),
-    post:(body: ReqPostDiscount) => AxiosInstance().post('/discounts', body).then<ResponseDetail<ResDiscountPar>>(res => res.data),
-    put:(id: number|string, body: ReqPostDiscount) => AxiosInstance().put(`/discounts/${id}`, body).then<ResponseDetail<ResDiscountPar>>(res => res.data),
-    delete:(id: number|string) => AxiosInstance().delete(`/discounts/${id}`).then(res => res.data),
-    getCodeCampaign:(params: QrDiscountCode) => AxiosInstance().get('/discounts/id/campaigncode',{params}).then<ResPaginate<ResCouponCodeCampaign[]>>(res => res.data),
+  Discount: {
+    get: (params?: QrDiscount) => AxiosInstance().get('/discounts', { params }).then<ResPaginate<ResDiscountPar[]>>(res => res.data),
+    detDetail: (params: QrDiscountDetail) => AxiosInstance().get(`/discounts/${params.id}`, { params }).then<ResponseDetail<ResDiscountPar>>(res => res.data),
+    post: (body: ReqPostDiscount) => AxiosInstance().post('/discounts', body).then<ResponseDetail<ResDiscountPar>>(res => res.data),
+    put: (id: number | string, body: ReqPostDiscount) => AxiosInstance().put(`/discounts/${id}`, body).then<ResponseDetail<ResDiscountPar>>(res => res.data),
+    delete: (id: number | string) => AxiosInstance().delete(`/discounts/${id}`).then(res => res.data),
+    getCodeCampaign: (params: QrDiscountCode) => AxiosInstance().get('/discounts/id/campaigncode', { params }).then<ResPaginate<ResCouponCodeCampaign[]>>(res => res.data),
+  },
+  GovBtxMobile: {
+    post: (body: ReqLoginGovBtx) => AxiosInstance({ version: '' }).post('/report/gov/btx-mobile', body).then<ResGovBtxMobile>(res => res.data),
   }
 }

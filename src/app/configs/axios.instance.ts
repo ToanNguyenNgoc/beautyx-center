@@ -4,14 +4,14 @@ import queryString from 'query-string';
 
 interface AxiosInstanceOptions {
   baseURL?: string,
-  version?: 'v1' | 'v2' | 'v3' | 'v4',
+  version?: 'v1' | 'v2' | 'v3' | 'v4' | '',
   token?: string,
 }
 
 export const AxiosInstance = (options?: AxiosInstanceOptions) => {
   const baseURL = options?.baseURL || (import.meta.env.VITE_REACT_APP_API_URL ?? import.meta.env.VITE_REACT_APP_API_LIVE).replace('/v1', '');
   // const baseURL = options?.baseURL || ('http://localhost:8000/v1').replace('/v1', '');
-  const version = options?.version || 'v1';
+  const version = options?.version ?? 'v1';
   const axiosClient = axios.create({
     baseURL: `${baseURL}/${version}`,
     headers: {
@@ -27,7 +27,7 @@ export const AxiosInstance = (options?: AxiosInstanceOptions) => {
     config = {
       ...config,
       headers: {
-        'Authorization': `Bearer ${options?.token || (session || local)}`
+        'Authorization': `Bearer ${options?.token || (session || local || '')}`
       }
     };
     return config;

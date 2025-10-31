@@ -15,6 +15,7 @@ import { CustomerEvent } from 'app/pages/customers-event/CustomerEvent'
 import { LocationTool } from 'app/pages/tools'
 import { RegisterGlobalLayout } from 'app/components'
 import ManagerTraffic from 'app/pages/manager-traffic/ManagerTraffic'
+import { GovBeautyxMobile } from 'app/pages/gov-btx-mobile/GovBeautyxMobile'
 
 /**
  * Base URL of the website.
@@ -33,6 +34,8 @@ const AppRoutes: FC = () => {
           <Route element={<App />}>
             <Route path='error/*' element={<ErrorsPage />} />
             <Route path='logout' element={<Logout />} />
+            <Route path='vong-quay' element={<CustomerEvent />} />
+            <Route path='gov-btx-mobile' element={<GovBeautyxMobile />} />
             {currentUser ? (
               <>
                 <Route path='/*' element={<PrivateRoutes USER_ROLE={user_role} />} />
@@ -40,7 +43,6 @@ const AppRoutes: FC = () => {
               </>
             ) : (
               <>
-                <Route path='vong-quay' element={<CustomerEvent />} />
                 <Route path='location-tool' element={<LocationTool />} />
                 <Route path='manager-traffic' element={<ManagerTraffic />} />
                 <Route path='auth/*' element={<AuthPage />} />

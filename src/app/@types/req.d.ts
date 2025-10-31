@@ -111,3 +111,8 @@ export type ReqPostMood = {
   media_id?: number;
   status?: boolean;
 }
+
+export type ReqLoginGovBtx = {
+  UserName: string;
+  PassWord: string;
+}

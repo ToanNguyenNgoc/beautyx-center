@@ -1,1 +1,0 @@
-import{Q as u,aw as o,aE as r}from"./index-CPKrhu4T.js";function c(t){var e;const a=u({queryKey:[r.GmupTag,t],queryFn:()=>o({version:"v4"}).get("/tags",{params:t}).then(n=>n.data)}),s=((e=a.data)==null?void 0:e.context.data)||[];return Object.assign(a,{gmupTags:s})}export{c as u};
